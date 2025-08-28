@@ -1715,6 +1715,7 @@ input:focus-visible {
             try {
                 const response = await fetch(form.action, {
                     method: 'POST',
+                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded' // ou 'application/json' se o script esperar JSON
                     },
