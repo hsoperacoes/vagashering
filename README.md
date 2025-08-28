@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulário de Solicitação de Emprego - Hering Store</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
 /* Reset e configurações básicas */
 * {
@@ -102,6 +103,9 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
     border-left: 4px solid #4CAF50;
+    animation: slideInUp 0.6s ease-out forwards;
+    opacity: 0;
+    transform: translateY(30px);
 }
 
 .form-block:hover {
@@ -172,7 +176,8 @@ input[type="text"],
 input[type="email"],
 input[type="tel"],
 input[type="date"],
-input[type="number"] {
+input[type="number"],
+textarea {
     background: #4a4a4a;
     border: 2px solid #555;
     border-radius: 8px;
@@ -182,11 +187,14 @@ input[type="number"] {
     transition: all 0.3s ease;
 }
 
+textarea { resize: vertical; }
+
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="tel"]:focus,
 input[type="date"]:focus,
-input[type="number"]:focus {
+input[type="number"]:focus,
+textarea:focus {
     outline: none;
     border-color: #4CAF50;
     box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
@@ -581,12 +589,6 @@ input::placeholder {
 }
 
 /* Animações de entrada */
-.form-block {
-    animation: slideInUp 0.6s ease-out forwards;
-    opacity: 0;
-    transform: translateY(30px);
-}
-
 .form-block:nth-child(1) { animation-delay: 0.1s; }
 .form-block:nth-child(2) { animation-delay: 0.2s; }
 .form-block:nth-child(3) { animation-delay: 0.3s; }
@@ -594,6 +596,9 @@ input::placeholder {
 .form-block:nth-child(5) { animation-delay: 0.5s; }
 .form-block:nth-child(6) { animation-delay: 0.6s; }
 .form-block:nth-child(7) { animation-delay: 0.7s; }
+.form-block:nth-child(8) { animation-delay: 0.8s; }
+.form-block:nth-child(9) { animation-delay: 0.9s; }
+.form-block:nth-child(10) { animation-delay: 1.0s; }
 
 @keyframes slideInUp {
     to {
@@ -644,10 +649,7 @@ input:focus-visible {
 }
 
 /* Container de experiências */
-.experience-container {
-    display: grid;
-    gap: 25px;
-}
+.experience-container { display: grid; gap: 25px; }
 
 .experience-card {
     background: #4a4a4a;
@@ -706,92 +708,18 @@ input:focus-visible {
     text-align: justify;
 }
 
-.declaration-checkbox:hover .declaration-text {
-    color: #4CAF50;
-}
-
-/* Animações para novos blocos */
-.form-block:nth-child(8) { animation-delay: 0.8s; }
-.form-block:nth-child(9) { animation-delay: 0.9s; }
-.form-block:nth-child(10) { animation-delay: 1.0s; }
-
 /* Máscara para pretensão salarial */
 #pretensao-salarial {
     text-align: right;
 }
 
-/* Estilos para campos de experiência */
-.experience-card .form-grid {
-    margin-top: 15px;
-}
-
-.experience-card .form-group label {
-    color: #b0b0b0;
-    font-size: 0.9em;
-}
-
-.experience-card input:focus {
-    border-color: #4CAF50;
-    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
-}
-
-/* Responsividade para experiências */
-@media (max-width: 768px) {
-    .experience-container {
-        gap: 20px;
-    }
-    
-    .experience-card {
-        padding: 15px;
-    }
-    
-    .experience-card h4 {
-        font-size: 1em;
-    }
-    
-    .declaration-container {
-        padding: 15px;
-    }
-    
-    .declaration-text {
-        font-size: 0.9em;
-    }
-}
-
-/* Estilos para seções ocultas */
-.hidden-section {
-    display: none;
-    animation: slideInDown 0.5s ease-out forwards;
-}
-
-.hidden-section.show {
-    display: block;
-}
-
-@keyframes slideInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 /* Loading indicator para CEP */
-.loading-cep {
-    position: relative;
-}
-
+.loading-cep { position: relative; }
 .loading-cep::after {
     content: '';
-    position: absolute;
-    right: 10px;
-    top: 50%;
+    position: absolute; right: 10px; top: 50%;
     transform: translateY(-50%);
-    width: 16px;
-    height: 16px;
+    width: 16px; height: 16px;
     border: 2px solid #4CAF50;
     border-top: 2px solid transparent;
     border-radius: 50%;
@@ -802,8 +730,7 @@ input:focus-visible {
     0% { transform: translateY(-50%) rotate(0deg); }
     100% { transform: translateY(-50%) rotate(360deg); }
 }
-</style>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    </style>
 </head>
 <body>
     <div class="container">
@@ -1477,10 +1404,10 @@ input:focus-visible {
                     municipioInput.value = '';
                     ufInput.value = '';
                 } else {
-                    enderecoInput.value = data.logradouro;
-                    bairroInput.value = data.bairro;
-                    municipioInput.value = data.localidade;
-                    ufInput.value = data.uf;
+                    enderecoInput.value = data.logradouro || '';
+                    bairroInput.value = data.bairro || '';
+                    municipioInput.value = data.localidade || '';
+                    ufInput.value = data.uf || '';
                 }
             } catch (error) {
                 console.error('Erro ao buscar CEP:', error);
@@ -1490,13 +1417,13 @@ input:focus-visible {
             }
         }
 
-        // Função para alternar campo de quantidade de filhos
+        // Funções de toggle
         function toggleFilhosQuantidade() {
             const possuiFilhosSim = document.querySelector('input[name="possui-filhos"][value="sim"]');
             const quantidadeFilhosContainer = document.getElementById('quantidade-filhos-container');
             const quantidadeFilhosInput = document.getElementById('quantidade-filhos');
 
-            if (possuiFilhosSim.checked) {
+            if (possuiFilhosSim && possuiFilhosSim.checked) {
                 quantidadeFilhosContainer.style.display = 'block';
                 quantidadeFilhosInput.disabled = false;
             } else {
@@ -1506,13 +1433,12 @@ input:focus-visible {
             }
         }
 
-        // Função para alternar campo de categoria CNH
         function toggleCNHCategoria() {
             const cnhSim = document.querySelector('input[name="cnh"][value="sim"]');
             const categoriaCNHContainer = document.getElementById('categoria-cnh-container');
             const categoriaCNHInput = document.getElementById('categoria-cnh');
 
-            if (cnhSim.checked) {
+            if (cnhSim && cnhSim.checked) {
                 categoriaCNHContainer.style.display = 'block';
                 categoriaCNHInput.disabled = false;
             } else {
@@ -1522,13 +1448,12 @@ input:focus-visible {
             }
         }
 
-        // Função para alternar campo de línguas estrangeiras
         function toggleLinguas() {
             const linguasSim = document.querySelector('input[name="linguas-estrangeiras"][value="sim"]');
             const quaisLinguasContainer = document.getElementById('quais-linguas-container');
             const quaisLinguasInput = document.getElementById('quais-linguas');
 
-            if (linguasSim.checked) {
+            if (linguasSim && linguasSim.checked) {
                 quaisLinguasContainer.style.display = 'block';
                 quaisLinguasInput.disabled = false;
             } else {
@@ -1538,26 +1463,23 @@ input:focus-visible {
             }
         }
 
-        // Função para alternar seção de formação acadêmica
         function toggleFormacaoAcademica() {
             const possuiFormacao = document.getElementById('possui-formacao');
             const formacaoAcademicaSection = document.getElementById('formacao-academica-section');
 
-            if (possuiFormacao.checked) {
+            if (possuiFormacao && possuiFormacao.checked) {
                 formacaoAcademicaSection.classList.add('show');
             } else {
                 formacaoAcademicaSection.classList.remove('show');
             }
         }
 
-        // Função para alternar campo de ano de conclusão do curso
         function toggleConclusao(cursoNum) {
-            const cursando = document.querySelector(`input[name="status-curso${cursoNum}"][value="cursando"]`);
             const concluido = document.querySelector(`input[name="status-curso${cursoNum}"][value="concluido"]`);
             const anoConclusaoContainer = document.getElementById(`ano-conclusao${cursoNum}-container`);
             const anoConclusaoInput = document.getElementById(`ano-conclusao${cursoNum}`);
 
-            if (concluido.checked) {
+            if (concluido && concluido.checked) {
                 anoConclusaoContainer.style.display = 'block';
                 anoConclusaoInput.disabled = false;
             } else {
@@ -1567,12 +1489,11 @@ input:focus-visible {
             }
         }
 
-        // Função para alternar seção de experiência profissional
         function toggleExperienciaProfissional() {
             const possuiExperiencia = document.getElementById('possui-experiencia');
             const experienciaProfissionalSection = document.getElementById('experiencia-profissional-section');
 
-            if (possuiExperiencia.checked) {
+            if (possuiExperiencia && possuiExperiencia.checked) {
                 experienciaProfissionalSection.classList.add('show');
             } else {
                 experienciaProfissionalSection.classList.remove('show');
@@ -1595,11 +1516,11 @@ input:focus-visible {
                 cpfInput.addEventListener('input', (e) => {
                     let value = e.target.value.replace(/\D/g, '');
                     if (value.length > 9) {
-                        value = value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '$1.$2.$3-$4');
+                        value = value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2}).*$/, '$1.$2.$3-$4');
                     } else if (value.length > 6) {
-                        value = value.replace(/^(\d{3})(\d{3})(\d{3})$/, '$1.$2.$3');
+                        value = value.replace(/^(\d{3})(\d{3})(\d{0,3}).*$/, '$1.$2.$3');
                     } else if (value.length > 3) {
-                        value = value.replace(/^(\d{3})(\d{3})$/, '$1.$2');
+                        value = value.replace(/^(\d{3})(\d{0,3}).*$/, '$1.$2');
                     }
                     e.target.value = value;
                 });
@@ -1615,7 +1536,7 @@ input:focus-visible {
                     } else if (value.length > 6) {
                         value = value.replace(/^(\d\d)(\d{4})(\d{0,4}).*/, '($1) $2-$3');
                     } else if (value.length > 2) {
-                        value = value.replace(/^(\d\d)(\d{0,5})/, '($1) $2');
+                        value = value.replace(/^(\d\d)(\d{0,5}).*/, '($1) $2');
                     }
                     e.target.value = value;
                 });
@@ -1631,7 +1552,7 @@ input:focus-visible {
                     } else if (value.length > 7) {
                         value = value.replace(/^(\d\d)(\d{5})(\d{0,4}).*/, '($1) $2-$3');
                     } else if (value.length > 2) {
-                        value = value.replace(/^(\d\d)(\d{0,5})/, '($1) $2');
+                        value = value.replace(/^(\d\d)(\d{0,5}).*/, '($1) $2');
                     }
                     e.target.value = value;
                 });
@@ -1641,88 +1562,55 @@ input:focus-visible {
             const pretensaoSalarialInput = document.getElementById('pretensao-salarial');
             if (pretensaoSalarialInput) {
                 pretensaoSalarialInput.addEventListener('input', (e) => {
-                    let value = e.target.value.replace(/\D/g, '');
+                    let value = e.target.value.replace(/\D/g, '') || '0';
                     value = (parseInt(value, 10) / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
                     e.target.value = value;
                 });
             }
         });
 
-        // Adicionar um event listener para o envio do formulário
+        // Envio do formulário (sem headers customizados → evita preflight/CORS)
         document.getElementById('job-application-form').addEventListener('submit', async function(event) {
             event.preventDefault(); // Previne o envio padrão do formulário
 
             const form = event.target;
-            const formData = new FormData(form);
-            const data = {};
-            formData.forEach((value, key) => {
-                // Lidar com múltiplos valores para o mesmo nome (ex: checkboxes)
-                if (key === 'disponibilidade-horario') {
-                    if (!data[key]) {
-                        data[key] = [];
-                    }
-                    data[key].push(value);
-                } else {
-                    data[key] = value;
-                }
-            });
+            const fd = new FormData(form);
 
-            // Adicionar campos de curso e experiência dinamicamente
+            // Cursos (array JSON em um único campo)
             const cursos = [];
-            for (let i = 1; i <= 2; i++) { // Assumindo 2 cursos
-                const curso = document.getElementById(`curso${i}`).value;
-                const instituicao = document.getElementById(`instituicao${i}`).value;
-                const statusCurso = document.querySelector(`input[name="status-curso${i}"]:checked`)?.value;
-                const anoConclusao = document.getElementById(`ano-conclusao${i}`).value;
+            for (let i = 1; i <= 2; i++) {
+                const curso = document.getElementById(`curso${i}`)?.value || '';
+                const instituicao = document.getElementById(`instituicao${i}`)?.value || '';
+                const statusCurso = document.querySelector(`input[name="status-curso${i}"]:checked`)?.value || '';
+                const anoConclusao = document.getElementById(`ano-conclusao${i}`)?.value || '';
                 if (curso || instituicao || statusCurso || anoConclusao) {
-                    cursos.push({
-                        curso: curso,
-                        instituicao: instituicao,
-                        status: statusCurso,
-                        anoConclusao: anoConclusao
-                    });
+                    cursos.push({ curso, instituicao, status: statusCurso, anoConclusao });
                 }
             }
-            if (cursos.length > 0) {
-                data['cursos'] = cursos;
-            }
+            if (cursos.length) fd.append('cursos', JSON.stringify(cursos));
 
+            // Experiências (array JSON em um único campo)
             const experiencias = [];
-            for (let i = 1; i <= 2; i++) { // Assumindo 2 experiências
-                const empresa = document.getElementById(`empresa${i}`).value;
-                const cargo = document.getElementById(`cargo${i}`).value;
-                const dataEntrada = document.getElementById(`data-entrada${i}`).value;
-                const dataSaida = document.getElementById(`data-saida${i}`).value;
-                const atividades = document.getElementById(`atividades${i}`).value;
+            for (let i = 1; i <= 2; i++) {
+                const empresa = document.getElementById(`empresa${i}`)?.value || '';
+                const cargo = document.getElementById(`cargo${i}`)?.value || '';
+                const dataEntrada = document.getElementById(`data-entrada${i}`)?.value || '';
+                const dataSaida = document.getElementById(`data-saida${i}`)?.value || '';
+                const atividades = document.getElementById(`atividades${i}`)?.value || '';
                 if (empresa || cargo || dataEntrada || dataSaida || atividades) {
-                    experiencias.push({
-                        empresa: empresa,
-                        cargo: cargo,
-                        dataEntrada: dataEntrada,
-                        dataSaida: dataSaida,
-                        atividades: atividades
-                    });
+                    experiencias.push({ empresa, cargo, dataEntrada, dataSaida, atividades });
                 }
             }
-            if (experiencias.length > 0) {
-                data['experiencias'] = experiencias;
-            }
+            if (experiencias.length) fd.append('experiencias', JSON.stringify(experiencias));
 
             try {
-                const response = await fetch(form.action, {
+                await fetch(form.action, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded' // ou 'application/json' se o script esperar JSON
-                    },
-                    body: new URLSearchParams(data).toString() // Envia como form-urlencoded
+                    body: new URLSearchParams(fd) // deixa o browser setar o Content-Type
                 });
 
-                if (response.ok) {
-                    alert('Formulário enviado com sucesso!');
-                    form.reset(); // Limpa o formulário após o envio
-                } else {
-                    alert('Erro ao enviar o formulário. Tente novamente.');
-                }
+                alert('Formulário enviado com sucesso!');
+                form.reset();
             } catch (error) {
                 console.error('Erro:', error);
                 alert('Ocorreu um erro ao enviar o formulário. Verifique sua conexão e tente novamente.');
@@ -1731,5 +1619,3 @@ input:focus-visible {
     </script>
 </body>
 </html>
-
-
