@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Solicitação de Emprego - Usina Irmãos Afonso</title>
+    <title>Formulário de Solicitação de Emprego - Hering Store</title>
     <style>
 /* Reset e configurações básicas */
 * {
@@ -651,7 +651,7 @@ input:focus-visible {
             <div class="header-content">
                 <i class="fas fa-briefcase header-icon"></i>
                 <h1>FORMULÁRIO DE SOLICITAÇÃO DE EMPREGO</h1>
-                <h2>USINA IRMÃOS AFONSO</h2>
+                <h2>Hering Store</h2>
                 <p>Preencha todos os campos para que sua candidatura seja validada</p>
             </div>
         </header>
