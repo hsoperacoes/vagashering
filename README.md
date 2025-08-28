@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Solicitação de Emprego - Usina Irmãos Afonso</title>
+    <title>Formulário de Solicitação de Emprego - hERING STORE</title>
     <link rel="stylesheet" href="styles_v2.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -12,7 +12,7 @@
             <div class="header-content">
                 <i class="fas fa-briefcase header-icon"></i>
                 <h1>FORMULÁRIO DE SOLICITAÇÃO DE EMPREGO</h1>
-                <h2>USINA IRMÃOS AFONSO</h2>
+                <h2>HERING STORE</h2>
                 <p>Preencha todos os campos para que sua candidatura seja validada</p>
             </div>
         </header>
