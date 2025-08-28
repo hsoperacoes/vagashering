@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -816,6 +815,8 @@ input:focus-visible {
                 <p>Preencha todos os campos para que sua candidatura seja validada</p>
             </div>
         </header>
+        
+        <div class="form-container">
             <form id="job-application-form" class="job-form" action="https://script.google.com/macros/s/AKfycbzdMkDG0N6xwF_px9n2N2gqqGFjYyv0D_8jOtremC3WSFQBy57_tHwtBg8CEsf-G93N/exec" method="POST">
                 
                 <!-- Bloco 1: Dados Pessoais -->
@@ -1445,7 +1446,7 @@ input:focus-visible {
                     <button type="reset" class="btn-reset"><i class="fas fa-eraser"></i> Limpar Formulário</button>
                 </div>
             </form>
-        </main>
+        </div>
     </div>
 
     <script>
