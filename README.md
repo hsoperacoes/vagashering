@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -814,7 +815,8 @@ input:focus-visible {
                 <h2>HERING STORE</h2>
                 <p>Preencha todos os campos para que sua candidatura seja validada</p>
             </div>
-        </hea            <form id="job-application-form" class="job-form" action="" method="POST">class="job-form">
+        </header>
+            <form id="job-application-form" class="job-form" action="https://script.google.com/macros/s/AKfycbzdMkDG0N6xwF_px9n2N2gqqGFjYyv0D_8jOtremC3WSFQBy57_tHwtBg8CEsf-G93N/exec" method="POST">
                 
                 <!-- Bloco 1: Dados Pessoais -->
                 <div class="form-block">
@@ -1271,203 +1273,147 @@ input:focus-visible {
                     </div>
                 </div>
 
-                <!-- Bloco 8: Cargo Pretendido -->
+                <!-- Bloco 8: Experiências Profissionais -->
                 <div class="form-block">
                     <div class="block-header">
-                        <i class="fas fa-briefcase"></i>
-                        <h3>Cargo Pretendido</h3>
+                        <i class="fas fa-history"></i>
+                        <h3>Experiências Profissionais</h3>
                     </div>
                     <div class="block-content">
                         <div class="form-grid">
                             <div class="form-group full-width">
-                                <label for="cargo-pretendido">Cargo que deseja pleitear *</label>
-                                <input type="text" id="cargo-pretendido" name="cargo-pretendido" required>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" id="possui-experiencia" name="possui-experiencia" onchange="toggleExperienciaProfissional()">
+                                    <span class="checkbox-custom"></span>
+                                    Possui experiência profissional
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="hidden-section" id="experiencia-profissional-section">
+                            <div class="experience-container">
+                                <div class="experience-card">
+                                    <h4>Experiência 1</h4>
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label for="empresa1">Empresa</label>
+                                            <input type="text" id="empresa1" name="empresa1">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cargo1">Cargo</label>
+                                            <input type="text" id="cargo1" name="cargo1">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="data-entrada1">Data de Entrada</label>
+                                            <input type="date" id="data-entrada1" name="data-entrada1">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="data-saida1">Data de Saída</label>
+                                            <input type="date" id="data-saida1" name="data-saida1">
+                                        </div>
+                                        <div class="form-group full-width">
+                                            <label for="atividades1">Principais Atividades</label>
+                                            <textarea id="atividades1" name="atividades1" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="experience-card">
+                                    <h4>Experiência 2</h4>
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label for="empresa2">Empresa</label>
+                                            <input type="text" id="empresa2" name="empresa2">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cargo2">Cargo</label>
+                                            <input type="text" id="cargo2" name="cargo2">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="data-entrada2">Data de Entrada</label>
+                                            <input type="date" id="data-entrada2" name="data-entrada2">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="data-saida2">Data de Saída</label>
+                                            <input type="date" id="data-saida2" name="data-saida2">
+                                        </div>
+                                        <div class="form-group full-width">
+                                            <label for="atividades2">Principais Atividades</label>
+                                            <textarea id="atividades2" name="atividades2" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bloco 9: Informações Finais -->
+                <div class="form-block">
+                    <div class="block-header">
+                        <i class="fas fa-clipboard-check"></i>
+                        <h3>Informações Finais</h3>
+                    </div>
+                    <div class="block-content">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="pretensao-salarial">Pretensão Salarial</label>
+                                <input type="text" id="pretensao-salarial" name="pretensao-salarial" placeholder="R$ 0.000,00">
                             </div>
                             
                             <div class="form-group">
-                                <label for="pretensao-salarial">Pretensão Salarial: R$ *</label>
-                                <input type="text" id="pretensao-salarial" name="pretensao-salarial" placeholder="0,00" required>
+                                <label for="disponibilidade-inicio">Disponibilidade para Início</label>
+                                <input type="text" id="disponibilidade-inicio" name="disponibilidade-inicio">
                             </div>
                             
                             <div class="form-group full-width">
-                                <label>Disponibilidade *</label>
+                                <label>Disponibilidade de Horário</label>
                                 <div class="checkbox-group">
                                     <label class="checkbox-option">
-                                        <input type="checkbox" name="disponibilidade" value="manha">
+                                        <input type="checkbox" name="disponibilidade-horario" value="manha">
                                         <span class="checkbox-custom"></span>
                                         Manhã
                                     </label>
                                     <label class="checkbox-option">
-                                        <input type="checkbox" name="disponibilidade" value="tarde">
+                                        <input type="checkbox" name="disponibilidade-horario" value="tarde">
                                         <span class="checkbox-custom"></span>
                                         Tarde
                                     </label>
                                     <label class="checkbox-option">
-                                        <input type="checkbox" name="disponibilidade" value="noite">
+                                        <input type="checkbox" name="disponibilidade-horario" value="noite">
                                         <span class="checkbox-custom"></span>
                                         Noite
                                     </label>
                                     <label class="checkbox-option">
-                                        <input type="checkbox" name="disponibilidade" value="integral">
+                                        <input type="checkbox" name="disponibilidade-horario" value="integral">
                                         <span class="checkbox-custom"></span>
                                         Integral
                                     </label>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Bloco 9: Experiência Profissional -->
-                <div class="form-block">
-                    <div class="block-header">
-                        <i class="fas fa-building"></i>
-                        <h3>Experiência Profissional</h3>
-                    </div>
-                    <div class="block-content">
-                        <div class="experience-container">
-                            <!-- Experiência 1 -->
-                            <div class="experience-card">
-                                <h4>Experiência Profissional 1</h4>
-                                <div class="form-grid">
-                                    <div class="form-group large">
-                                        <label for="empresa1">Empresa</label>
-                                        <input type="text" id="empresa1" name="empresa1">
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="responsavel1">Responsável</label>
-                                        <input type="text" id="responsavel1" name="responsavel1">
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="telefone-empresa1">Telefone</label>
-                                        <input type="tel" id="telefone-empresa1" name="telefone-empresa1" placeholder="(00) 0000-0000">
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="cidade-empresa1">Cidade</label>
-                                        <input type="text" id="cidade-empresa1" name="cidade-empresa1">
-                                    </div>
-                                    
-                                    <div class="form-group small">
-                                        <label for="uf-empresa1">UF</label>
-                                        <input type="text" id="uf-empresa1" name="uf-empresa1" maxlength="2">
-                                    </div>
-                                    
-                                    <div class="form-group full-width">
-                                        <label for="funcao1">Função exercida</label>
-                                        <input type="text" id="funcao1" name="funcao1">
-                                    </div>
-                                    
-                                    <div class="form-group full-width">
-                                        <label for="periodo1">Período de Permanência nesta Empresa</label>
-                                        <input type="text" id="periodo1" name="periodo1" placeholder="Ex: Janeiro/2020 a Dezembro/2022">
-                                    </div>
-                                </div>
-                            </div>
                             
-                            <!-- Experiência 2 -->
-                            <div class="experience-card">
-                                <h4>Experiência Profissional 2</h4>
-                                <div class="form-grid">
-                                    <div class="form-group large">
-                                        <label for="empresa2">Empresa</label>
-                                        <input type="text" id="empresa2" name="empresa2">
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="responsavel2">Responsável</label>
-                                        <input type="text" id="responsavel2" name="responsavel2">
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="telefone-empresa2">Telefone</label>
-                                        <input type="tel" id="telefone-empresa2" name="telefone-empresa2" placeholder="(00) 0000-0000">
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="cidade-empresa2">Cidade</label>
-                                        <input type="text" id="cidade-empresa2" name="cidade-empresa2">
-                                    </div>
-                                    
-                                    <div class="form-group small">
-                                        <label for="uf-empresa2">UF</label>
-                                        <input type="text" id="uf-empresa2" name="uf-empresa2" maxlength="2">
-                                    </div>
-                                    
-                                    <div class="form-group full-width">
-                                        <label for="funcao2">Função exercida</label>
-                                        <input type="text" id="funcao2" name="funcao2">
-                                    </div>
-                                    
-                                    <div class="form-group full-width">
-                                        <label for="periodo2">Período de Permanência nesta Empresa</label>
-                                        <input type="text" id="periodo2" name="periodo2" placeholder="Ex: Janeiro/2018 a Dezembro/2019">
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Experiência 3 -->
-                            <div class="experience-card">
-                                <h4>Experiência Profissional 3</h4>
-                                <div class="form-grid">
-                                    <div class="form-group large">
-                                        <label for="empresa3">Empresa</label>
-                                        <input type="text" id="empresa3" name="empresa3">
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="responsavel3">Responsável</label>
-                                        <input type="text" id="responsavel3" name="responsavel3">
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="telefone-empresa3">Telefone</label>
-                                        <input type="tel" id="telefone-empresa3" name="telefone-empresa3" placeholder="(00) 0000-0000">
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="cidade-empresa3">Cidade</label>
-                                        <input type="text" id="cidade-empresa3" name="cidade-empresa3">
-                                    </div>
-                                    
-                                    <div class="form-group small">
-                                        <label for="uf-empresa3">UF</label>
-                                        <input type="text" id="uf-empresa3" name="uf-empresa3" maxlength="2">
-                                    </div>
-                                    
-                                    <div class="form-group full-width">
-                                        <label for="funcao3">Função exercida</label>
-                                        <input type="text" id="funcao3" name="funcao3">
-                                    </div>
-                                    
-                                    <div class="form-group full-width">
-                                        <label for="periodo3">Período de Permanência nesta Empresa</label>
-                                        <input type="text" id="periodo3" name="periodo3" placeholder="Ex: Janeiro/2015 a Dezembro/2017">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Bloco 10: Declaração -->
-                <div class="form-block">
-                    <div class="block-header">
-                        <i class="fas fa-file-signature"></i>
-                        <h3>Declaração</h3>
-                    </div>
-                    <div class="block-content">
-                        <div class="form-grid">
                             <div class="form-group full-width">
-                                <div class="declaration-container">
-                                    <label class="checkbox-option declaration-checkbox">
-                                        <input type="checkbox" id="declaracao" name="declaracao" required>
-                                        <span class="checkbox-custom"></span>
-                                        <span class="declaration-text">
-                                            Declaro para devidos fins que todas as informações acima prestadas neste formulário são verdadeiras e fico ciente que a falsidade dessa declaração configura crime previsto no Código Penal Brasileiro.
-                                        </span>
+                                <label>Como soube da vaga?</label>
+                                <div class="radio-group">
+                                    <label class="radio-option">
+                                        <input type="radio" name="como-soube" value="site">
+                                        <span class="radio-custom"></span>
+                                        Site de Empregos
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="como-soube" value="indicacao">
+                                        <span class="radio-custom"></span>
+                                        Indicação
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="como-soube" value="redes-sociais">
+                                        <span class="radio-custom"></span>
+                                        Redes Sociais
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="como-soube" value="outro">
+                                        <span class="radio-custom"></span>
+                                        Outro
                                     </label>
                                 </div>
                             </div>
@@ -1475,218 +1421,314 @@ input:focus-visible {
                     </div>
                 </div>
 
-                <!-- Botões de Ação -->
+                <!-- Bloco 10: Declaração de Veracidade -->
+                <div class="form-block">
+                    <div class="block-header">
+                        <i class="fas fa-file-signature"></i>
+                        <h3>Declaração de Veracidade</h3>
+                    </div>
+                    <div class="block-content">
+                        <div class="declaration-container">
+                            <label class="checkbox-option declaration-checkbox">
+                                <input type="checkbox" id="declaracao-veracidade" name="declaracao-veracidade" required>
+                                <span class="checkbox-custom"></span>
+                                <span class="declaration-text">
+                                    Declaro para os devidos fins que as informações prestadas neste formulário são verdadeiras e completas, assumindo total responsabilidade pelas mesmas. Estou ciente de que a falsidade das informações poderá implicar na minha desclassificação do processo seletivo, sem prejuízo das demais medidas legais cabíveis.
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-actions">
-                    <button type="submit" class="btn-submit">
-                        <i class="fas fa-paper-plane"></i>
-                        Enviar Candidatura
-                    </button>
-                    <button type="reset" class="btn-reset">
-                        <i class="fas fa-redo"></i>
-                        Limpar Formulário
-                    </button>
+                    <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Enviar Candidatura</button>
+                    <button type="reset" class="btn-reset"><i class="fas fa-eraser"></i> Limpar Formulário</button>
                 </div>
             </form>
-        </div>
+        </main>
     </div>
 
     <script>
-        // Função para buscar CEP via API ViaCEP
+        // Função para buscar CEP
         async function buscarCEP() {
             const cepInput = document.getElementById('cep');
-            const cep = cepInput.value.replace(/\D/g, '');
-            
+            const enderecoInput = document.getElementById('endereco');
+            const bairroInput = document.getElementById('bairro');
+            const municipioInput = document.getElementById('municipio');
+            const ufInput = document.getElementById('uf');
+
+            const cep = cepInput.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+
             if (cep.length !== 8) {
-                return;
+                return; // CEP inválido
             }
-            
-            // Adiciona indicador de loading
+
             cepInput.classList.add('loading-cep');
-            
+
             try {
                 const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
                 const data = await response.json();
-                
-                if (!data.erro) {
-                    document.getElementById('endereco').value = data.logradouro;
-                    document.getElementById('bairro').value = data.bairro;
-                    document.getElementById('municipio').value = data.localidade;
-                    document.getElementById('uf').value = data.uf;
-                    
-                    // Remove readonly dos campos preenchidos
-                    document.getElementById('endereco').removeAttribute('readonly');
-                    document.getElementById('bairro').removeAttribute('readonly');
-                    document.getElementById('municipio').removeAttribute('readonly');
-                    document.getElementById('uf').removeAttribute('readonly');
+
+                if (data.erro) {
+                    alert('CEP não encontrado.');
+                    enderecoInput.value = '';
+                    bairroInput.value = '';
+                    municipioInput.value = '';
+                    ufInput.value = '';
                 } else {
-                    alert('CEP não encontrado. Preencha os campos manualmente.');
-                    // Remove readonly para permitir preenchimento manual
-                    document.getElementById('endereco').removeAttribute('readonly');
-                    document.getElementById('bairro').removeAttribute('readonly');
-                    document.getElementById('municipio').removeAttribute('readonly');
-                    document.getElementById('uf').removeAttribute('readonly');
+                    enderecoInput.value = data.logradouro;
+                    bairroInput.value = data.bairro;
+                    municipioInput.value = data.localidade;
+                    ufInput.value = data.uf;
                 }
             } catch (error) {
                 console.error('Erro ao buscar CEP:', error);
-                alert('Erro ao buscar CEP. Preencha os campos manualmente.');
-                // Remove readonly para permitir preenchimento manual
-                document.getElementById('endereco').removeAttribute('readonly');
-                document.getElementById('bairro').removeAttribute('readonly');
-                document.getElementById('municipio').removeAttribute('readonly');
-                document.getElementById('uf').removeAttribute('readonly');
+                alert('Erro ao buscar CEP. Tente novamente.');
             } finally {
-                // Remove indicador de loading
                 cepInput.classList.remove('loading-cep');
             }
         }
 
+        // Função para alternar campo de quantidade de filhos
         function toggleFilhosQuantidade() {
-            const possuiFilhos = document.querySelector("input[name='possui-filhos']:checked");
-            const container = document.getElementById("quantidade-filhos-container");
-            const input = document.getElementById("quantidade-filhos");
-            
-            if (possuiFilhos && possuiFilhos.value === "sim") {
-                container.style.display = "block";
-                input.disabled = false;
-                input.required = true;
+            const possuiFilhosSim = document.querySelector('input[name="possui-filhos"][value="sim"]');
+            const quantidadeFilhosContainer = document.getElementById('quantidade-filhos-container');
+            const quantidadeFilhosInput = document.getElementById('quantidade-filhos');
+
+            if (possuiFilhosSim.checked) {
+                quantidadeFilhosContainer.style.display = 'block';
+                quantidadeFilhosInput.disabled = false;
             } else {
-                container.style.display = "none";
-                input.disabled = true;
-                input.required = false;
-                input.value = "";
+                quantidadeFilhosContainer.style.display = 'none';
+                quantidadeFilhosInput.disabled = true;
+                quantidadeFilhosInput.value = '';
             }
         }
 
+        // Função para alternar campo de categoria CNH
         function toggleCNHCategoria() {
-            const cnh = document.querySelector("input[name='cnh']:checked");
-            const container = document.getElementById("categoria-cnh-container");
-            const input = document.getElementById("categoria-cnh");
-            
-            if (cnh && cnh.value === "sim") {
-                container.style.display = "block";
-                input.disabled = false;
-                input.required = true;
+            const cnhSim = document.querySelector('input[name="cnh"][value="sim"]');
+            const categoriaCNHContainer = document.getElementById('categoria-cnh-container');
+            const categoriaCNHInput = document.getElementById('categoria-cnh');
+
+            if (cnhSim.checked) {
+                categoriaCNHContainer.style.display = 'block';
+                categoriaCNHInput.disabled = false;
             } else {
-                container.style.display = "none";
-                input.disabled = true;
-                input.required = false;
-                input.value = "";
+                categoriaCNHContainer.style.display = 'none';
+                categoriaCNHInput.disabled = true;
+                categoriaCNHInput.value = '';
             }
         }
 
+        // Função para alternar campo de línguas estrangeiras
         function toggleLinguas() {
-            const linguas = document.querySelector("input[name='linguas-estrangeiras']:checked");
-            const container = document.getElementById("quais-linguas-container");
-            const input = document.getElementById("quais-linguas");
-            
-            if (linguas && linguas.value === "sim") {
-                container.style.display = "block";
-                input.disabled = false;
-                input.required = true;
+            const linguasSim = document.querySelector('input[name="linguas-estrangeiras"][value="sim"]');
+            const quaisLinguasContainer = document.getElementById('quais-linguas-container');
+            const quaisLinguasInput = document.getElementById('quais-linguas');
+
+            if (linguasSim.checked) {
+                quaisLinguasContainer.style.display = 'block';
+                quaisLinguasInput.disabled = false;
             } else {
-                container.style.display = "none";
-                input.disabled = true;
-                input.required = false;
-                input.value = "";
+                quaisLinguasContainer.style.display = 'none';
+                quaisLinguasInput.disabled = true;
+                quaisLinguasInput.value = '';
             }
         }
 
+        // Função para alternar seção de formação acadêmica
         function toggleFormacaoAcademica() {
-            const possuiFormacao = document.getElementById("possui-formacao");
-            const section = document.getElementById("formacao-academica-section");
-            
+            const possuiFormacao = document.getElementById('possui-formacao');
+            const formacaoAcademicaSection = document.getElementById('formacao-academica-section');
+
             if (possuiFormacao.checked) {
-                section.classList.add('show');
+                formacaoAcademicaSection.classList.add('show');
             } else {
-                section.classList.remove('show');
-                // Limpar campos quando ocultar
-                document.getElementById('curso1').value = '';
-                document.getElementById('instituicao1').value = '';
-                document.getElementById('curso2').value = '';
-                document.getElementById('instituicao2').value = '';
-                document.getElementById('ano-conclusao1').value = '';
-                document.getElementById('ano-conclusao2').value = '';
-                
-                // Desmarcar checkboxes
-                document.querySelectorAll("input[name='status-curso1'], input[name='status-curso2']").forEach(checkbox => {
-                    checkbox.checked = false;
-                });
-                
-                // Ocultar campos condicionais
-                document.getElementById('ano-conclusao1-container').style.display = 'none';
-                document.getElementById('ano-conclusao2-container').style.display = 'none';
+                formacaoAcademicaSection.classList.remove('show');
             }
         }
 
-        function toggleConclusao(courseNumber) {
-            const statusInputs = document.querySelectorAll(`input[name='status-curso${courseNumber}']`);
-            const container = document.getElementById(`ano-conclusao${courseNumber}-container`);
-            const input = document.getElementById(`ano-conclusao${courseNumber}`);
-            
-            let showContainer = false;
-            statusInputs.forEach(inputEl => {
-                if (inputEl.checked && inputEl.value === 'concluido') {
-                    showContainer = true;
+        // Função para alternar campo de ano de conclusão do curso
+        function toggleConclusao(cursoNum) {
+            const cursando = document.querySelector(`input[name="status-curso${cursoNum}"][value="cursando"]`);
+            const concluido = document.querySelector(`input[name="status-curso${cursoNum}"][value="concluido"]`);
+            const anoConclusaoContainer = document.getElementById(`ano-conclusao${cursoNum}-container`);
+            const anoConclusaoInput = document.getElementById(`ano-conclusao${cursoNum}`);
+
+            if (concluido.checked) {
+                anoConclusaoContainer.style.display = 'block';
+                anoConclusaoInput.disabled = false;
+            } else {
+                anoConclusaoContainer.style.display = 'none';
+                anoConclusaoInput.disabled = true;
+                anoConclusaoInput.value = '';
+            }
+        }
+
+        // Função para alternar seção de experiência profissional
+        function toggleExperienciaProfissional() {
+            const possuiExperiencia = document.getElementById('possui-experiencia');
+            const experienciaProfissionalSection = document.getElementById('experiencia-profissional-section');
+
+            if (possuiExperiencia.checked) {
+                experienciaProfissionalSection.classList.add('show');
+            } else {
+                experienciaProfissionalSection.classList.remove('show');
+            }
+        }
+
+        // Inicializar estados dos campos condicionais ao carregar a página
+        document.addEventListener('DOMContentLoaded', () => {
+            toggleFilhosQuantidade();
+            toggleCNHCategoria();
+            toggleLinguas();
+            toggleFormacaoAcademica();
+            toggleExperienciaProfissional();
+            toggleConclusao(1);
+            toggleConclusao(2);
+
+            // Máscara para CPF
+            const cpfInput = document.getElementById('cpf');
+            if (cpfInput) {
+                cpfInput.addEventListener('input', (e) => {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 9) {
+                        value = value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '$1.$2.$3-$4');
+                    } else if (value.length > 6) {
+                        value = value.replace(/^(\d{3})(\d{3})(\d{3})$/, '$1.$2.$3');
+                    } else if (value.length > 3) {
+                        value = value.replace(/^(\d{3})(\d{3})$/, '$1.$2');
+                    }
+                    e.target.value = value;
+                });
+            }
+
+            // Máscara para Telefone
+            const telefoneInput = document.getElementById('telefone');
+            if (telefoneInput) {
+                telefoneInput.addEventListener('input', (e) => {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 10) {
+                        value = value.replace(/^(\d\d)(\d{5})(\d{4}).*/, '($1) $2-$3');
+                    } else if (value.length > 6) {
+                        value = value.replace(/^(\d\d)(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+                    } else if (value.length > 2) {
+                        value = value.replace(/^(\d\d)(\d{0,5})/, '($1) $2');
+                    }
+                    e.target.value = value;
+                });
+            }
+
+            // Máscara para Celular
+            const celularInput = document.getElementById('celular');
+            if (celularInput) {
+                celularInput.addEventListener('input', (e) => {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 11) {
+                        value = value.replace(/^(\d\d)(\d{5})(\d{4}).*/, '($1) $2-$3');
+                    } else if (value.length > 7) {
+                        value = value.replace(/^(\d\d)(\d{5})(\d{0,4}).*/, '($1) $2-$3');
+                    } else if (value.length > 2) {
+                        value = value.replace(/^(\d\d)(\d{0,5})/, '($1) $2');
+                    }
+                    e.target.value = value;
+                });
+            }
+
+            // Máscara para Pretensão Salarial
+            const pretensaoSalarialInput = document.getElementById('pretensao-salarial');
+            if (pretensaoSalarialInput) {
+                pretensaoSalarialInput.addEventListener('input', (e) => {
+                    let value = e.target.value.replace(/\D/g, '');
+                    value = (parseInt(value, 10) / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                    e.target.value = value;
+                });
+            }
+        });
+
+        // Adicionar um event listener para o envio do formulário
+        document.getElementById('job-application-form').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Previne o envio padrão do formulário
+
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = {};
+            formData.forEach((value, key) => {
+                // Lidar com múltiplos valores para o mesmo nome (ex: checkboxes)
+                if (key === 'disponibilidade-horario') {
+                    if (!data[key]) {
+                        data[key] = [];
+                    }
+                    data[key].push(value);
+                } else {
+                    data[key] = value;
                 }
             });
-            
-            if (showContainer) {
-                container.style.display = "block";
-                input.disabled = false;
-                input.required = true;
-            } else {
-                container.style.display = "none";
-                input.disabled = true;
-                input.required = false;
-                input.value = "";
-            }
-        }
 
-        // Prevent multiple selections in course status checkboxes
-        document.querySelectorAll("input[name='status-curso1'], input[name='status-curso2']").forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                if (this.checked) {
-                    document.querySelectorAll(`input[name="${this.name}"]`).forEach(other => {
-                        if (other !== this) other.checked = false;
+            // Adicionar campos de curso e experiência dinamicamente
+            const cursos = [];
+            for (let i = 1; i <= 2; i++) { // Assumindo 2 cursos
+                const curso = document.getElementById(`curso${i}`).value;
+                const instituicao = document.getElementById(`instituicao${i}`).value;
+                const statusCurso = document.querySelector(`input[name="status-curso${i}"]:checked`)?.value;
+                const anoConclusao = document.getElementById(`ano-conclusao${i}`).value;
+                if (curso || instituicao || statusCurso || anoConclusao) {
+                    cursos.push({
+                        curso: curso,
+                        instituicao: instituicao,
+                        status: statusCurso,
+                        anoConclusao: anoConclusao
                     });
                 }
-            });
-        });
+            }
+            if (cursos.length > 0) {
+                data['cursos'] = cursos;
+            }
 
-        // Máscara para CEP
-        document.getElementById('cep').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 5) {
-                value = value.replace(/^(\d{5})(\d)/, '$1-$2');
+            const experiencias = [];
+            for (let i = 1; i <= 2; i++) { // Assumindo 2 experiências
+                const empresa = document.getElementById(`empresa${i}`).value;
+                const cargo = document.getElementById(`cargo${i}`).value;
+                const dataEntrada = document.getElementById(`data-entrada${i}`).value;
+                const dataSaida = document.getElementById(`data-saida${i}`).value;
+                const atividades = document.getElementById(`atividades${i}`).value;
+                if (empresa || cargo || dataEntrada || dataSaida || atividades) {
+                    experiencias.push({
+                        empresa: empresa,
+                        cargo: cargo,
+                        dataEntrada: dataEntrada,
+                        dataSaida: dataSaida,
+                        atividades: atividades
+                    });
+                }
             }
-            e.target.value = value;
-        });
+            if (experiencias.length > 0) {
+                data['experiencias'] = experiencias;
+            }
 
-        // Máscara para CPF
-        document.getElementById('cpf').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 3) {
-                value = value.replace(/^(\d{3})(\d)/, '$1.$2');
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded' // ou 'application/json' se o script esperar JSON
+                    },
+                    body: new URLSearchParams(data).toString() // Envia como form-urlencoded
+                });
+
+                if (response.ok) {
+                    alert('Formulário enviado com sucesso!');
+                    form.reset(); // Limpa o formulário após o envio
+                } else {
+                    alert('Erro ao enviar o formulário. Tente novamente.');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Ocorreu um erro ao enviar o formulário. Verifique sua conexão e tente novamente.');
             }
-            if (value.length > 7) {
-                value = value.replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
-            }
-            if (value.length > 11) {
-                value = value.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
-            }
-            e.target.value = value;
-        });
-        // Máscara para pretensão salarial
-        document.getElementById('pretensao-salarial').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 0) {
-                value = (parseInt(value) / 100).toFixed(2);
-                value = value.replace('.', ',');
-                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-            }
-            e.target.value = value;
         });
     </script>
 </body>
 </html>
+
 
