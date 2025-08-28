@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Solicitação de Emprego - hERING STORE</title>
+    <title>Formulário de Solicitação de Emprego - Usina Irmãos Afonso</title>
     <link rel="stylesheet" href="styles_v2.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -12,7 +13,7 @@
             <div class="header-content">
                 <i class="fas fa-briefcase header-icon"></i>
                 <h1>FORMULÁRIO DE SOLICITAÇÃO DE EMPREGO</h1>
-                <h2>HERING STORE</h2>
+                <h2>USINA IRMÃOS AFONSO</h2>
                 <p>Preencha todos os campos para que sua candidatura seja validada</p>
             </div>
         </header>
@@ -117,7 +118,7 @@
                         <div class="form-grid">
                             <div class="form-group">
                                 <label for="telefone">Telefone</label>
-                                <input type="tel" id="telefone" name="telefone" placeholder="(00) 0000-0000">
+                                <input type="tel" id="telefone" name="telefone" placeholder="(00 ) 0000-0000">
                             </div>
                             
                             <div class="form-group">
@@ -492,85 +493,85 @@
 
     <script>
         function toggleFilhosQuantidade() {
-            const possuiFilhos = document.querySelector('input[name="possui-filhos"]:checked');
-            const container = document.getElementById('quantidade-filhos-container');
-            const input = document.getElementById('quantidade-filhos');
+            const possuiFilhos = document.querySelector("input[name=\"possui-filhos\"]:checked");
+            const container = document.getElementById("quantidade-filhos-container");
+            const input = document.getElementById("quantidade-filhos");
             
-            if (possuiFilhos && possuiFilhos.value === 'sim') {
-                container.style.display = 'block';
+            if (possuiFilhos && possuiFilhos.value === "sim") {
+                container.style.display = "block";
                 input.disabled = false;
                 input.required = true;
             } else {
-                container.style.display = 'none';
+                container.style.display = "none";
                 input.disabled = true;
                 input.required = false;
-                input.value = '';
+                input.value = "";
             }
         }
 
         function toggleCNHCategoria() {
-            const cnh = document.querySelector('input[name="cnh"]:checked');
-            const container = document.getElementById('categoria-cnh-container');
-            const input = document.getElementById('categoria-cnh');
+            const cnh = document.querySelector("input[name=\"cnh\"]:checked");
+            const container = document.getElementById("categoria-cnh-container");
+            const input = document.getElementById("categoria-cnh");
             
-            if (cnh && cnh.value === 'sim') {
-                container.style.display = 'block';
+            if (cnh && cnh.value === "sim") {
+                container.style.display = "block";
                 input.disabled = false;
                 input.required = true;
             } else {
-                container.style.display = 'none';
+                container.style.display = "none";
                 input.disabled = true;
                 input.required = false;
-                input.value = '';
+                input.value = "";
             }
         }
 
         function toggleLinguas() {
-            const linguas = document.querySelector('input[name="linguas-estrangeiras"]:checked');
-            const container = document.getElementById('quais-linguas-container');
-            const input = document.getElementById('quais-linguas');
+            const linguas = document.querySelector("input[name=\"linguas-estrangeiras\"]:checked");
+            const container = document.getElementById("quais-linguas-container");
+            const input = document.getElementById("quais-linguas");
             
-            if (linguas && linguas.value === 'sim') {
-                container.style.display = 'block';
+            if (linguas && linguas.value === "sim") {
+                container.style.display = "block";
                 input.disabled = false;
                 input.required = true;
             } else {
-                container.style.display = 'none';
+                container.style.display = "none";
                 input.disabled = true;
                 input.required = false;
-                input.value = '';
+                input.value = "";
             }
         }
 
         function toggleConclusao(courseNumber) {
-            const statusInputs = document.querySelectorAll(`input[name="status-curso${courseNumber}"]`);
+            const statusInputs = document.querySelectorAll(`input[name=\"status-curso${courseNumber}\"]`);
             const container = document.getElementById(`ano-conclusao${courseNumber}-container`);
             const input = document.getElementById(`ano-conclusao${courseNumber}`);
             
             let showContainer = false;
             statusInputs.forEach(inputEl => {
-                if (inputEl.checked && inputEl.value === 'concluido') {
+                if (inputEl.checked && inputEl.value === "concluido") {
                     showContainer = true;
                 }
             });
             
             if (showContainer) {
-                container.style.display = 'block';
+                container.style.display = "block";
                 input.disabled = false;
                 input.required = true;
             } else {
-                container.style.display = 'none';
+                container.style.display = "none";
                 input.disabled = true;
                 input.required = false;
-                input.value = '';
+                input.value = "";
             }
         }
 
         // Prevent multiple selections in education checkboxes
-        document.querySelectorAll('input[name="fundamental"], input[name="medio"], input[name="superior"]').forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
+        document.querySelectorAll("input[name=\"fundamental\"], input[name=\"medio\"], input[name=\"superior\"]").forEach(checkbox => {
+            checkbox.addEventListener("change", function() {
                 if (this.checked) {
-                    document.querySelectorAll(`input[name="${this.name}"]`).forEach(other => {
+                    document.querySelectorAll(`input[name=\"${this.name}\"]`).forEach(other => {
                         if (other !== this) other.checked = false;
                     });
                 }
@@ -578,10 +579,10 @@
         });
 
         // Prevent multiple selections in course status checkboxes
-        document.querySelectorAll('input[name="status-curso1"], input[name="status-curso2"]').forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
+        document.querySelectorAll("input[name=\"status-curso1\"], input[name=\"status-curso2\"]").forEach(checkbox => {
+            checkbox.addEventListener("change", function() {
                 if (this.checked) {
-                    document.querySelectorAll(`input[name="${this.name}"]`).forEach(other => {
+                    document.querySelectorAll(`input[name=\"${this.name}\"]`).forEach(other => {
                         if (other !== this) other.checked = false;
                     });
                 }
@@ -590,4 +591,3 @@
     </script>
 </body>
 </html>
-
