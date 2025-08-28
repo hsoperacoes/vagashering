@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -643,6 +642,121 @@ input:focus-visible {
     background: #45a049;
 }
 
+/* Container de experiências */
+.experience-container {
+    display: grid;
+    gap: 25px;
+}
+
+.experience-card {
+    background: #4a4a4a;
+    border: 2px solid #555;
+    border-radius: 10px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.experience-card:hover {
+    border-color: #4CAF50;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.experience-card h4 {
+    color: #4CAF50;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.experience-card h4::before {
+    content: '💼';
+    font-size: 1.2em;
+}
+
+/* Container de declaração */
+.declaration-container {
+    background: #4a4a4a;
+    border: 2px solid #555;
+    border-radius: 10px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.declaration-container:hover {
+    border-color: #4CAF50;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.declaration-checkbox {
+    align-items: flex-start !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    margin: 0 !important;
+}
+
+.declaration-text {
+    font-size: 0.95em;
+    line-height: 1.6;
+    color: #e0e0e0;
+    margin-left: 10px;
+    text-align: justify;
+}
+
+.declaration-checkbox:hover .declaration-text {
+    color: #4CAF50;
+}
+
+/* Animações para novos blocos */
+.form-block:nth-child(8) { animation-delay: 0.8s; }
+.form-block:nth-child(9) { animation-delay: 0.9s; }
+.form-block:nth-child(10) { animation-delay: 1.0s; }
+
+/* Máscara para pretensão salarial */
+#pretensao-salarial {
+    text-align: right;
+}
+
+/* Estilos para campos de experiência */
+.experience-card .form-grid {
+    margin-top: 15px;
+}
+
+.experience-card .form-group label {
+    color: #b0b0b0;
+    font-size: 0.9em;
+}
+
+.experience-card input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+}
+
+/* Responsividade para experiências */
+@media (max-width: 768px) {
+    .experience-container {
+        gap: 20px;
+    }
+    
+    .experience-card {
+        padding: 15px;
+    }
+    
+    .experience-card h4 {
+        font-size: 1em;
+    }
+    
+    .declaration-container {
+        padding: 15px;
+    }
+    
+    .declaration-text {
+        font-size: 0.9em;
+    }
+}
+
 /* Estilos para seções ocultas */
 .hidden-section {
     display: none;
@@ -699,10 +813,7 @@ input:focus-visible {
                 <h2>HERING STORE</h2>
                 <p>Preencha todos os campos para que sua candidatura seja validada</p>
             </div>
-        </header>
-
-        <div class="form-container">
-            <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="job-form">
+        </hea            <form id="job-application-form" class="job-form" action="" method="POST">class="job-form">
                 
                 <!-- Bloco 1: Dados Pessoais -->
                 <div class="form-block">
@@ -1159,6 +1270,210 @@ input:focus-visible {
                     </div>
                 </div>
 
+                <!-- Bloco 8: Cargo Pretendido -->
+                <div class="form-block">
+                    <div class="block-header">
+                        <i class="fas fa-briefcase"></i>
+                        <h3>Cargo Pretendido</h3>
+                    </div>
+                    <div class="block-content">
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label for="cargo-pretendido">Cargo que deseja pleitear *</label>
+                                <input type="text" id="cargo-pretendido" name="cargo-pretendido" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="pretensao-salarial">Pretensão Salarial: R$ *</label>
+                                <input type="text" id="pretensao-salarial" name="pretensao-salarial" placeholder="0,00" required>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label>Disponibilidade *</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="disponibilidade" value="manha">
+                                        <span class="checkbox-custom"></span>
+                                        Manhã
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="disponibilidade" value="tarde">
+                                        <span class="checkbox-custom"></span>
+                                        Tarde
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="disponibilidade" value="noite">
+                                        <span class="checkbox-custom"></span>
+                                        Noite
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="disponibilidade" value="integral">
+                                        <span class="checkbox-custom"></span>
+                                        Integral
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bloco 9: Experiência Profissional -->
+                <div class="form-block">
+                    <div class="block-header">
+                        <i class="fas fa-building"></i>
+                        <h3>Experiência Profissional</h3>
+                    </div>
+                    <div class="block-content">
+                        <div class="experience-container">
+                            <!-- Experiência 1 -->
+                            <div class="experience-card">
+                                <h4>Experiência Profissional 1</h4>
+                                <div class="form-grid">
+                                    <div class="form-group large">
+                                        <label for="empresa1">Empresa</label>
+                                        <input type="text" id="empresa1" name="empresa1">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="responsavel1">Responsável</label>
+                                        <input type="text" id="responsavel1" name="responsavel1">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="telefone-empresa1">Telefone</label>
+                                        <input type="tel" id="telefone-empresa1" name="telefone-empresa1" placeholder="(00) 0000-0000">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="cidade-empresa1">Cidade</label>
+                                        <input type="text" id="cidade-empresa1" name="cidade-empresa1">
+                                    </div>
+                                    
+                                    <div class="form-group small">
+                                        <label for="uf-empresa1">UF</label>
+                                        <input type="text" id="uf-empresa1" name="uf-empresa1" maxlength="2">
+                                    </div>
+                                    
+                                    <div class="form-group full-width">
+                                        <label for="funcao1">Função exercida</label>
+                                        <input type="text" id="funcao1" name="funcao1">
+                                    </div>
+                                    
+                                    <div class="form-group full-width">
+                                        <label for="periodo1">Período de Permanência nesta Empresa</label>
+                                        <input type="text" id="periodo1" name="periodo1" placeholder="Ex: Janeiro/2020 a Dezembro/2022">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Experiência 2 -->
+                            <div class="experience-card">
+                                <h4>Experiência Profissional 2</h4>
+                                <div class="form-grid">
+                                    <div class="form-group large">
+                                        <label for="empresa2">Empresa</label>
+                                        <input type="text" id="empresa2" name="empresa2">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="responsavel2">Responsável</label>
+                                        <input type="text" id="responsavel2" name="responsavel2">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="telefone-empresa2">Telefone</label>
+                                        <input type="tel" id="telefone-empresa2" name="telefone-empresa2" placeholder="(00) 0000-0000">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="cidade-empresa2">Cidade</label>
+                                        <input type="text" id="cidade-empresa2" name="cidade-empresa2">
+                                    </div>
+                                    
+                                    <div class="form-group small">
+                                        <label for="uf-empresa2">UF</label>
+                                        <input type="text" id="uf-empresa2" name="uf-empresa2" maxlength="2">
+                                    </div>
+                                    
+                                    <div class="form-group full-width">
+                                        <label for="funcao2">Função exercida</label>
+                                        <input type="text" id="funcao2" name="funcao2">
+                                    </div>
+                                    
+                                    <div class="form-group full-width">
+                                        <label for="periodo2">Período de Permanência nesta Empresa</label>
+                                        <input type="text" id="periodo2" name="periodo2" placeholder="Ex: Janeiro/2018 a Dezembro/2019">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Experiência 3 -->
+                            <div class="experience-card">
+                                <h4>Experiência Profissional 3</h4>
+                                <div class="form-grid">
+                                    <div class="form-group large">
+                                        <label for="empresa3">Empresa</label>
+                                        <input type="text" id="empresa3" name="empresa3">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="responsavel3">Responsável</label>
+                                        <input type="text" id="responsavel3" name="responsavel3">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="telefone-empresa3">Telefone</label>
+                                        <input type="tel" id="telefone-empresa3" name="telefone-empresa3" placeholder="(00) 0000-0000">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="cidade-empresa3">Cidade</label>
+                                        <input type="text" id="cidade-empresa3" name="cidade-empresa3">
+                                    </div>
+                                    
+                                    <div class="form-group small">
+                                        <label for="uf-empresa3">UF</label>
+                                        <input type="text" id="uf-empresa3" name="uf-empresa3" maxlength="2">
+                                    </div>
+                                    
+                                    <div class="form-group full-width">
+                                        <label for="funcao3">Função exercida</label>
+                                        <input type="text" id="funcao3" name="funcao3">
+                                    </div>
+                                    
+                                    <div class="form-group full-width">
+                                        <label for="periodo3">Período de Permanência nesta Empresa</label>
+                                        <input type="text" id="periodo3" name="periodo3" placeholder="Ex: Janeiro/2015 a Dezembro/2017">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bloco 10: Declaração -->
+                <div class="form-block">
+                    <div class="block-header">
+                        <i class="fas fa-file-signature"></i>
+                        <h3>Declaração</h3>
+                    </div>
+                    <div class="block-content">
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <div class="declaration-container">
+                                    <label class="checkbox-option declaration-checkbox">
+                                        <input type="checkbox" id="declaracao" name="declaracao" required>
+                                        <span class="checkbox-custom"></span>
+                                        <span class="declaration-text">
+                                            Declaro para devidos fins que todas as informações acima prestadas neste formulário são verdadeiras e fico ciente que a falsidade dessa declaração configura crime previsto no Código Penal Brasileiro.
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Botões de Ação -->
                 <div class="form-actions">
                     <button type="submit" class="btn-submit">
@@ -1357,6 +1672,16 @@ input:focus-visible {
             }
             if (value.length > 11) {
                 value = value.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
+            }
+            e.target.value = value;
+        });
+        // Máscara para pretensão salarial
+        document.getElementById('pretensao-salarial').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 0) {
+                value = (parseInt(value) / 100).toFixed(2);
+                value = value.replace('.', ',');
+                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
             }
             e.target.value = value;
         });
