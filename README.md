@@ -641,6 +641,51 @@ input:focus-visible {
 ::-webkit-scrollbar-thumb:hover {
     background: #45a049;
 }
+
+/* Estilos para seções ocultas */
+.hidden-section {
+    display: none;
+    animation: slideInDown 0.5s ease-out forwards;
+}
+
+.hidden-section.show {
+    display: block;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Loading indicator para CEP */
+.loading-cep {
+    position: relative;
+}
+
+.loading-cep::after {
+    content: '';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border: 2px solid #4CAF50;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: translateY(-50%) rotate(0deg); }
+    100% { transform: translateY(-50%) rotate(360deg); }
+}
 </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -650,7 +695,7 @@ input:focus-visible {
             <div class="header-content">
                 <i class="fas fa-briefcase header-icon"></i>
                 <h1>FORMULÁRIO DE SOLICITAÇÃO DE EMPREGO</h1>
-                <h2>Hering Store</h2>
+                <h2>HERING STORE</h2>
                 <p>Preencha todos os campos para que sua candidatura seja validada</p>
             </div>
         </header>
@@ -712,9 +757,14 @@ input:focus-visible {
                     </div>
                     <div class="block-content">
                         <div class="form-grid">
+                            <div class="form-group">
+                                <label for="cep">CEP *</label>
+                                <input type="text" id="cep" name="cep" pattern="\d{5}-?\d{3}" placeholder="00000-000" required onblur="buscarCEP()">
+                            </div>
+                            
                             <div class="form-group large">
                                 <label for="endereco">Endereço *</label>
-                                <input type="text" id="endereco" name="endereco" required>
+                                <input type="text" id="endereco" name="endereco" required readonly>
                             </div>
                             
                             <div class="form-group small">
@@ -724,38 +774,33 @@ input:focus-visible {
                             
                             <div class="form-group">
                                 <label for="bairro">Bairro *</label>
-                                <input type="text" id="bairro" name="bairro" required>
+                                <input type="text" id="bairro" name="bairro" required readonly>
                             </div>
                             
                             <div class="form-group">
                                 <label for="municipio">Município *</label>
-                                <input type="text" id="municipio" name="municipio" required>
+                                <input type="text" id="municipio" name="municipio" required readonly>
                             </div>
                             
                             <div class="form-group small">
                                 <label for="uf">UF *</label>
-                                <input type="text" id="uf" name="uf" maxlength="2" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="cep">CEP *</label>
-                                <input type="text" id="cep" name="cep" pattern="\d{5}-\d{3}" placeholder="00000-000" required>
+                                <input type="text" id="uf" name="uf" maxlength="2" required readonly>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Bloco 3: Contatos -->
+                <!-- Bloco 3: Contatos Pessoais -->
                 <div class="form-block">
                     <div class="block-header">
                         <i class="fas fa-phone"></i>
-                        <h3>Contatos</h3>
+                        <h3>Contatos Pessoais</h3>
                     </div>
                     <div class="block-content">
                         <div class="form-grid">
                             <div class="form-group">
                                 <label for="telefone">Telefone</label>
-                                <input type="tel" id="telefone" name="telefone" placeholder="(00 ) 0000-0000">
+                                <input type="tel" id="telefone" name="telefone" placeholder="(00) 0000-0000">
                             </div>
                             
                             <div class="form-group">
@@ -872,51 +917,39 @@ input:focus-visible {
                         <h3>Grau de Escolaridade</h3>
                     </div>
                     <div class="block-content">
-                        <div class="education-grid">
-                            <div class="education-card">
-                                <h4><i class="fas fa-school"></i> Ensino Fundamental</h4>
-                                <div class="checkbox-group">
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="fundamental" value="completo">
-                                        <span class="checkbox-custom"></span>
-                                        Completo
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label>Selecione seu nível de escolaridade *</label>
+                                <div class="radio-group">
+                                    <label class="radio-option">
+                                        <input type="radio" name="escolaridade" value="fundamental-completo" required>
+                                        <span class="radio-custom"></span>
+                                        Ensino Fundamental Completo
                                     </label>
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="fundamental" value="incompleto">
-                                        <span class="checkbox-custom"></span>
-                                        Incompleto
+                                    <label class="radio-option">
+                                        <input type="radio" name="escolaridade" value="fundamental-incompleto" required>
+                                        <span class="radio-custom"></span>
+                                        Ensino Fundamental Incompleto
                                     </label>
-                                </div>
-                            </div>
-                            
-                            <div class="education-card">
-                                <h4><i class="fas fa-book"></i> Ensino Médio</h4>
-                                <div class="checkbox-group">
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="medio" value="completo">
-                                        <span class="checkbox-custom"></span>
-                                        Completo
+                                    <label class="radio-option">
+                                        <input type="radio" name="escolaridade" value="medio-completo" required>
+                                        <span class="radio-custom"></span>
+                                        Ensino Médio Completo
                                     </label>
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="medio" value="incompleto">
-                                        <span class="checkbox-custom"></span>
-                                        Incompleto
+                                    <label class="radio-option">
+                                        <input type="radio" name="escolaridade" value="medio-incompleto" required>
+                                        <span class="radio-custom"></span>
+                                        Ensino Médio Incompleto
                                     </label>
-                                </div>
-                            </div>
-                            
-                            <div class="education-card">
-                                <h4><i class="fas fa-university"></i> Superior</h4>
-                                <div class="checkbox-group">
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="superior" value="completo">
-                                        <span class="checkbox-custom"></span>
-                                        Completo
+                                    <label class="radio-option">
+                                        <input type="radio" name="escolaridade" value="superior-completo" required>
+                                        <span class="radio-custom"></span>
+                                        Ensino Superior Completo
                                     </label>
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="superior" value="incompleto">
-                                        <span class="checkbox-custom"></span>
-                                        Incompleto
+                                    <label class="radio-option">
+                                        <input type="radio" name="escolaridade" value="superior-incompleto" required>
+                                        <span class="radio-custom"></span>
+                                        Ensino Superior Incompleto
                                     </label>
                                 </div>
                             </div>
@@ -924,73 +957,85 @@ input:focus-visible {
                     </div>
                 </div>
 
-                <!-- Bloco 6: Formação Acadêmica -->
+                <!-- Bloco 6: Formação Acadêmica (Oculto por padrão) -->
                 <div class="form-block">
                     <div class="block-header">
                         <i class="fas fa-certificate"></i>
                         <h3>Formação Acadêmica</h3>
                     </div>
                     <div class="block-content">
-                        <div class="course-container">
-                            <div class="course-card">
-                                <h4>Curso 1</h4>
-                                <div class="form-grid">
-                                    <div class="form-group">
-                                        <label for="curso1">Curso</label>
-                                        <input type="text" id="curso1" name="curso1">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="instituicao1">Instituição</label>
-                                        <input type="text" id="instituicao1" name="instituicao1">
-                                    </div>
-                                    <div class="form-group full-width">
-                                        <div class="checkbox-group">
-                                            <label class="checkbox-option">
-                                                <input type="checkbox" name="status-curso1" value="cursando" onchange="toggleConclusao(1)">
-                                                <span class="checkbox-custom"></span>
-                                                Cursando
-                                            </label>
-                                            <label class="checkbox-option">
-                                                <input type="checkbox" name="status-curso1" value="concluido" onchange="toggleConclusao(1)">
-                                                <span class="checkbox-custom"></span>
-                                                Concluído
-                                            </label>
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label class="checkbox-option">
+                                    <input type="checkbox" id="possui-formacao" name="possui-formacao" onchange="toggleFormacaoAcademica()">
+                                    <span class="checkbox-custom"></span>
+                                    Possui formação acadêmica (cursos técnicos, superiores, pós-graduação, etc.)
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="hidden-section" id="formacao-academica-section">
+                            <div class="course-container">
+                                <div class="course-card">
+                                    <h4>Curso 1</h4>
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label for="curso1">Curso</label>
+                                            <input type="text" id="curso1" name="curso1">
                                         </div>
-                                        <div class="conditional-field" id="ano-conclusao1-container" style="display: none;">
-                                            <label for="ano-conclusao1">Ano de conclusão</label>
-                                            <input type="number" id="ano-conclusao1" name="ano-conclusao1" min="1950" max="2030" disabled>
+                                        <div class="form-group">
+                                            <label for="instituicao1">Instituição</label>
+                                            <input type="text" id="instituicao1" name="instituicao1">
+                                        </div>
+                                        <div class="form-group full-width">
+                                            <div class="checkbox-group">
+                                                <label class="checkbox-option">
+                                                    <input type="checkbox" name="status-curso1" value="cursando" onchange="toggleConclusao(1)">
+                                                    <span class="checkbox-custom"></span>
+                                                    Cursando
+                                                </label>
+                                                <label class="checkbox-option">
+                                                    <input type="checkbox" name="status-curso1" value="concluido" onchange="toggleConclusao(1)">
+                                                    <span class="checkbox-custom"></span>
+                                                    Concluído
+                                                </label>
+                                            </div>
+                                            <div class="conditional-field" id="ano-conclusao1-container" style="display: none;">
+                                                <label for="ano-conclusao1">Ano de conclusão</label>
+                                                <input type="number" id="ano-conclusao1" name="ano-conclusao1" min="1950" max="2030" disabled>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="course-card">
-                                <h4>Curso 2</h4>
-                                <div class="form-grid">
-                                    <div class="form-group">
-                                        <label for="curso2">Curso</label>
-                                        <input type="text" id="curso2" name="curso2">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="instituicao2">Instituição</label>
-                                        <input type="text" id="instituicao2" name="instituicao2">
-                                    </div>
-                                    <div class="form-group full-width">
-                                        <div class="checkbox-group">
-                                            <label class="checkbox-option">
-                                                <input type="checkbox" name="status-curso2" value="cursando" onchange="toggleConclusao(2)">
-                                                <span class="checkbox-custom"></span>
-                                                Cursando
-                                            </label>
-                                            <label class="checkbox-option">
-                                                <input type="checkbox" name="status-curso2" value="concluido" onchange="toggleConclusao(2)">
-                                                <span class="checkbox-custom"></span>
-                                                Concluído
-                                            </label>
+                                
+                                <div class="course-card">
+                                    <h4>Curso 2</h4>
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label for="curso2">Curso</label>
+                                            <input type="text" id="curso2" name="curso2">
                                         </div>
-                                        <div class="conditional-field" id="ano-conclusao2-container" style="display: none;">
-                                            <label for="ano-conclusao2">Ano de conclusão</label>
-                                            <input type="number" id="ano-conclusao2" name="ano-conclusao2" min="1950" max="2030" disabled>
+                                        <div class="form-group">
+                                            <label for="instituicao2">Instituição</label>
+                                            <input type="text" id="instituicao2" name="instituicao2">
+                                        </div>
+                                        <div class="form-group full-width">
+                                            <div class="checkbox-group">
+                                                <label class="checkbox-option">
+                                                    <input type="checkbox" name="status-curso2" value="cursando" onchange="toggleConclusao(2)">
+                                                    <span class="checkbox-custom"></span>
+                                                    Cursando
+                                                </label>
+                                                <label class="checkbox-option">
+                                                    <input type="checkbox" name="status-curso2" value="concluido" onchange="toggleConclusao(2)">
+                                                    <span class="checkbox-custom"></span>
+                                                    Concluído
+                                                </label>
+                                            </div>
+                                            <div class="conditional-field" id="ano-conclusao2-container" style="display: none;">
+                                                <label for="ano-conclusao2">Ano de conclusão</label>
+                                                <input type="number" id="ano-conclusao2" name="ano-conclusao2" min="1950" max="2030" disabled>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1129,6 +1174,55 @@ input:focus-visible {
     </div>
 
     <script>
+        // Função para buscar CEP via API ViaCEP
+        async function buscarCEP() {
+            const cepInput = document.getElementById('cep');
+            const cep = cepInput.value.replace(/\D/g, '');
+            
+            if (cep.length !== 8) {
+                return;
+            }
+            
+            // Adiciona indicador de loading
+            cepInput.classList.add('loading-cep');
+            
+            try {
+                const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                const data = await response.json();
+                
+                if (!data.erro) {
+                    document.getElementById('endereco').value = data.logradouro;
+                    document.getElementById('bairro').value = data.bairro;
+                    document.getElementById('municipio').value = data.localidade;
+                    document.getElementById('uf').value = data.uf;
+                    
+                    // Remove readonly dos campos preenchidos
+                    document.getElementById('endereco').removeAttribute('readonly');
+                    document.getElementById('bairro').removeAttribute('readonly');
+                    document.getElementById('municipio').removeAttribute('readonly');
+                    document.getElementById('uf').removeAttribute('readonly');
+                } else {
+                    alert('CEP não encontrado. Preencha os campos manualmente.');
+                    // Remove readonly para permitir preenchimento manual
+                    document.getElementById('endereco').removeAttribute('readonly');
+                    document.getElementById('bairro').removeAttribute('readonly');
+                    document.getElementById('municipio').removeAttribute('readonly');
+                    document.getElementById('uf').removeAttribute('readonly');
+                }
+            } catch (error) {
+                console.error('Erro ao buscar CEP:', error);
+                alert('Erro ao buscar CEP. Preencha os campos manualmente.');
+                // Remove readonly para permitir preenchimento manual
+                document.getElementById('endereco').removeAttribute('readonly');
+                document.getElementById('bairro').removeAttribute('readonly');
+                document.getElementById('municipio').removeAttribute('readonly');
+                document.getElementById('uf').removeAttribute('readonly');
+            } finally {
+                // Remove indicador de loading
+                cepInput.classList.remove('loading-cep');
+            }
+        }
+
         function toggleFilhosQuantidade() {
             const possuiFilhos = document.querySelector("input[name='possui-filhos']:checked");
             const container = document.getElementById("quantidade-filhos-container");
@@ -1180,6 +1274,33 @@ input:focus-visible {
             }
         }
 
+        function toggleFormacaoAcademica() {
+            const possuiFormacao = document.getElementById("possui-formacao");
+            const section = document.getElementById("formacao-academica-section");
+            
+            if (possuiFormacao.checked) {
+                section.classList.add('show');
+            } else {
+                section.classList.remove('show');
+                // Limpar campos quando ocultar
+                document.getElementById('curso1').value = '';
+                document.getElementById('instituicao1').value = '';
+                document.getElementById('curso2').value = '';
+                document.getElementById('instituicao2').value = '';
+                document.getElementById('ano-conclusao1').value = '';
+                document.getElementById('ano-conclusao2').value = '';
+                
+                // Desmarcar checkboxes
+                document.querySelectorAll("input[name='status-curso1'], input[name='status-curso2']").forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                
+                // Ocultar campos condicionais
+                document.getElementById('ano-conclusao1-container').style.display = 'none';
+                document.getElementById('ano-conclusao2-container').style.display = 'none';
+            }
+        }
+
         function toggleConclusao(courseNumber) {
             const statusInputs = document.querySelectorAll(`input[name='status-curso${courseNumber}']`);
             const container = document.getElementById(`ano-conclusao${courseNumber}-container`);
@@ -1204,17 +1325,6 @@ input:focus-visible {
             }
         }
 
-        // Prevent multiple selections in education checkboxes
-        document.querySelectorAll("input[name='fundamental'], input[name='medio'], input[name='superior']").forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                if (this.checked) {
-                    document.querySelectorAll(`input[name="${this.name}"]`).forEach(other => {
-                        if (other !== this) other.checked = false;
-                    });
-                }
-            });
-        });
-
         // Prevent multiple selections in course status checkboxes
         document.querySelectorAll("input[name='status-curso1'], input[name='status-curso2']").forEach(checkbox => {
             checkbox.addEventListener('change', function() {
@@ -1225,6 +1335,31 @@ input:focus-visible {
                 }
             });
         });
+
+        // Máscara para CEP
+        document.getElementById('cep').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 5) {
+                value = value.replace(/^(\d{5})(\d)/, '$1-$2');
+            }
+            e.target.value = value;
+        });
+
+        // Máscara para CPF
+        document.getElementById('cpf').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 3) {
+                value = value.replace(/^(\d{3})(\d)/, '$1.$2');
+            }
+            if (value.length > 7) {
+                value = value.replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
+            }
+            if (value.length > 11) {
+                value = value.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
+            }
+            e.target.value = value;
+        });
     </script>
 </body>
 </html>
+
