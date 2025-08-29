@@ -1,677 +1,800 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <!-- Viewport “fixo” para manter visual do desktop no mobile -->
-  <meta name="viewport" content="width=1024, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1024">
   <title>Formulário de Solicitação de Emprego - Hering Store</title>
-
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    :root {
-      --bg: #1a1a1a;
-      --panel: #2a2a2a;
-      --card: #3a3a3a;
-      --text: #e0e0e0;
-      --muted: #b0b0b0;
-      --primary: #4CAF50;
-      --primary-2: #45a049;
-      --danger: #f44336;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
-           background: var(--bg); color: var(--text); padding: 20px 0; }
-    .container { width: 100%; max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+/* Reset e configurações básicas */
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+  line-height:1.6;color:#333;background:#1a1a1a;min-height:100vh;padding:20px 0;
+}
+.container{max-width:1000px;margin:0 auto;padding:0 20px}
 
-    .form-header { background: linear-gradient(135deg,#2c3e50,#34495e); color: #fff; padding: 40px 30px;
-                   border-radius: 15px 15px 0 0; text-align: center; position: relative; overflow: hidden;
-                   box-shadow: 0 4px 20px rgba(0,0,0,.3); }
-    .form-header::before{content:"";position:absolute;inset:-50%;background:radial-gradient(circle,rgba(255,255,255,.05),transparent 70%);
-                         animation: spin 30s linear infinite;}
-    .form-header > * { position: relative; z-index: 1; }
-    @keyframes spin { to { transform: rotate(1turn); } }
-    .header-icon{ font-size: 3rem; color: var(--primary); margin-bottom: .5rem; }
-    .form-header h1{ font-size: 2rem; font-weight: 800; letter-spacing: .5px; }
-    .form-header h2{ font-weight: 500; opacity: .9; margin-top: .25rem; }
-    .form-header p { opacity:.85; margin-top:.5rem }
+/* Header do formulário */
+.form-header{
+  background:linear-gradient(135deg,#2c3e50 0%,#34495e 100%);color:#fff;padding:40px 30px;text-align:center;
+  border-radius:15px 15px 0 0;box-shadow:0 4px 20px rgba(0,0,0,.3);position:relative;overflow:hidden
+}
+.form-header::before{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:radial-gradient(circle,rgba(255,255,255,.05) 0%,transparent 70%);animation:rotate 30s linear infinite
+}
+@keyframes rotate{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.header-content{position:relative;z-index:1}
+.header-icon{font-size:3em;margin-bottom:20px;color:#4CAF50}
+.form-header h1{font-size:2.2em;font-weight:700;margin-bottom:10px}
+.form-header h2{font-size:1.4em;font-weight:400;margin-bottom:15px;color:#ecf0f1}
+.form-header p{font-size:1.1em;opacity:.9;max-width:600px;margin:0 auto}
 
-    .form-container{ background: var(--panel); padding: 28px; border-radius: 0 0 15px 15px;
-                     box-shadow: 0 4px 20px rgba(0,0,0,.35); }
+/* Container do formulário */
+.form-container{background:#2a2a2a;border-radius:0 0 15px 15px;box-shadow:0 4px 20px rgba(0,0,0,.3);padding:30px}
 
-    .form-block{ background: var(--card); border-radius: 12px; margin-bottom: 22px; border-left: 4px solid var(--primary);
-                 opacity:0; transform: translateY(24px); animation: in .5s ease forwards; }
-    .form-block:nth-child(1){animation-delay:.05s}.form-block:nth-child(2){animation-delay:.1s}
-    .form-block:nth-child(3){animation-delay:.15s}.form-block:nth-child(4){animation-delay:.2s}
-    .form-block:nth-child(5){animation-delay:.25s}.form-block:nth-child(6){animation-delay:.3s}
-    .form-block:nth-child(7){animation-delay:.35s}.form-block:nth-child(8){animation-delay:.4s}
-    @keyframes in{to{opacity:1; transform: none}}
+/* Blocos do formulário */
+.form-block{
+  background:#3a3a3a;border-radius:12px;margin-bottom:25px;box-shadow:0 4px 15px rgba(0,0,0,.2);
+  transition:.3s;border-left:4px solid #4CAF50;animation:slideInUp .6s ease-out forwards;opacity:0;transform:translateY(30px)
+}
+.form-block:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,.3)}
+.block-header{
+  background:linear-gradient(135deg,#4CAF50 0%,#45a049 100%);color:#fff;padding:20px 25px;border-radius:8px 8px 0 0;
+  display:flex;align-items:center;gap:15px
+}
+.block-header i{font-size:1.5em}
+.block-header h3{font-size:1.3em;font-weight:600;margin:0}
+.block-content{padding:25px}
 
-    .block-header{ display:flex; align-items:center; gap:10px; background: linear-gradient(135deg,var(--primary),var(--primary-2));
-                   padding: 16px 20px; border-radius: 8px 8px 0 0; }
-    .block-header i{ font-size: 1.25rem }
-    .block-header h3{ font-size: 1.1rem; font-weight: 700 }
+/* Grid */
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;align-items:start}
+.form-group{display:flex;flex-direction:column}
+.form-group.full-width{grid-column:1/-1}
+.form-group.large{grid-column:span 2}
+.form-group.small{grid-column:span 1;min-width:120px}
 
-    .block-content{ padding: 20px 20px 24px }
+/* Labels e Inputs */
+label{color:#e0e0e0;font-weight:600;margin-bottom:8px;font-size:.95em}
+input[type="text"],input[type="email"],input[type="tel"],input[type="date"],input[type="number"],textarea{
+  background:#4a4a4a;border:2px solid #555;border-radius:8px;padding:12px 15px;color:#e0e0e0;font-size:1em;transition:.3s
+}
+textarea{min-height:90px;resize:vertical}
+input:focus,textarea:focus{outline:none;border-color:#4CAF50;box-shadow:0 0 0 3px rgba(76,175,80,.2);background:#5a5a5a}
+input:disabled,textarea:disabled{background:#333;color:#888;cursor:not-allowed;opacity:.6}
+input::placeholder,textarea::placeholder{color:#999}
 
-    .form-grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
-    .col-12{ grid-column: span 12 }
-    .col-8{ grid-column: span 8 } .col-6{ grid-column: span 6 } .col-4{ grid-column: span 4 } .col-3{ grid-column: span 3 }
+/* Radios & Checkboxes customizados */
+.radio-group,.checkbox-group{display:flex;gap:20px;flex-wrap:wrap;margin-top:10px}
+.radio-option,.checkbox-option{
+  display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 15px;border-radius:8px;transition:.3s;
+  background:#4a4a4a;border:2px solid #555;color:#e0e0e0;font-weight:500
+}
+.radio-option:hover,.checkbox-option:hover{background:#5a5a5a;border-color:#4CAF50}
+.radio-option input[type="radio"],.checkbox-option input[type="checkbox"]{display:none}
+.radio-custom{width:20px;height:20px;border:2px solid #777;border-radius:50%;position:relative;transition:.3s}
+.radio-option input[type="radio"]:checked + .radio-custom{border-color:#4CAF50;background:#4CAF50}
+.radio-option input[type="radio"]:checked + .radio-custom::after{
+  content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:8px;height:8px;background:#fff;border-radius:50%
+}
+.radio-option input[type="radio"]:checked ~ span:not(.radio-custom){color:#4CAF50}
 
-    label{ font-weight: 700; color: var(--text); margin-bottom: 6px; font-size: .95rem }
-    input[type=text], input[type=email], input[type=tel], input[type=date], input[type=number], textarea, select {
-      width: 100%; background: #4a4a4a; border: 2px solid #555; color: var(--text);
-      border-radius: 8px; padding: 12px 12px; font-size: .98rem; transition: .15s;
-    }
-    textarea{ resize: vertical; min-height: 84px }
-    input:focus, textarea:focus, select:focus{ outline: none; border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(76,175,80,.2); background:#545454 }
-    input:disabled, textarea:disabled{ opacity:.7; cursor:not-allowed }
+.checkbox-custom{width:20px;height:20px;border:2px solid #777;border-radius:4px;position:relative;transition:.3s}
+.checkbox-option input[type="checkbox"]:checked + .checkbox-custom{border-color:#4CAF50;background:#4CAF50}
+.checkbox-option input[type="checkbox"]:checked + .checkbox-custom::after{
+  content:'✓';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-weight:bold;font-size:14px
+}
+.checkbox-option input[type="checkbox"]:checked ~ span:not(.checkbox-custom){color:#4CAF50}
 
-    .radio-group, .checkbox-group{ display:flex; flex-wrap: wrap; gap: 12px }
-    .radio-option,.checkbox-option{ display:flex; align-items:center; gap:10px; padding: 10px 14px; border-radius: 8px;
-      background:#4a4a4a;border:2px solid #555; cursor:pointer; user-select:none }
-    .radio-option input, .checkbox-option input{ display:none }
-    .radio-custom, .checkbox-custom{ width: 18px; height: 18px; border:2px solid #777; border-radius:50%; display:inline-block }
-    .checkbox-custom{ border-radius: 4px }
-    .radio-option input:checked + .radio-custom{ background: var(--primary); border-color: var(--primary) }
-    .checkbox-option input:checked + .checkbox-custom{ background: var(--primary); border-color: var(--primary) }
-    .checkbox-option input:checked + .checkbox-custom::after{ content:"✓"; color:#fff; font-weight:700; display:block; text-align:center; line-height:18px; font-size:12px }
+/* Cards específicos */
+.course-card,.experience-card{
+  background:#4a4a4a;border:2px solid #555;border-radius:10px;padding:20px;transition:.3s
+}
+.course-card:hover,.experience-card:hover{border-color:#4CAF50;box-shadow:0 5px 15px rgba(0,0,0,.3)}
+.course-card h4,.experience-card h4{color:#4CAF50;margin-bottom:15px;font-size:1.1em;display:flex;align-items:center;gap:10px}
+.experience-card h4::before{content:'💼';font-size:1.2em}
+.education-grid,.experience-container{display:grid;gap:20px}
+.hidden-section{display:none}
+.hidden-section.show{display:block}
 
-    .conditional-field{ margin-top: 10px; padding: 12px; border-left: 3px solid var(--primary); background: #3a3a3a; border-radius: 8px }
+/* Avisos/Declarações */
+.info-text{font-size:.95em;line-height:1.6;color:#e0e0e0}
+.declaration-container{background:#4a4a4a;border:2px solid #555;border-radius:10px;padding:20px;transition:.3s}
+.declaration-container:hover{border-color:#4CAF50;box-shadow:0 5px 15px rgba(0,0,0,.3)}
+.declaration-text{font-size:.95em;line-height:1.6;color:#e0e0e0;text-align:justify}
 
-    .actions{ display:flex; gap:16px; justify-content:center; padding-top: 24px; border-top: 2px solid #555; margin-top: 18px }
-    .btn{ border: none; border-radius: 10px; padding: 14px 26px; font-weight:800; letter-spacing:.3px; cursor:pointer;
-          text-transform: uppercase; display:inline-flex; align-items:center; gap:10px; }
-    .btn-primary{ background: linear-gradient(135deg,var(--primary),var(--primary-2)); color:#fff }
-    .btn-danger{ background: linear-gradient(135deg,var(--danger),#d32f2f); color:#fff }
+/* Botões */
+.form-actions{display:flex;gap:20px;justify-content:center;margin-top:40px;padding-top:30px;border-top:2px solid #555}
+.btn-submit,.btn-reset,.btn-secondary{
+  display:flex;align-items:center;gap:10px;padding:12px 20px;border:none;border-radius:8px;font-size:1em;font-weight:600;cursor:pointer;transition:.3s;
+  text-transform:uppercase;letter-spacing:1px;position:relative;overflow:hidden
+}
+.btn-submit{background:linear-gradient(135deg,#4CAF50 0%,#45a049 100%);color:#fff;box-shadow:0 4px 15px rgba(76,175,80,.3)}
+.btn-reset{background:linear-gradient(135deg,#f44336 0%,#d32f2f 100%);color:#fff;box-shadow:0 4px 15px rgba(244,67,54,.3)}
+.btn-secondary{background:#444;color:#fff;border:2px solid #666;text-transform:none;letter-spacing:0}
+.btn-submit:hover,.btn-reset:hover,.btn-secondary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,.3)}
 
-    .hidden{ display:none }
+/* Animações */
+@keyframes slideInUp{to{opacity:1;transform:translateY(0)}}
+input:valid{border-color:#4CAF50}
+input:invalid:not(:placeholder-shown){border-color:#f44336}
+input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:#2a2a2a}
+::-webkit-scrollbar-thumb{background:#4CAF50;border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:#45a049}
 
-    /* Loading indicador para CEP */
-    .loading-cep{ position:relative }
-    .loading-cep::after{ content:""; position:absolute; right:10px; top:50%; width:16px; height:16px;
-      border: 2px solid var(--primary); border-top-color: transparent; border-radius:50%; transform: translateY(-50%);
-      animation: spin2 1s linear infinite; }
-    @keyframes spin2 { to{ transform: translateY(-50%) rotate(1turn) } }
-
-    .disclaimer{ font-size:.9rem; color:#ddd; opacity:.95; line-height:1.6 }
-    .muted{ color: var(--muted) }
+/* loader CEP */
+.loading-cep{position:relative}
+.loading-cep::after{
+  content:'';position:absolute;right:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;border:2px solid #4CAF50;border-top:2px solid transparent;border-radius:50%;
+  animation:spin 1s linear infinite
+}
+@keyframes spin{0%{transform:translateY(-50%) rotate(0)}100%{transform:translateY(-50%) rotate(360deg)}}
   </style>
 </head>
-
 <body>
   <div class="container">
     <header class="form-header">
-      <i class="fas fa-briefcase header-icon"></i>
-      <h1>FORMULÁRIO DE SOLICITAÇÃO DE EMPREGO</h1>
-      <h2>HERING STORE</h2>
-      <p>Preencha todos os campos para que sua candidatura seja validada.</p>
+      <div class="header-content">
+        <i class="fas fa-briefcase header-icon"></i>
+        <h1>FORMULÁRIO DE SOLICITAÇÃO DE EMPREGO</h1>
+        <h2>HERING STORE</h2>
+        <p>Preencha todos os campos para que sua candidatura seja validada</p>
+      </div>
     </header>
 
     <div class="form-container">
-      <form id="job-form" action="https://script.google.com/macros/s/AKfycbzdMkDG0N6xwF_px9n2N2gqqGFjYyv0D_8jOtremC3WSFQBy57_tHwtBg8CEsf-G93N/exec" method="POST" novalidate>
+      <form id="job-application-form" class="job-form" action="https://script.google.com/macros/s/AKfycbzdMkDG0N6xwF_px9n2N2gqqGFjYyv0D_8jOtremC3WSFQBy57_tHwtBg8CEsf-G93N/exec" method="POST">
 
-        <!-- 1. Dados pessoais -->
-        <section class="form-block">
+        <!-- 1. Dados Pessoais -->
+        <div class="form-block">
           <div class="block-header"><i class="fas fa-user"></i><h3>Dados Pessoais</h3></div>
           <div class="block-content">
             <div class="form-grid">
-              <div class="col-12">
-                <label for="nome">Nome Completo *</label>
-                <input id="nome" name="nome" type="text" required />
+              <div class="form-group full-width">
+                <label for="nome-completo">Nome Completo *</label>
+                <input type="text" id="nome-completo" name="nome-completo" required>
               </div>
-
-              <div class="col-4">
-                <label for="nascimento">Data de Nascimento *</label>
-                <input id="nascimento" name="data-nascimento" type="date" required />
+              <div class="form-group">
+                <label for="data-nascimento">Data de Nascimento *</label>
+                <input type="date" id="data-nascimento" name="data-nascimento" required>
               </div>
-
-              <div class="col-4">
+              <div class="form-group">
                 <label for="rg">RG *</label>
-                <input id="rg" name="rg" type="text" required />
+                <input type="text" id="rg" name="rg" required>
               </div>
-
-              <div class="col-4">
+              <div class="form-group">
                 <label for="orgao-emissor">Órgão Emissor *</label>
-                <input id="orgao-emissor" name="orgao-emissor" type="text" required />
+                <input type="text" id="orgao-emissor" name="orgao-emissor" required>
               </div>
-
-              <div class="col-4">
+              <div class="form-group">
                 <label for="cpf">CPF *</label>
-                <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00"
-                       inputmode="numeric" autocomplete="off" maxlength="14"
-                       pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}" title="Use o formato 000.000.000-00" required />
+                <!-- pattern corrigido (sem barras duplas) -->
+                <input type="text" id="cpf" name="cpf" pattern="[0-9]{3}[.][0-9]{3}[.][0-9]{3}-[0-9]{2}" placeholder="000.000.000-00" required>
               </div>
-
-              <div class="col-4">
+              <div class="form-group">
                 <label for="naturalidade">Naturalidade *</label>
-                <input id="naturalidade" name="naturalidade" type="text" required />
+                <input type="text" id="naturalidade" name="naturalidade" required>
               </div>
-
-              <div class="col-4">
-                <label for="uf-nat">UF *</label>
-                <input id="uf-nat" name="uf-naturalidade" type="text" maxlength="2" required />
+              <div class="form-group">
+                <label for="uf-naturalidade">UF *</label>
+                <input type="text" id="uf-naturalidade" name="uf-naturalidade" maxlength="2" required>
               </div>
             </div>
           </div>
-        </section>
+        </div>
 
         <!-- 2. Endereço -->
-        <section class="form-block">
+        <div class="form-block">
           <div class="block-header"><i class="fas fa-map-marker-alt"></i><h3>Endereço</h3></div>
           <div class="block-content">
             <div class="form-grid">
-              <div class="col-3">
+              <div class="form-group">
                 <label for="cep">CEP *</label>
-                <input id="cep" name="cep" placeholder="00000-000" inputmode="numeric" maxlength="9"
-                       pattern="[0-9]{5}-?[0-9]{3}" required />
+                <!-- pattern corrigido (sem barras duplas) -->
+                <input type="text" id="cep" name="cep" pattern="[0-9]{5}-?[0-9]{3}" placeholder="00000-000" required onblur="buscarCEP()">
               </div>
-              <div class="col-7">
+              <div class="form-group large">
                 <label for="endereco">Endereço *</label>
-                <input id="endereco" name="endereco" type="text" required readonly />
+                <input type="text" id="endereco" name="endereco" required readonly>
               </div>
-              <div class="col-2">
+              <div class="form-group small">
                 <label for="numero">Nº *</label>
-                <input id="numero" name="numero" type="text" required />
+                <input type="text" id="numero" name="numero" required>
               </div>
-              <div class="col-4">
+              <div class="form-group">
                 <label for="bairro">Bairro *</label>
-                <input id="bairro" name="bairro" type="text" required readonly />
+                <input type="text" id="bairro" name="bairro" required readonly>
               </div>
-              <div class="col-4">
+              <div class="form-group">
                 <label for="municipio">Município *</label>
-                <input id="municipio" name="municipio" type="text" required readonly />
+                <input type="text" id="municipio" name="municipio" required readonly>
               </div>
-              <div class="col-4">
+              <div class="form-group small">
                 <label for="uf">UF *</label>
-                <input id="uf" name="uf" type="text" maxlength="2" required readonly />
+                <input type="text" id="uf" name="uf" maxlength="2" required readonly>
               </div>
             </div>
           </div>
-        </section>
+        </div>
 
         <!-- 3. Contatos -->
-        <section class="form-block">
+        <div class="form-block">
           <div class="block-header"><i class="fas fa-phone"></i><h3>Contatos Pessoais</h3></div>
           <div class="block-content">
             <div class="form-grid">
-              <div class="col-4">
+              <div class="form-group">
                 <label for="telefone">Telefone</label>
-                <input id="telefone" name="telefone" type="tel" placeholder="(00) 0000-0000" />
+                <input type="tel" id="telefone" name="telefone" placeholder="(00) 0000-0000">
               </div>
-              <div class="col-4">
+              <div class="form-group">
                 <label for="celular">Celular *</label>
-                <input id="celular" name="celular" type="tel" placeholder="(00) 00000-0000" required />
+                <input type="tel" id="celular" name="celular" placeholder="(00) 00000-0000" required>
               </div>
-              <div class="col-12">
+              <div class="form-group full-width">
                 <label for="email">E-mail *</label>
-                <input id="email" name="email" type="email" required />
+                <input type="email" id="email" name="email" required>
               </div>
             </div>
           </div>
-        </section>
+        </div>
 
-        <!-- 4. Familia -->
-        <section class="form-block">
+        <!-- 4. Informações Familiares -->
+        <div class="form-block">
           <div class="block-header"><i class="fas fa-users"></i><h3>Informações Familiares</h3></div>
           <div class="block-content">
             <div class="form-grid">
-              <div class="col-6">
+              <div class="form-group">
                 <label for="nome-pai">Nome do Pai</label>
-                <input id="nome-pai" name="nome-pai" type="text" />
+                <input type="text" id="nome-pai" name="nome-pai">
               </div>
-              <div class="col-6">
+              <div class="form-group">
                 <label for="nome-mae">Nome da Mãe *</label>
-                <input id="nome-mae" name="nome-mae" type="text" required />
+                <input type="text" id="nome-mae" name="nome-mae" required>
               </div>
 
-              <div class="col-12">
+              <div class="form-group full-width">
                 <label>Estado Civil *</label>
                 <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="estado-civil" value="casado" required /><span class="radio-custom"></span>Casado(a)</label>
-                  <label class="radio-option"><input type="radio" name="estado-civil" value="solteiro" required /><span class="radio-custom"></span>Solteiro(a)</label>
-                  <label class="radio-option"><input type="radio" name="estado-civil" value="divorciado" required /><span class="radio-custom"></span>Divorciado(a)</label>
+                  <label class="radio-option"><input type="radio" name="estado-civil" value="casado" required><span class="radio-custom"></span>Casado(a)</label>
+                  <label class="radio-option"><input type="radio" name="estado-civil" value="solteiro" required><span class="radio-custom"></span>Solteiro(a)</label>
+                  <label class="radio-option"><input type="radio" name="estado-civil" value="divorciado" required><span class="radio-custom"></span>Divorciado(a)</label>
                 </div>
               </div>
 
-              <div class="col-12">
+              <div class="form-group full-width">
                 <label>Residência *</label>
                 <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="residencia" value="propria" required /><span class="radio-custom"></span>Própria</label>
-                  <label class="radio-option"><input type="radio" name="residencia" value="alugada" required /><span class="radio-custom"></span>Alugada</label>
+                  <label class="radio-option"><input type="radio" name="residencia" value="propria" required><span class="radio-custom"></span>Própria</label>
+                  <label class="radio-option"><input type="radio" name="residencia" value="alugada" required><span class="radio-custom"></span>Alugada</label>
                 </div>
               </div>
 
-              <div class="col-12">
+              <div class="form-group full-width">
                 <label>Possui Filhos?</label>
                 <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="possui-filhos" value="sim" /><span class="radio-custom"></span>Sim</label>
-                  <label class="radio-option"><input type="radio" name="possui-filhos" value="nao" /><span class="radio-custom"></span>Não</label>
+                  <label class="radio-option"><input type="radio" name="possui-filhos" value="sim" onchange="toggleFilhosQuantidade()"><span class="radio-custom"></span>Sim</label>
+                  <label class="radio-option"><input type="radio" name="possui-filhos" value="nao" onchange="toggleFilhosQuantidade()"><span class="radio-custom"></span>Não</label>
                 </div>
-                <div id="filhos-extra" class="conditional-field hidden">
-                  <div class="form-grid">
-                    <div class="col-4">
-                      <label for="qtd-filhos">Quantos filhos?</label>
-                      <input id="qtd-filhos" name="quantidade-filhos" type="number" min="0" />
-                    </div>
-                    <div class="col-8">
-                      <label>Menores de 14 anos</label>
-                      <div class="radio-group">
-                        <label class="radio-option"><input type="radio" name="menores-14" value="sim" /><span class="radio-custom"></span>Sim</label>
-                        <label class="radio-option"><input type="radio" name="menores-14" value="nao" /><span class="radio-custom"></span>Não</label>
-                      </div>
-                    </div>
+
+                <div class="conditional-field" id="quantidade-filhos-container" style="display:none;margin-top:10px">
+                  <label for="quantidade-filhos">Quantos filhos?</label>
+                  <input type="number" id="quantidade-filhos" name="quantidade-filhos" min="0" disabled>
+                </div>
+
+                <!-- Menores de 14: escondido e só aparece se "Possui Filhos" = sim -->
+                <div class="conditional-field" id="menores-14-container" style="display:none;margin-top:10px">
+                  <label>Menores de 14 anos:</label>
+                  <div class="radio-group">
+                    <label class="radio-option"><input type="radio" name="menores-14" value="sim"><span class="radio-custom"></span>Sim</label>
+                    <label class="radio-option"><input type="radio" name="menores-14" value="nao"><span class="radio-custom"></span>Não</label>
                   </div>
                 </div>
               </div>
 
             </div>
           </div>
-        </section>
+        </div>
 
         <!-- 5. Escolaridade -->
-        <section class="form-block">
+        <div class="form-block">
           <div class="block-header"><i class="fas fa-graduation-cap"></i><h3>Grau de Escolaridade</h3></div>
           <div class="block-content">
             <div class="form-grid">
-              <div class="col-12">
+              <div class="form-group full-width">
                 <label>Selecione seu nível de escolaridade *</label>
                 <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="escolaridade" value="fundamental-completo" required /><span class="radio-custom"></span>Ensino Fundamental Completo</label>
-                  <label class="radio-option"><input type="radio" name="escolaridade" value="fundamental-incompleto" required /><span class="radio-custom"></span>Ensino Fundamental Incompleto</label>
-                  <label class="radio-option"><input type="radio" name="escolaridade" value="medio-completo" required /><span class="radio-custom"></span>Ensino Médio Completo</label>
-                  <label class="radio-option"><input type="radio" name="escolaridade" value="medio-incompleto" required /><span class="radio-custom"></span>Ensino Médio Incompleto</label>
-                  <label class="radio-option"><input type="radio" name="escolaridade" value="superior-completo" required /><span class="radio-custom"></span>Ensino Superior Completo</label>
-                  <label class="radio-option"><input type="radio" name="escolaridade" value="superior-incompleto" required /><span class="radio-custom"></span>Ensino Superior Incompleto</label>
+                  <label class="radio-option"><input type="radio" name="escolaridade" value="fundamental-completo" required><span class="radio-custom"></span>Fundamental Completo</label>
+                  <label class="radio-option"><input type="radio" name="escolaridade" value="fundamental-incompleto" required><span class="radio-custom"></span>Fundamental Incompleto</label>
+                  <label class="radio-option"><input type="radio" name="escolaridade" value="medio-completo" required><span class="radio-custom"></span>Médio Completo</label>
+                  <label class="radio-option"><input type="radio" name="escolaridade" value="medio-incompleto" required><span class="radio-custom"></span>Médio Incompleto</label>
+                  <label class="radio-option"><input type="radio" name="escolaridade" value="superior-completo" required><span class="radio-custom"></span>Superior Completo</label>
+                  <label class="radio-option"><input type="radio" name="escolaridade" value="superior-incompleto" required><span class="radio-custom"></span>Superior Incompleto</label>
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </div>
 
-        <!-- 6. Formação acadêmica dinâmica -->
-        <section class="form-block">
+        <!-- 6. Formação Acadêmica (dinâmico) -->
+        <div class="form-block">
           <div class="block-header"><i class="fas fa-certificate"></i><h3>Formação Acadêmica</h3></div>
           <div class="block-content">
-            <label class="checkbox-option">
-              <input type="checkbox" id="tem-formacao" />
-              <span class="checkbox-custom"></span> Possuo formação acadêmica (cursos técnicos, superiores, pós-graduação, etc.)
-            </label>
-
-            <div id="formacao-wrap" class="hidden" style="margin-top:14px">
-              <div id="cursos"></div>
-              <div class="actions" style="border:0; padding-top:12px; margin-top:0; justify-content:flex-start">
-                <button type="button" id="add-curso" class="btn btn-primary"><i class="fa fa-plus"></i> Adicionar curso</button>
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label class="checkbox-option">
+                  <input type="checkbox" id="possui-formacao" name="possui-formacao" onchange="toggleFormacaoAcademica()">
+                  <span class="checkbox-custom"></span>
+                  Possuo formação acadêmica (curso técnico/superior, pós etc.)
+                </label>
               </div>
             </div>
-          </div>
-        </section>
 
-        <!-- 7. Informações adicionais -->
-        <section class="form-block">
+            <div class="hidden-section" id="formacao-academica-section">
+              <div class="course-container" id="course-container"></div>
+
+              <div style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap">
+                <button type="button" class="btn-secondary" id="btn-add-curso" onclick="adicionarCurso()">Adicionar curso</button>
+                <button type="button" class="btn-secondary" id="btn-remover-curso" onclick="removerUltimoCurso()">Remover último</button>
+              </div>
+              <p class="info-text" style="margin-top:8px">Ao marcar “Possuo formação acadêmica”, aparece 1 cartão de curso. Use “Adicionar curso” para incluir mais.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. Informações Adicionais -->
+        <div class="form-block">
           <div class="block-header"><i class="fas fa-info-circle"></i><h3>Informações Adicionais</h3></div>
           <div class="block-content">
             <div class="form-grid">
-              <div class="col-4">
+              <div class="form-group">
                 <label for="titulo-eleitor">Título de Eleitor nº</label>
-                <input id="titulo-eleitor" name="titulo-eleitor" type="text" />
+                <input type="text" id="titulo-eleitor" name="titulo-eleitor">
               </div>
-              <div class="col-4">
+              <div class="form-group">
                 <label for="zona">Zona</label>
-                <input id="zona" name="zona" type="text" />
+                <input type="text" id="zona" name="zona">
               </div>
 
-              <div class="col-12">
+              <div class="form-group full-width">
                 <label>CNH</label>
                 <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="cnh" value="sim" /><span class="radio-custom"></span>Sim</label>
-                  <label class="radio-option"><input type="radio" name="cnh" value="nao" /><span class="radio-custom"></span>Não</label>
+                  <label class="radio-option"><input type="radio" name="cnh" value="sim" onchange="toggleCNHCategoria()"><span class="radio-custom"></span>Sim</label>
+                  <label class="radio-option"><input type="radio" name="cnh" value="nao" onchange="toggleCNHCategoria()"><span class="radio-custom"></span>Não</label>
                 </div>
-                <div id="cnh-extra" class="conditional-field hidden">
+                <div class="conditional-field" id="categoria-cnh-container" style="display:none">
                   <label for="categoria-cnh">Categoria</label>
-                  <input id="categoria-cnh" name="categoria-cnh" type="text" />
+                  <input type="text" id="categoria-cnh" name="categoria-cnh" disabled>
                 </div>
               </div>
 
-              <div class="col-12">
+              <div class="form-group full-width">
                 <label>Condução Própria</label>
                 <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="conducao-propria" value="sim" /><span class="radio-custom"></span>Sim</label>
-                  <label class="radio-option"><input type="radio" name="conducao-propria" value="nao" /><span class="radio-custom"></span>Não</label>
+                  <label class="radio-option"><input type="radio" name="conducao-propria" value="sim"><span class="radio-custom"></span>Sim</label>
+                  <label class="radio-option"><input type="radio" name="conducao-propria" value="nao"><span class="radio-custom"></span>Não</label>
                 </div>
               </div>
 
-              <div class="col-12">
+              <div class="form-group full-width">
                 <label>Possui alguma deficiência</label>
                 <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="deficiencia" value="sim" /><span class="radio-custom"></span>Sim</label>
-                  <label class="radio-option"><input type="radio" name="deficiencia" value="nao" /><span class="radio-custom"></span>Não</label>
+                  <label class="radio-option"><input type="radio" name="deficiencia" value="sim"><span class="radio-custom"></span>Sim</label>
+                  <label class="radio-option"><input type="radio" name="deficiencia" value="nao"><span class="radio-custom"></span>Não</label>
                 </div>
               </div>
 
-              <div class="col-12">
+              <div class="form-group full-width">
                 <label>Línguas estrangeiras</label>
                 <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="linguas-estrangeiras" value="sim" /><span class="radio-custom"></span>Sim</label>
-                  <label class="radio-option"><input type="radio" name="linguas-estrangeiras" value="nao" /><span class="radio-custom"></span>Não</label>
+                  <label class="radio-option"><input type="radio" name="linguas-estrangeiras" value="sim" onchange="toggleLinguas()"><span class="radio-custom"></span>Sim</label>
+                  <label class="radio-option"><input type="radio" name="linguas-estrangeiras" value="nao" onchange="toggleLinguas()"><span class="radio-custom"></span>Não</label>
                 </div>
-                <div id="linguas-extra" class="conditional-field hidden">
+                <div class="conditional-field" id="quais-linguas-container" style="display:none">
                   <label for="quais-linguas">Quais línguas?</label>
-                  <input id="quais-linguas" name="quais-linguas" type="text" />
+                  <input type="text" id="quais-linguas" name="quais-linguas" disabled>
                 </div>
               </div>
 
-              <div class="col-12">
+              <div class="form-group full-width">
                 <label>Conhecimento de Informática</label>
                 <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="informatica" value="basico" /><span class="radio-custom"></span>Básico</label>
-                  <label class="radio-option"><input type="radio" name="informatica" value="intermediario" /><span class="radio-custom"></span>Intermediário</label>
-                  <label class="radio-option"><input type="radio" name="informatica" value="avancado" /><span class="radio-custom"></span>Avançado</label>
+                  <label class="radio-option"><input type="radio" name="informatica" value="basico"><span class="radio-custom"></span>Básico</label>
+                  <label class="radio-option"><input type="radio" name="informatica" value="intermediario"><span class="radio-custom"></span>Intermediário</label>
+                  <label class="radio-option"><input type="radio" name="informatica" value="avancado"><span class="radio-custom"></span>Avançado</label>
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </div>
 
-        <!-- 8. Experiências -->
-        <section class="form-block">
+        <!-- 8. Experiências Profissionais (obrigatório escolher Sim ou Não) -->
+        <div class="form-block">
           <div class="block-header"><i class="fas fa-history"></i><h3>Experiências Profissionais</h3></div>
           <div class="block-content">
-            <label class="radio-option">
-              <input type="radio" name="tem-experiencia" value="sim" />
-              <span class="radio-custom"></span> Possuo experiência profissional
-            </label>
-            <label class="radio-option" style="margin-left:12px">
-              <input type="radio" name="tem-experiencia" value="nao" />
-              <span class="radio-custom"></span> Não possuo experiência profissional
-            </label>
-
-            <div id="xp-wrap" class="hidden" style="margin-top:14px">
-              <div id="experiencias"></div>
-              <div class="actions" style="border:0; padding-top:12px; margin-top:0; justify-content:flex-start">
-                <button type="button" id="add-xp" class="btn btn-primary"><i class="fa fa-plus"></i> Adicionar experiência</button>
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label>Você possui experiência profissional? *</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="tem-experiencia" value="sim" required onchange="toggleExperienciaProfissional()"><span class="radio-custom"></span>Possuo experiência profissional</label>
+                  <label class="radio-option"><input type="radio" name="tem-experiencia" value="nao" required onchange="toggleExperienciaProfissional()"><span class="radio-custom"></span>Não possuo experiência profissional</label>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
 
-        <!-- 9. Finais -->
-        <section class="form-block">
+            <div class="hidden-section" id="experiencia-profissional-section">
+              <div class="experience-container" id="experience-container"></div>
+
+              <div style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap">
+                <button type="button" class="btn-secondary" onclick="adicionarExperiencia()">Adicionar experiência</button>
+                <button type="button" class="btn-secondary" onclick="removerUltimaExperiencia()">Remover última</button>
+              </div>
+              <p class="info-text" style="margin-top:8px">Incluímos campos de <b>Responsável</b> e <b>Contato</b> (telefone do gestor/líder da época).</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9. Informações Finais -->
+        <div class="form-block">
           <div class="block-header"><i class="fas fa-clipboard-check"></i><h3>Informações Finais</h3></div>
           <div class="block-content">
             <div class="form-grid">
-              <div class="col-4">
-                <label for="pretensao">Pretensão Salarial</label>
-                <input id="pretensao" name="pretensao-salarial" type="text" placeholder="R$ 0.000,00" />
+              <div class="form-group">
+                <label for="pretensao-salarial">Pretensão Salarial</label>
+                <input type="text" id="pretensao-salarial" name="pretensao-salarial" placeholder="R$ 0.000,00">
               </div>
-              <div class="col-4">
-                <label for="inicio">Disponibilidade para Início</label>
-                <input id="inicio" name="disponibilidade-inicio" type="text" />
+              <div class="form-group">
+                <label for="disponibilidade-inicio">Disponibilidade para Início</label>
+                <input type="text" id="disponibilidade-inicio" name="disponibilidade-inicio">
               </div>
-              <div class="col-12">
-                <label>Disponibilidade de Horário (escolha 1)</label>
+
+              <!-- Disponibilidade de horário agora é RADIO (uma opção apenas) -->
+              <div class="form-group full-width">
+                <label>Disponibilidade de Horário *</label>
                 <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="disponibilidade-horario" value="manha" /><span class="radio-custom"></span>Manhã</label>
-                  <label class="radio-option"><input type="radio" name="disponibilidade-horario" value="tarde" /><span class="radio-custom"></span>Tarde</label>
-                  <label class="radio-option"><input type="radio" name="disponibilidade-horario" value="noite" /><span class="radio-custom"></span>Noite</label>
-                  <label class="radio-option"><input type="radio" name="disponibilidade-horario" value="integral" /><span class="radio-custom"></span>Integral</label>
+                  <label class="radio-option"><input type="radio" name="disponibilidade-horario" value="manha" required><span class="radio-custom"></span>Manhã</label>
+                  <label class="radio-option"><input type="radio" name="disponibilidade-horario" value="tarde" required><span class="radio-custom"></span>Tarde</label>
+                  <label class="radio-option"><input type="radio" name="disponibilidade-horario" value="noite" required><span class="radio-custom"></span>Noite</label>
+                  <label class="radio-option"><input type="radio" name="disponibilidade-horario" value="integral" required><span class="radio-custom"></span>Integral</label>
                 </div>
               </div>
-              <div class="col-12">
+
+              <div class="form-group full-width">
                 <label>Como soube da vaga?</label>
                 <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="como-soube" value="site" /><span class="radio-custom"></span>Site de Empregos</label>
-                  <label class="radio-option"><input type="radio" name="como-soube" value="indicacao" /><span class="radio-custom"></span>Indicação</label>
-                  <label class="radio-option"><input type="radio" name="como-soube" value="redes-sociais" /><span class="radio-custom"></span>Redes Sociais</label>
-                  <label class="radio-option"><input type="radio" name="como-soube" value="outro" /><span class="radio-custom"></span>Outro</label>
+                  <label class="radio-option"><input type="radio" name="como-soube" value="site"><span class="radio-custom"></span>Site de Empregos</label>
+                  <label class="radio-option"><input type="radio" name="como-soube" value="indicacao"><span class="radio-custom"></span>Indicação</label>
+                  <label class="radio-option"><input type="radio" name="como-soube" value="redes-sociais"><span class="radio-custom"></span>Redes Sociais</label>
+                  <label class="radio-option"><input type="radio" name="como-soube" value="outro"><span class="radio-custom"></span>Outro</label>
                 </div>
               </div>
             </div>
-
-            <div style="margin-top:14px" class="disclaimer">
-              <strong>Declaração de Confidencialidade:</strong> Seus dados serão usados exclusivamente para fins de recrutamento e seleção,
-              tratados com segurança e não serão compartilhados com terceiros sem seu consentimento.
-            </div>
           </div>
-        </section>
+        </div>
 
-        <!-- 10. Declaração de veracidade -->
-        <section class="form-block">
+        <!-- 10-A. Declaração de Veracidade -->
+        <div class="form-block">
           <div class="block-header"><i class="fas fa-file-signature"></i><h3>Declaração de Veracidade</h3></div>
           <div class="block-content">
-            <label class="checkbox-option" style="align-items:flex-start">
-              <input type="checkbox" id="veracidade" name="declaracao-veracidade" />
-              <span class="checkbox-custom"></span>
-              <span class="disclaimer">
-                Declaro que as informações prestadas neste formulário são verdadeiras e completas, assumindo total responsabilidade pelas mesmas.
-                Estou ciente de que a falsidade das informações poderá implicar na desclassificação do processo seletivo, sem prejuízo das medidas legais cabíveis.
-              </span>
-            </label>
+            <div class="declaration-container">
+              <label class="checkbox-option declaration-checkbox" style="background:transparent;border:none;padding:0">
+                <input type="checkbox" id="declaracao-veracidade" name="declaracao-veracidade">
+                <span class="checkbox-custom"></span>
+                <span class="declaration-text">
+                  Declaro, para os devidos fins, que as informações prestadas neste formulário são verdadeiras e completas, assumindo total responsabilidade pelas mesmas.
+                </span>
+              </label>
+            </div>
           </div>
-        </section>
-
-        <div class="actions">
-          <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Enviar Candidatura</button>
-          <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Limpar Formulário</button>
         </div>
+
+        <!-- 10-B. Declaração de Confidencialidade -->
+        <div class="form-block">
+          <div class="block-header"><i class="fas fa-shield-alt"></i><h3>Declaração de Confidencialidade</h3></div>
+          <div class="block-content">
+            <div class="declaration-container">
+              <p class="declaration-text">
+                A Hering Store se compromete a tratar seus dados pessoais com confidencialidade e segurança, utilizando-os exclusivamente para análise
+                desta candidatura e processos seletivos relacionados. As informações não serão compartilhadas com terceiros não autorizados e serão
+                armazenadas pelo período necessário ao processo, em conformidade com a legislação aplicável (LGPD).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ações -->
+        <div class="form-actions">
+          <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Enviar Candidatura</button>
+          <button type="reset" class="btn-reset"><i class="fas fa-eraser"></i> Limpar Formulário</button>
+        </div>
+
       </form>
     </div>
   </div>
 
-  <script>
-    // ---------- Utilidades de máscara ----------
-    function formatCPF(value){
-      const d = value.replace(/\\D/g,'').slice(0,11);
-      const p=[]; if(d.length>0)p.push(d.slice(0,3)); if(d.length>3)p.push(d.slice(3,6)); if(d.length>6)p.push(d.slice(6,9));
-      let out=p.join('.'); if(d.length>9) out += '-' + d.slice(9,11); return out;
+<script>
+/* ===== CEP ===== */
+async function buscarCEP(){
+  const cepInput=document.getElementById('cep');
+  const enderecoInput=document.getElementById('endereco');
+  const bairroInput=document.getElementById('bairro');
+  const municipioInput=document.getElementById('municipio');
+  const ufInput=document.getElementById('uf');
+  const cep=cepInput.value.replace(/\D/g,'');
+  if(cep.length!==8) return;
+  cepInput.classList.add('loading-cep');
+  try{
+    const resp=await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+    const data=await resp.json();
+    if(data.erro){
+      alert('CEP não encontrado.');enderecoInput.value='';bairroInput.value='';municipioInput.value='';ufInput.value='';
+    }else{
+      enderecoInput.value=data.logradouro||'';bairroInput.value=data.bairro||'';municipioInput.value=data.localidade||'';ufInput.value=data.uf||'';
     }
-    function isCPFFormatted(v){ return /^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$/.test(v); }
+  }catch(e){console.error(e);alert('Erro ao buscar CEP.');}
+  finally{cepInput.classList.remove('loading-cep');}
+}
 
-    // Pretensão salarial
-    function formatMoneyBR(v){
-      const n = v.replace(/\\D/g,''); if(!n) return '';
-      return (parseInt(n,10)/100).toLocaleString('pt-BR',{style:'currency', currency:'BRL'});
-    }
+/* ===== Familiares ===== */
+function toggleFilhosQuantidade(){
+  const possuiFilhosSim=document.querySelector('input[name="possui-filhos"][value="sim"]');
+  const qtdWrap=document.getElementById('quantidade-filhos-container');
+  const qtdInput=document.getElementById('quantidade-filhos');
+  const menoresWrap=document.getElementById('menores-14-container');
+  if(possuiFilhosSim && possuiFilhosSim.checked){
+    qtdWrap.style.display='block';qtdInput.disabled=false;
+    menoresWrap.style.display='block';
+  }else{
+    qtdWrap.style.display='none';qtdInput.disabled=true;qtdInput.value='';
+    menoresWrap.style.display='none';
+    const m14=document.querySelectorAll('input[name="menores-14"]'); m14.forEach(r=>r.checked=false);
+  }
+}
 
-    // Telefone
-    function maskPhone(v){
-      const d=v.replace(/\\D/g,'').slice(0,11);
-      if(d.length<=10) return d.replace(/^(\\d{2})(\\d{4})(\\d{0,4}).*/, '($1) $2-$3').trim();
-      return d.replace(/^(\\d{2})(\\d{5})(\\d{0,4}).*/, '($1) $2-$3').trim();
-    }
+/* ===== CNH ===== */
+function toggleCNHCategoria(){
+  const cnhSim=document.querySelector('input[name="cnh"][value="sim"]');
+  const wrap=document.getElementById('categoria-cnh-container');
+  const input=document.getElementById('categoria-cnh');
+  if(cnhSim && cnhSim.checked){wrap.style.display='block';input.disabled=false;}
+  else{wrap.style.display='none';input.disabled=true;input.value='';}
+}
 
-    // ---------- CEP via ViaCEP ----------
-    async function buscarCEP(cepRaw){
-      const cep = cepRaw.replace(/\\D/g, '');
-      if(cep.length !== 8) return;
-      const cepInput = document.getElementById('cep');
-      cepInput.classList.add('loading-cep');
-      try{
-        const r = await fetch('https://viacep.com.br/ws/'+cep+'/json/');
-        const j = await r.json();
-        if(j.erro){ alert('CEP não encontrado.'); return; }
-        document.getElementById('endereco').value = j.logradouro || '';
-        document.getElementById('bairro').value   = j.bairro || '';
-        document.getElementById('municipio').value= j.localidade || '';
-        document.getElementById('uf').value       = j.uf || '';
-      }catch(e){
-        alert('Erro ao buscar CEP. Tente novamente.');
-      }finally{
-        cepInput.classList.remove('loading-cep');
+/* ===== Línguas ===== */
+function toggleLinguas(){
+  const linguasSim=document.querySelector('input[name="linguas-estrangeiras"][value="sim"]');
+  const wrap=document.getElementById('quais-linguas-container');
+  const input=document.getElementById('quais-linguas');
+  if(linguasSim && linguasSim.checked){wrap.style.display='block';input.disabled=false;}
+  else{wrap.style.display='none';input.disabled=true;input.value='';}
+}
+
+/* ===== Formação Acadêmica Dinâmica ===== */
+let cursoCount=0;
+function cursoCardTemplate(idx){
+  return `
+  <div class="course-card" data-curso="${idx}">
+    <h4>Curso ${idx}</h4>
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="curso${idx}">Curso</label>
+        <input type="text" id="curso${idx}" name="curso${idx}">
+      </div>
+      <div class="form-group">
+        <label for="instituicao${idx}">Instituição</label>
+        <input type="text" id="instituicao${idx}" name="instituicao${idx}">
+      </div>
+      <div class="form-group full-width">
+        <div class="checkbox-group">
+          <label class="checkbox-option">
+            <input type="checkbox" name="status-curso${idx}" value="cursando" onchange="toggleConclusao(${idx})">
+            <span class="checkbox-custom"></span>Cursando
+          </label>
+          <label class="checkbox-option">
+            <input type="checkbox" name="status-curso${idx}" value="concluido" onchange="toggleConclusao(${idx})">
+            <span class="checkbox-custom"></span>Concluído
+          </label>
+        </div>
+        <div class="conditional-field" id="ano-conclusao${idx}-container" style="display:none">
+          <label for="ano-conclusao${idx}">Ano de conclusão</label>
+          <input type="number" id="ano-conclusao${idx}" name="ano-conclusao${idx}" min="1950" max="2030" disabled>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+function adicionarCurso(){
+  cursoCount++; const ctn=document.getElementById('course-container');
+  ctn.insertAdjacentHTML('beforeend', cursoCardTemplate(cursoCount));
+}
+function removerUltimoCurso(){
+  const ctn=document.getElementById('course-container');
+  if(ctn.lastElementChild){ctn.removeChild(ctn.lastElementChild);cursoCount=Math.max(0,cursoCount-1);}
+}
+function toggleFormacaoAcademica(){
+  const chk=document.getElementById('possui-formacao');
+  const sec=document.getElementById('formacao-academica-section');
+  if(chk.checked){
+    sec.classList.add('show');
+    if(cursoCount===0) adicionarCurso(); // apenas 1 por padrão ao abrir
+  }else{
+    sec.classList.remove('show');
+  }
+}
+function toggleConclusao(idx){
+  const concluido=document.querySelector(`input[name="status-curso${idx}"][value="concluido"]`);
+  const wrap=document.getElementById(`ano-conclusao${idx}-container`);
+  const input=document.getElementById(`ano-conclusao${idx}`);
+  if(concluido && concluido.checked){wrap.style.display='block';input.disabled=false;}
+  else{wrap.style.display='none';input.disabled=true;input.value='';}
+}
+
+/* ===== Experiências Dinâmicas ===== */
+let expCount=0;
+function experienciaCardTemplate(idx){
+  return `
+  <div class="experience-card" data-exp="${idx}">
+    <h4>Experiência ${idx}</h4>
+    <div class="form-grid">
+      <div class="form-group"><label for="empresa${idx}">Empresa</label><input type="text" id="empresa${idx}" name="empresa${idx}"></div>
+      <div class="form-group"><label for="cargo${idx}">Cargo</label><input type="text" id="cargo${idx}" name="cargo${idx}"></div>
+      <div class="form-group"><label for="data-entrada${idx}">Data de Entrada</label><input type="date" id="data-entrada${idx}" name="data-entrada${idx}"></div>
+      <div class="form-group"><label for="data-saida${idx}">Data de Saída</label><input type="date" id="data-saida${idx}" name="data-saida${idx}"></div>
+      <div class="form-group"><label for="responsavel${idx}">Responsável (gestor/líder)</label><input type="text" id="responsavel${idx}" name="responsavel${idx}"></div>
+      <div class="form-group"><label for="contato${idx}">Contato do responsável</label><input type="tel" id="contato${idx}" name="contato${idx}" placeholder="(00) 00000-0000"></div>
+      <div class="form-group full-width"><label for="atividades${idx}">Principais Atividades</label><textarea id="atividades${idx}" name="atividades${idx}" rows="3"></textarea></div>
+    </div>
+  </div>`;
+}
+function adicionarExperiencia(){
+  expCount++; const ctn=document.getElementById('experience-container');
+  ctn.insertAdjacentHTML('beforeend', experienciaCardTemplate(expCount));
+}
+function removerUltimaExperiencia(){
+  const ctn=document.getElementById('experience-container');
+  if(ctn.lastElementChild){ctn.removeChild(ctn.lastElementChild);expCount=Math.max(0,expCount-1);}
+}
+function toggleExperienciaProfissional(){
+  const tem=document.querySelector('input[name="tem-experiencia"]:checked')?.value;
+  const sec=document.getElementById('experiencia-profissional-section');
+  if(tem==='sim'){
+    sec.classList.add('show');
+    if(expCount===0) adicionarExperiencia();
+  }else{
+    sec.classList.remove('show');
+  }
+}
+
+/* ===== Máscaras ===== */
+document.addEventListener('DOMContentLoaded', ()=>{
+  toggleFilhosQuantidade(); toggleCNHCategoria(); toggleLinguas(); toggleFormacaoAcademica(); toggleExperienciaProfissional();
+
+  const cpf=document.getElementById('cpf');
+  if(cpf){cpf.addEventListener('input',e=>{
+    let v=e.target.value.replace(/\D/g,'');
+    if(v.length>9) v=v.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/,'$1.$2.$3-$4');
+    else if(v.length>6) v=v.replace(/^(\d{3})(\d{3})(\d{3})$/,'$1.$2.$3');
+    else if(v.length>3) v=v.replace(/^(\d{3})(\d{3})$/,'$1.$2');
+    e.target.value=v;
+  });}
+
+  const tel=document.getElementById('telefone');
+  if(tel){tel.addEventListener('input',e=>{
+    let v=e.target.value.replace(/\D/g,'');
+    if(v.length>10) v=v.replace(/^(\d\d)(\d{5})(\d{4}).*/,'($1) $2-$3');
+    else if(v.length>6) v=v.replace(/^(\d\d)(\d{4})(\d{0,4}).*/,'($1) $2-$3');
+    else if(v.length>2) v=v.replace(/^(\d\d)(\d{0,5})/,'($1) $2');
+    e.target.value=v;
+  });}
+
+  const cel=document.getElementById('celular');
+  if(cel){cel.addEventListener('input',e=>{
+    let v=e.target.value.replace(/\D/g,'');
+    if(v.length>11) v=v.replace(/^(\d\d)(\d{5})(\d{4}).*/,'($1) $2-$3');
+    else if(v.length>7) v=v.replace(/^(\d\d)(\d{5})(\d{0,4}).*/,'($1) $2-$3');
+    else if(v.length>2) v=v.replace(/^(\d\d)(\d{0,5})/,'($1) $2');
+    e.target.value=v;
+  });}
+
+  const pret=document.getElementById('pretensao-salarial');
+  if(pret){pret.addEventListener('input',e=>{
+    let v=e.target.value.replace(/\D/g,''); v=(parseInt(v||'0',10)/100).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); e.target.value=v;
+  });}
+});
+
+/* ===== Envio ===== */
+document.getElementById('job-application-form').addEventListener('submit', async function(event){
+  event.preventDefault();
+
+  // Valida declaração de veracidade (sem required no HTML para evitar bug de foco)
+  const decl=document.getElementById('declaracao-veracidade');
+  if(!decl.checked){
+    alert('Você precisa aceitar a Declaração de Veracidade para prosseguir.');
+    decl.scrollIntoView({behavior:'smooth',block:'center'}); decl.focus(); return;
+  }
+
+  const form=event.target;
+  const data={};
+
+  // Coleta campos simples
+  const fd=new FormData(form);
+  fd.forEach((value,key)=>{ data[key]=value; });
+
+  // Monta array de cursos (se houver seção visível)
+  const cursos=[];
+  for(let i=1;i<=cursoCount;i++){
+    const card=document.querySelector(`.course-card[data-curso="${i}"]`); if(!card) continue;
+    const curso=card.querySelector(`#curso${i}`)?.value?.trim();
+    const inst=card.querySelector(`#instituicao${i}`)?.value?.trim();
+    const status=document.querySelector(`input[name="status-curso${i}"]:checked`)?.value || '';
+    const ano=card.querySelector(`#ano-conclusao${i}`)?.value || '';
+    if(curso || inst || status || ano){cursos.push({curso, instituicao:inst, status, anoConclusao:ano});}
+  }
+  if(cursos.length) data['cursos']=JSON.stringify(cursos);
+
+  // Monta array de experiências (se marcou que tem experiência)
+  const temExp=document.querySelector('input[name="tem-experiencia"]:checked')?.value==='sim';
+  if(temExp){
+    const exps=[];
+    for(let i=1;i<=expCount;i++){
+      const card=document.querySelector(`.experience-card[data-exp="${i}"]`); if(!card) continue;
+      const empresa=card.querySelector(`#empresa${i}`)?.value?.trim();
+      const cargo=card.querySelector(`#cargo${i}`)?.value?.trim();
+      const dataEntrada=card.querySelector(`#data-entrada${i}`)?.value || '';
+      const dataSaida=card.querySelector(`#data-saida${i}`)?.value || '';
+      const responsavel=card.querySelector(`#responsavel${i}`)?.value?.trim();
+      const contato=card.querySelector(`#contato${i}`)?.value?.trim();
+      const atividades=card.querySelector(`#atividades${i}`)?.value?.trim();
+      if(empresa || cargo || dataEntrada || dataSaida || atividades || responsavel || contato){
+        exps.push({empresa,cargo,dataEntrada,dataSaida,responsavel,contato,atividades});
       }
     }
+    if(exps.length) data['experiencias']=JSON.stringify(exps);
+  }
 
-    // ---------- Dinâmicos (cursos / experiências) ----------
-    let cursoCount = 0;
-    function addCurso(){
-      cursoCount++;
-      const wrap = document.getElementById('cursos');
-      const idx = cursoCount;
-      const el = document.createElement('div');
-      el.className = 'conditional-field';
-      el.innerHTML = \`
-        <div class="form-grid">
-          <div class="col-6"><label>Curso</label><input type="text" name="curso[\${idx}][nome]"></div>
-          <div class="col-6"><label>Instituição</label><input type="text" name="curso[\${idx}][instituicao]"></div>
-          <div class="col-12">
-            <div class="checkbox-group">
-              <label class="checkbox-option"><input type="checkbox" name="curso[\${idx}][status]" value="cursando"><span class="checkbox-custom"></span>Cursando</label>
-              <label class="checkbox-option"><input type="checkbox" name="curso[\${idx}][status]" value="concluido" class="chk-concluido"><span class="checkbox-custom"></span>Concluído</label>
-            </div>
-            <div class="conditional-field hidden ano-wrap">
-              <label>Ano de conclusão</label>
-              <input type="number" min="1950" max="2035" name="curso[\${idx}][ano]">
-            </div>
-          </div>
-          <div class="col-12" style="display:flex;justify-content:flex-end">
-            <button type="button" class="btn btn-danger btn-remover"><i class="fa fa-trash"></i> Remover</button>
-          </div>
-        </div>\`;
-      wrap.appendChild(el);
+  // Garante valor explícito da declaração
+  data['declaracao-veracidade']=decl.checked ? 'Aceito' : 'Não aceito';
 
-      el.querySelector('.btn-remover').addEventListener('click', ()=> el.remove());
-      // Toggle ano de conclusão quando "Concluído"
-      const chk = el.querySelector('.chk-concluido');
-      const ano = el.querySelector('.ano-wrap');
-      chk.addEventListener('change', ()=> { ano.classList.toggle('hidden', !chk.checked); });
-    }
-
-    let xpCount = 0;
-    function addXP(){
-      xpCount++;
-      const wrap = document.getElementById('experiencias');
-      const idx = xpCount;
-      const el = document.createElement('div');
-      el.className = 'conditional-field';
-      el.innerHTML = \`
-        <div class="form-grid">
-          <div class="col-6"><label>Empresa</label><input type="text" name="xp[\${idx}][empresa]"></div>
-          <div class="col-6"><label>Cargo</label><input type="text" name="xp[\${idx}][cargo]"></div>
-          <div class="col-4"><label>Data de Entrada</label><input type="date" name="xp[\${idx}][entrada]"></div>
-          <div class="col-4"><label>Data de Saída</label><input type="date" name="xp[\${idx}][saida]"></div>
-          <div class="col-4"><label>Contato (Telefone)</label><input type="tel" name="xp[\${idx}][contato]" placeholder="(00) 00000-0000"></div>
-          <div class="col-6"><label>Responsável (Gerente/Líder)</label><input type="text" name="xp[\${idx}][responsavel]"></div>
-          <div class="col-12"><label>Principais Atividades</label><textarea name="xp[\${idx}][atividades]" rows="3"></textarea></div>
-          <div class="col-12" style="display:flex;justify-content:flex-end">
-            <button type="button" class="btn btn-danger btn-remover"><i class="fa fa-trash"></i> Remover</button>
-          </div>
-        </div>\`;
-      wrap.appendChild(el);
-      el.querySelector('.btn-remover').addEventListener('click', ()=> el.remove());
-    }
-
-    // ---------- Listeners iniciais ----------
-    document.addEventListener('DOMContentLoaded', ()=>{
-      const cpf = document.getElementById('cpf');
-      if(cpf){
-        cpf.addEventListener('input', e => {
-          const val = formatCPF(e.target.value);
-          e.target.value = val;
-          if(isCPFFormatted(val)){ e.target.setCustomValidity(''); }
-          else { e.target.setCustomValidity('Use o formato 000.000.000-00'); }
-        });
-      }
-
-      document.getElementById('telefone').addEventListener('input', e => e.target.value = maskPhone(e.target.value));
-      document.getElementById('celular').addEventListener('input', e => e.target.value = maskPhone(e.target.value));
-      document.getElementById('pretensao').addEventListener('input', e => e.target.value = formatMoneyBR(e.target.value));
-
-      const cepInput = document.getElementById('cep');
-      cepInput.addEventListener('blur', ()=> buscarCEP(cepInput.value));
-
-      // Filhos -> mostra "menores de 14" apenas se tiver filhos
-      document.querySelectorAll('input[name="possui-filhos"]').forEach(r=>{
-        r.addEventListener('change', ()=>{
-          const show = document.querySelector('input[name="possui-filhos"][value="sim"]').checked;
-          document.getElementById('filhos-extra').classList.toggle('hidden', !show);
-        });
-      });
-
-      // CNH extra
-      document.querySelectorAll('input[name="cnh"]').forEach(r=>{
-        r.addEventListener('change', ()=>{
-          const show = document.querySelector('input[name="cnh"][value="sim"]').checked;
-          document.getElementById('cnh-extra').classList.toggle('hidden', !show);
-        });
-      });
-
-      // Línguas extra
-      document.querySelectorAll('input[name="linguas-estrangeiras"]').forEach(r=>{
-        r.addEventListener('change', ()=>{
-          const show = document.querySelector('input[name="linguas-estrangeiras"][value="sim"]').checked;
-          document.getElementById('linguas-extra').classList.toggle('hidden', !show);
-        });
-      });
-
-      // Formação: liga/desliga e adiciona 1 bloco ao ativar
-      const chkForm = document.getElementById('tem-formacao');
-      const formWrap = document.getElementById('formacao-wrap');
-      chkForm.addEventListener('change', ()=>{
-        formWrap.classList.toggle('hidden', !chkForm.checked);
-        if(chkForm.checked && cursoCount===0){ addCurso(); }
-      });
-      document.getElementById('add-curso').addEventListener('click', addCurso);
-
-      // Experiência: obrigatório escolher uma das opções; abrimos bloco se "sim"
-      const xpWrap = document.getElementById('xp-wrap');
-      document.querySelectorAll('input[name="tem-experiencia"]').forEach(r=>{
-        r.addEventListener('change', ()=>{
-          const show = document.querySelector('input[name="tem-experiencia"][value="sim"]').checked;
-          xpWrap.classList.toggle('hidden', !show);
-          if(show && xpCount===0){ addXP(); }
-        });
-      });
-      document.getElementById('add-xp').addEventListener('click', addXP);
+  try{
+    // Tenta CORS normal primeiro
+    let response=await fetch(form.action,{
+      method:'POST',
+      headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body:new URLSearchParams(data).toString()
     });
 
-    // ---------- Submit ----------
-    document.getElementById('job-form').addEventListener('submit', async (ev)=>{
-      ev.preventDefault();
-      const form = ev.target;
+    if(response.ok){
+      alert('Formulário enviado com sucesso!');
+      form.reset();
+      // reset dinâmicos
+      document.getElementById('formacao-academica-section').classList.remove('show');
+      document.getElementById('course-container').innerHTML=''; cursoCount=0;
+      document.getElementById('experiencia-profissional-section').classList.remove('show');
+      document.getElementById('experience-container').innerHTML=''; expCount=0;
+      return;
+    }
 
-      // Valida veracidade
-      const ver = document.getElementById('veracidade');
-      if(!ver.checked){ alert('Você precisa aceitar a Declaração de Veracidade.'); ver.focus(); return; }
-
-      // Validação extra CPF
-      const cpfVal = document.getElementById('cpf').value.trim();
-      if(!isCPFFormatted(cpfVal)){ alert('CPF inválido. Use o formato 000.000.000-00.'); document.getElementById('cpf').focus(); return; }
-
-      // Constrói payload em x-www-form-urlencoded
-      const fd = new FormData(form);
-      const data = {};
-      fd.forEach((v,k)=>{
-        if(data[k] !== undefined){
-          if(!Array.isArray(data[k])) data[k] = [data[k]];
-          data[k].push(v);
-        }else{
-          data[k]=v;
-        }
-      });
-
-      try{
-        // Usa no-cors para evitar alerta de erro quando o Apps Script não retorna CORS permitido
-        await fetch(form.action, {
-          method:'POST',
-          mode:'no-cors',
-          headers:{ 'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8' },
-          body: new URLSearchParams(data).toString()
-        });
-        alert('Formulário enviado!');
-        form.reset();
-        // fecha áreas dinâmicas
-        document.getElementById('formacao-wrap').classList.add('hidden');
-        document.getElementById('cnh-extra').classList.add('hidden');
-        document.getElementById('linguas-extra').classList.add('hidden');
-        document.getElementById('filhos-extra').classList.add('hidden');
-        document.getElementById('cursos').innerHTML=''; cursoCount=0;
-        document.getElementById('experiencias').innerHTML=''; xpCount=0;
-      }catch(e){
-        alert('Não foi possível enviar agora. Tente novamente em instantes.');
-      }
+    // Fallback no-cors
+    response=await fetch(form.action,{
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body:new URLSearchParams(data).toString()
     });
-  </script>
+
+    alert('Formulário enviado! (o navegador não conseguiu ler a resposta, mas o envio foi realizado).');
+    form.reset();
+    document.getElementById('formacao-academica-section').classList.remove('show');
+    document.getElementById('course-container').innerHTML=''; cursoCount=0;
+    document.getElementById('experiencia-profissional-section').classList.remove('show');
+    document.getElementById('experience-container').innerHTML=''; expCount=0;
+
+  }catch(err){
+    console.error(err);
+    alert('Ocorreu um erro de rede. Mesmo assim, sua candidatura pode ter sido enviada. Verifique se recebeu confirmação por e-mail.');
+  }
+});
+</script>
 </body>
 </html>
