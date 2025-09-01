@@ -8,12 +8,21 @@
   <style>
 /* Reset e configurações básicas */
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;line-height:1.6;color:#333;background:#1a1a1a;min-height:100vh;padding:20px 0}
+body{
+  font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+  line-height:1.6;color:#333;background:#1a1a1a;min-height:100vh;padding:20px 0;
+}
 .container{max-width:1000px;margin:0 auto;padding:0 20px}
 
-/* Header */
-.form-header{background:linear-gradient(135deg,#2c3e50 0%,#34495e 100%);color:#fff;padding:40px 30px;text-align:center;border-radius:15px 15px 0 0;box-shadow:0 4px 20px rgba(0,0,0,.3);position:relative;overflow:hidden}
-.form-header::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,.05) 0%,transparent 70%);animation:rotate 30s linear infinite}
+/* Header do formulário */
+.form-header{
+  background:linear-gradient(135deg,#2c3e50 0%,#34495e 100%);color:#fff;padding:40px 30px;text-align:center;
+  border-radius:15px 15px 0 0;box-shadow:0 4px 20px rgba(0,0,0,.3);position:relative;overflow:hidden
+}
+.form-header::before{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:radial-gradient(circle,rgba(255,255,255,.05) 0%,transparent 70%);animation:rotate 30s linear infinite
+}
 @keyframes rotate{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 .header-content{position:relative;z-index:1}
 .header-icon{font-size:3em;margin-bottom:20px;color:#4CAF50}
@@ -24,43 +33,63 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;line-height:1.6;col
 /* Container do formulário */
 .form-container{background:#2a2a2a;border-radius:0 0 15px 15px;box-shadow:0 4px 20px rgba(0,0,0,.3);padding:30px}
 
-/* Blocos */
-.form-block{background:#3a3a3a;border-radius:12px;margin-bottom:25px;box-shadow:0 4px 15px rgba(0,0,0,.2);transition:.3s;border-left:4px solid #4CAF50;animation:slideInUp .6s ease-out forwards;opacity:0;transform:translateY(30px)}
+/* Blocos do formulário */
+.form-block{
+  background:#3a3a3a;border-radius:12px;margin-bottom:25px;box-shadow:0 4px 15px rgba(0,0,0,.2);
+  transition:.3s;border-left:4px solid #4CAF50;animation:slideInUp .6s ease-out forwards;opacity:0;transform:translateY(30px)
+}
 .form-block:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,.3)}
-.block-header{background:linear-gradient(135deg,#4CAF50 0%,#45a049 100%);color:#fff;padding:20px 25px;border-radius:8px 8px 0 0;display:flex;align-items:center;gap:15px}
+.block-header{
+  background:linear-gradient(135deg,#4CAF50 0%,#45a049 100%);color:#fff;padding:20px 25px;border-radius:8px 8px 0 0;
+  display:flex;align-items:center;gap:15px
+}
 .block-header i{font-size:1.5em}
 .block-header h3{font-size:1.3em;font-weight:600;margin:0}
 .block-content{padding:25px}
 
-/* Grid e inputs */
+/* Grid */
 .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;align-items:start}
 .form-group{display:flex;flex-direction:column}
 .form-group.full-width{grid-column:1/-1}
 .form-group.large{grid-column:span 2}
 .form-group.small{grid-column:span 1;min-width:120px}
+
+/* Labels e Inputs */
 label{color:#e0e0e0;font-weight:600;margin-bottom:8px;font-size:.95em}
-input[type="text"],input[type="email"],input[type="tel"],input[type="date"],input[type="number"],textarea{background:#4a4a4a;border:2px solid #555;border-radius:8px;padding:12px 15px;color:#e0e0e0;font-size:1em;transition:.3s}
+input[type="text"],input[type="email"],input[type="tel"],input[type="date"],input[type="number"],textarea{
+  background:#4a4a4a;border:2px solid #555;border-radius:8px;padding:12px 15px;color:#e0e0e0;font-size:1em;transition:.3s
+}
 textarea{min-height:90px;resize:vertical}
 input:focus,textarea:focus{outline:none;border-color:#4CAF50;box-shadow:0 0 0 3px rgba(76,175,80,.2);background:#5a5a5a}
 input:disabled,textarea:disabled{background:#333;color:#888;cursor:not-allowed;opacity:.6}
 input::placeholder,textarea::placeholder{color:#999}
 
-/* Radios/checkboxes */
+/* Radios & Checkboxes customizados */
 .radio-group,.checkbox-group{display:flex;gap:20px;flex-wrap:wrap;margin-top:10px}
-.radio-option,.checkbox-option{display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 15px;border-radius:8px;transition:.3s;background:#4a4a4a;border:2px solid #555;color:#e0e0e0;font-weight:500}
+.radio-option,.checkbox-option{
+  display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 15px;border-radius:8px;transition:.3s;
+  background:#4a4a4a;border:2px solid #555;color:#e0e0e0;font-weight:500
+}
 .radio-option:hover,.checkbox-option:hover{background:#5a5a5a;border-color:#4CAF50}
 .radio-option input[type="radio"],.checkbox-option input[type="checkbox"]{display:none}
 .radio-custom{width:20px;height:20px;border:2px solid #777;border-radius:50%;position:relative;transition:.3s}
 .radio-option input[type="radio"]:checked + .radio-custom{border-color:#4CAF50;background:#4CAF50}
-.radio-option input[type="radio"]:checked + .radio-custom::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:8px;height:8px;background:#fff;border-radius:50%}
+.radio-option input[type="radio"]:checked + .radio-custom::after{
+  content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:8px;height:8px;background:#fff;border-radius:50%
+}
 .radio-option input[type="radio"]:checked ~ span:not(.radio-custom){color:#4CAF50}
+
 .checkbox-custom{width:20px;height:20px;border:2px solid #777;border-radius:4px;position:relative;transition:.3s}
 .checkbox-option input[type="checkbox"]:checked + .checkbox-custom{border-color:#4CAF50;background:#4CAF50}
-.checkbox-option input[type="checkbox"]:checked + .checkbox-custom::after{content:'✓';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-weight:bold;font-size:14px}
+.checkbox-option input[type="checkbox"]:checked + .checkbox-custom::after{
+  content:'✓';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-weight:bold;font-size:14px
+}
 .checkbox-option input[type="checkbox"]:checked ~ span:not(.checkbox-custom){color:#4CAF50}
 
-/* Cards */
-.course-card,.experience-card{background:#4a4a4a;border:2px solid #555;border-radius:10px;padding:20px;transition:.3s}
+/* Cards específicos */
+.course-card,.experience-card{
+  background:#4a4a4a;border:2px solid #555;border-radius:10px;padding:20px;transition:.3s
+}
 .course-card:hover,.experience-card:hover{border-color:#4CAF50;box-shadow:0 5px 15px rgba(0,0,0,.3)}
 .course-card h4,.experience-card h4{color:#4CAF50;margin-bottom:15px;font-size:1.1em;display:flex;align-items:center;gap:10px}
 .experience-card h4::before{content:'💼';font-size:1.2em}
@@ -73,23 +102,33 @@ input::placeholder,textarea::placeholder{color:#999}
 .declaration-container:hover{border-color:#4CAF50;box-shadow:0 5px 15px rgba(0,0,0,.3)}
 .declaration-text{font-size:.95em;line-height:1.6;color:#e0e0e0;text-align:justify}
 
-/* Anti-tela */
-#preselect{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:1000}
-.preselect-card{width:min(680px,92vw);background:#2a2a2a;border:2px solid #555;border-radius:14px;box-shadow:0 6px 30px rgba(0,0,0,.5);padding:24px}
+/* Seleção de loja (anti-tela) */
+#preselect{
+  position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:1000
+}
+.preselect-card{
+  width:min(680px,92vw);background:#2a2a2a;border:2px solid #555;border-radius:14px;box-shadow:0 6px 30px rgba(0,0,0,.5);padding:24px
+}
 .preselect-card h3{color:#fff;margin-bottom:10px}
 .preselect-row{display:grid;grid-template-columns:1fr;gap:16px}
 .preselect-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:16px}
-.badge{display:inline-flex;align-items:center;gap:8px;background:#3a3a3a;border:1px solid #555;color:#e0e0e0;border-radius:999px;padding:6px 12px;font-size:.9em}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;background:#3a3a3a;border:1px solid #555;color:#e0e0e0;border-radius:999px;
+  padding:6px 12px;font-size:.9em
+}
 
 /* Botões */
 .form-actions{display:flex;gap:20px;justify-content:center;margin-top:40px;padding-top:30px;border-top:2px solid #555}
-.btn-submit,.btn-reset,.btn-secondary{display:flex;align-items:center;gap:10px;padding:12px 20px;border:none;border-radius:8px;font-size:1em;font-weight:600;cursor:pointer;transition:.3s;text-transform:uppercase;letter-spacing:1px;position:relative;overflow:hidden}
+.btn-submit,.btn-reset,.btn-secondary{
+  display:flex;align-items:center;gap:10px;padding:12px 20px;border:none;border-radius:8px;font-size:1em;font-weight:600;cursor:pointer;transition:.3s;
+  text-transform:uppercase;letter-spacing:1px;position:relative;overflow:hidden
+}
 .btn-submit{background:linear-gradient(135deg,#4CAF50 0%,#45a049 100%);color:#fff;box-shadow:0 4px 15px rgba(76,175,80,.3)}
 .btn-reset{background:linear-gradient(135deg,#f44336 0%,#d32f2f 100%);color:#fff;box-shadow:0 4px 15px rgba(244,67,54,.3)}
 .btn-secondary{background:#444;color:#fff;border:2px solid #666;text-transform:none;letter-spacing:0}
 .btn-submit:hover,.btn-reset:hover,.btn-secondary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,.3)}
 
-/* Acessibilidade / animações */
+/* Animações / Acessibilidade */
 @keyframes slideInUp{to{opacity:1;transform:translateY(0)}}
 input:valid{border-color:#4CAF50}
 input:invalid:not(:placeholder-shown){border-color:#f44336}
@@ -99,15 +138,18 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
 ::-webkit-scrollbar-thumb{background:#4CAF50;border-radius:4px}
 ::-webkit-scrollbar-thumb:hover{background:#45a049}
 
-/* Loader CEP */
+/* loader CEP */
 .loading-cep{position:relative}
-.loading-cep::after{content:'';position:absolute;right:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;border:2px solid #4CAF50;border-top:2px solid transparent;border-radius:50%;animation:spin 1s linear infinite}
+.loading-cep::after{
+  content:'';position:absolute;right:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;border:2px solid #4CAF50;border-top:2px solid transparent;border-radius:50%;
+  animation:spin 1s linear infinite
+}
 @keyframes spin{0%{transform:translateY(-50%) rotate(0)}100%{transform:translateY(-50%) rotate(360deg)}}
   </style>
 </head>
 <body>
 
-  <!-- Anti-tela -->
+  <!-- Anti-tela: escolha Cidade e Filiais -->
   <div id="preselect" role="dialog" aria-modal="true">
     <div class="preselect-card">
       <h3><i class="fas fa-store"></i> Escolha a cidade e filial(is) para sua candidatura</h3>
@@ -144,6 +186,7 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
     </header>
 
     <div class="form-container">
+      <!-- Resumo da seleção de Cidade/Filiais -->
       <div class="form-block">
         <div class="block-header"><i class="fas fa-map-pin"></i><h3>Vaga selecionada</h3></div>
         <div class="block-content">
@@ -153,6 +196,7 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
       </div>
 
       <form id="job-application-form" class="job-form" action="https://script.google.com/macros/s/AKfycbzdMkDG0N6xwF_px9n2N2gqqGFjYyv0D_8jOtremC3WSFQBy57_tHwtBg8CEsf-G93N/exec" method="POST" enctype="multipart/form-data">
+        <!-- campos ocultos para enviar cidade/filiais -->
         <input type="hidden" name="cidade" id="cidade-hidden">
         <input type="hidden" name="filiais" id="filiais-hidden">
 
@@ -323,7 +367,7 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
           </div>
         </div>
 
-        <!-- 6. Formação Acadêmica -->
+        <!-- 6. Formação Acadêmica (dinâmico) -->
         <div class="form-block">
           <div class="block-header"><i class="fas fa-certificate"></i><h3>Formação Acadêmica</h3></div>
           <div class="block-content">
@@ -415,7 +459,7 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
           </div>
         </div>
 
-        <!-- 8. Experiências -->
+        <!-- 8. Experiências Profissionais -->
         <div class="form-block">
           <div class="block-header"><i class="fas fa-history"></i><h3>Experiências Profissionais</h3></div>
           <div class="block-content">
@@ -440,7 +484,7 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
           </div>
         </div>
 
-        <!-- 9. Informações Finais -->
+        <!-- 9. Informações Finais (com ajustes pedidos) -->
         <div class="form-block">
           <div class="block-header"><i class="fas fa-clipboard-check"></i><h3>Informações Finais</h3></div>
           <div class="block-content">
@@ -450,8 +494,16 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
                 <input type="text" id="pretensao-salarial" name="pretensao-salarial" placeholder="R$ 0.000,00">
               </div>
               <div class="form-group">
-                <label for="disponibilidade-inicio">Disponibilidade para Início</label>
-                <input type="text" id="disponibilidade-inicio" name="disponibilidade-inicio">
+                <label for="pretensao-cargo">Pretensão de Cargo</label>
+                <input type="text" id="pretensao-cargo" name="pretensao-cargo" placeholder="Ex.: Vendedor, Caixa, Estoquista...">
+              </div>
+
+              <div class="form-group full-width">
+                <label>Disponibilidade para início imediato *</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="disponibilidade-inicio" value="sim" required><span class="radio-custom"></span>Sim</label>
+                  <label class="radio-option"><input type="radio" name="disponibilidade-inicio" value="nao" required><span class="radio-custom"></span>Não</label>
+                </div>
               </div>
 
               <div class="form-group full-width">
@@ -477,7 +529,7 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
           </div>
         </div>
 
-        <!-- 10. Declarações -->
+        <!-- 10-A. Declaração de Veracidade -->
         <div class="form-block">
           <div class="block-header"><i class="fas fa-file-signature"></i><h3>Declaração de Veracidade</h3></div>
           <div class="block-content">
@@ -491,17 +543,21 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
           </div>
         </div>
 
+        <!-- 10-B. Declaração de Confidencialidade (texto completo LGPD) -->
         <div class="form-block">
           <div class="block-header"><i class="fas fa-shield-alt"></i><h3>Declaração de Confidencialidade</h3></div>
           <div class="block-content">
             <div class="declaration-container">
               <p class="declaration-text">
-                A Hering Store se compromete a tratar seus dados pessoais com confidencialidade e segurança, utilizando-os exclusivamente para análise desta candidatura e processos seletivos relacionados.
+                A Hering Store se compromete a tratar seus dados pessoais com confidencialidade e segurança, utilizando-os exclusivamente para análise
+                desta candidatura e processos seletivos relacionados. As informações não serão compartilhadas com terceiros não autorizados e serão
+                armazenadas pelo período necessário ao processo, em conformidade com a legislação aplicável (LGPD).
               </p>
             </div>
           </div>
         </div>
 
+        <!-- Ações -->
         <div class="form-actions">
           <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Enviar Candidatura</button>
           <button type="reset" class="btn-reset"><i class="fas fa-eraser"></i> Limpar Formulário</button>
@@ -512,10 +568,22 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
   </div>
 
 <script>
-/* Filiais por cidade */
-const FILIAIS={"Uberaba":["Hering - Prudente de Morais","Hering - Shopping Uberaba"],"Uberlândia":["Hering - Floriano Peixoto","Hering - Uberlândia Shopping"],"Poços de Caldas":["Hering - Rio de Janeiro"]};
+/* ====== Mapa de filiais por cidade (anti-tela) ====== */
+const FILIAIS = {
+  "Uberaba": [
+    "Hering - Prudente de Morais",
+    "Hering - Shopping Uberaba"
+  ],
+  "Uberlândia": [
+    "Hering - Floriano Peixoto",
+    "Hering - Uberlândia Shopping"
+  ],
+  "Poços de Caldas": [
+    "Hering - Rio de Janeiro"
+  ]
+};
 
-/* CEP */
+/* ====== CEP ====== */
 async function buscarCEP(){
   const cepInput=document.getElementById('cep');
   const enderecoInput=document.getElementById('endereco');
@@ -529,8 +597,7 @@ async function buscarCEP(){
     const resp=await fetch(`https://viacep.com.br/ws/${cep}/json/`);
     const data=await resp.json();
     if(data.erro){
-      alert('CEP não encontrado.');
-      enderecoInput.value='';bairroInput.value='';municipioInput.value='';ufInput.value='';
+      alert('CEP não encontrado.');enderecoInput.value='';bairroInput.value='';municipioInput.value='';ufInput.value='';
     }else{
       enderecoInput.value=data.logradouro||'';bairroInput.value=data.bairro||'';municipioInput.value=data.localidade||'';ufInput.value=data.uf||'';
     }
@@ -538,7 +605,7 @@ async function buscarCEP(){
   finally{cepInput.classList.remove('loading-cep');}
 }
 
-/* Familiares */
+/* ===== Familiares ===== */
 function toggleFilhosQuantidade(){
   const possuiFilhosSim=document.querySelector('input[name="possui-filhos"][value="sim"]');
   const qtdWrap=document.getElementById('quantidade-filhos-container');
@@ -550,11 +617,11 @@ function toggleFilhosQuantidade(){
   }else{
     qtdWrap.style.display='none';qtdInput.disabled=true;qtdInput.value='';
     menoresWrap.style.display='none';
-    document.querySelectorAll('input[name="menores-14"]').forEach(r=>r.checked=false);
+    const m14=document.querySelectorAll('input[name="menores-14"]'); m14.forEach(r=>r.checked=false);
   }
 }
 
-/* CNH */
+/* ===== CNH ===== */
 function toggleCNHCategoria(){
   const cnhSim=document.querySelector('input[name="cnh"][value="sim"]');
   const wrap=document.getElementById('categoria-cnh-container');
@@ -563,7 +630,7 @@ function toggleCNHCategoria(){
   else{wrap.style.display='none';input.disabled=true;input.value='';}
 }
 
-/* Línguas */
+/* ===== Línguas ===== */
 function toggleLinguas(){
   const linguasSim=document.querySelector('input[name="linguas-estrangeiras"][value="sim"]');
   const wrap=document.getElementById('quais-linguas-container');
@@ -572,18 +639,31 @@ function toggleLinguas(){
   else{wrap.style.display='none';input.disabled=true;input.value='';}
 }
 
-/* Formação dinâmica */
+/* ===== Formação Acadêmica Dinâmica ===== */
 let cursoCount=0;
-function cursoCardTemplate(idx){return `
+function cursoCardTemplate(idx){
+  return `
   <div class="course-card" data-curso="${idx}">
     <h4>Curso ${idx}</h4>
     <div class="form-grid">
-      <div class="form-group"><label for="curso${idx}">Curso</label><input type="text" id="curso${idx}" name="curso${idx}"></div>
-      <div class="form-group"><label for="instituicao${idx}">Instituição</label><input type="text" id="instituicao${idx}" name="instituicao${idx}"></div>
+      <div class="form-group">
+        <label for="curso${idx}">Curso</label>
+        <input type="text" id="curso${idx}" name="curso${idx}">
+      </div>
+      <div class="form-group">
+        <label for="instituicao${idx}">Instituição</label>
+        <input type="text" id="instituicao${idx}" name="instituicao${idx}">
+      </div>
       <div class="form-group full-width">
         <div class="checkbox-group">
-          <label class="checkbox-option"><input type="checkbox" name="status-curso${idx}" value="cursando" onchange="toggleConclusao(${idx})"><span class="checkbox-custom"></span>Cursando</label>
-          <label class="checkbox-option"><input type="checkbox" name="status-curso${idx}" value="concluido" onchange="toggleConclusao(${idx})"><span class="checkbox-custom"></span>Concluído</label>
+          <label class="checkbox-option">
+            <input type="checkbox" name="status-curso${idx}" value="cursando" onchange="toggleConclusao(${idx})">
+            <span class="checkbox-custom"></span>Cursando
+          </label>
+          <label class="checkbox-option">
+            <input type="checkbox" name="status-curso${idx}" value="concluido" onchange="toggleConclusao(${idx})">
+            <span class="checkbox-custom"></span>Concluído
+          </label>
         </div>
         <div class="conditional-field" id="ano-conclusao${idx}-container" style="display:none">
           <label for="ano-conclusao${idx}">Ano de conclusão</label>
@@ -591,14 +671,37 @@ function cursoCardTemplate(idx){return `
         </div>
       </div>
     </div>
-  </div>`;}
-function adicionarCurso(){cursoCount++;document.getElementById('course-container').insertAdjacentHTML('beforeend',cursoCardTemplate(cursoCount));}
-function removerUltimoCurso(){const ctn=document.getElementById('course-container');if(ctn.lastElementChild){ctn.removeChild(ctn.lastElementChild);cursoCount=Math.max(0,cursoCount-1);}}
-function toggleFormacaoAcademica(){const chk=document.getElementById('possui-formacao');const sec=document.getElementById('formacao-academica-section');if(chk.checked){sec.classList.add('show');if(cursoCount===0) adicionarCurso();}else{sec.classList.remove('show');}}
-function toggleConclusao(idx){const concluido=document.querySelector(`input[name="status-curso${idx}"][value="concluido"]`);const wrap=document.getElementById(`ano-conclusao${idx}-container`);const input=document.getElementById(`ano-conclusao${idx}`);if(concluido&&concluido.checked){wrap.style.display='block';input.disabled=false;}else{wrap.style.display='none';input.disabled=true;input.value='';}}
+  </div>`;
+}
+function adicionarCurso(){
+  cursoCount++; const ctn=document.getElementById('course-container');
+  ctn.insertAdjacentHTML('beforeend', cursoCardTemplate(cursoCount));
+}
+function removerUltimoCurso(){
+  const ctn=document.getElementById('course-container');
+  if(ctn.lastElementChild){ctn.removeChild(ctn.lastElementChild);cursoCount=Math.max(0,cursoCount-1);}
+}
+function toggleFormacaoAcademica(){
+  const chk=document.getElementById('possui-formacao');
+  const sec=document.getElementById('formacao-academica-section');
+  if(chk.checked){
+    sec.classList.add('show');
+    if(cursoCount===0) adicionarCurso(); // abre com 1 curso
+  }else{
+    sec.classList.remove('show');
+  }
+}
+function toggleConclusao(idx){
+  const concluido=document.querySelector(`input[name="status-curso${idx}"][value="concluido"]`);
+  const wrap=document.getElementById(`ano-conclusao${idx}-container`);
+  const input=document.getElementById(`ano-conclusao${idx}`);
+  if(concluido && concluido.checked){wrap.style.display='block';input.disabled=false;}
+  else{wrap.style.display='none';input.disabled=true;input.value='';}
+}
 
-/* Experiências dinâmicas */
-function experienciaCardTemplate(idx){return `
+/* ===== Experiências Dinâmicas ===== */
+function experienciaCardTemplate(idx){
+  return `
   <div class="experience-card" data-exp="${idx}">
     <h4>Experiência ${idx}</h4>
     <div class="form-grid">
@@ -609,12 +712,29 @@ function experienciaCardTemplate(idx){return `
       <div class="form-group"><label for="contato${idx}">Contato do responsável</label><input type="tel" id="contato${idx}" name="contato${idx}" placeholder="(00) 00000-0000"></div>
       <div class="form-group full-width"><label for="atividades${idx}">Principais Atividades</label><textarea id="atividades${idx}" name="atividades${idx}" rows="3"></textarea></div>
     </div>
-  </div>`;}
-function adicionarExperiencia(){const ctn=document.getElementById('experience-container');const idx=ctn.children.length+1;ctn.insertAdjacentHTML('beforeend',experienciaCardTemplate(idx));}
-function removerUltimaExperiencia(){const ctn=document.getElementById('experience-container');if(ctn.lastElementChild){ctn.removeChild(ctn.lastElementChild);}}
-function toggleExperienciaProfissional(){const tem=document.querySelector('input[name="tem-experiencia"]:checked')?.value;const sec=document.getElementById('experiencia-profissional-section');if(tem==='sim'){sec.classList.add('show');if(!document.querySelector('.experience-card')) adicionarExperiencia();}else{sec.classList.remove('show');}}
+  </div>`;
+}
+function adicionarExperiencia(){
+  const ctn=document.getElementById('experience-container');
+  const idx=ctn.children.length+1;
+  ctn.insertAdjacentHTML('beforeend', experienciaCardTemplate(idx));
+}
+function removerUltimaExperiencia(){
+  const ctn=document.getElementById('experience-container');
+  if(ctn.lastElementChild){ctn.removeChild(ctn.lastElementChild);}
+}
+function toggleExperienciaProfissional(){
+  const tem=document.querySelector('input[name="tem-experiencia"]:checked')?.value;
+  const sec=document.getElementById('experiencia-profissional-section');
+  if(tem==='sim'){
+    sec.classList.add('show');
+    if(!document.querySelector('.experience-card')) adicionarExperiencia();
+  }else{
+    sec.classList.remove('show');
+  }
+}
 
-/* Anti-tela */
+/* ===== Anti-tela (Cidade/Filiais) ===== */
 function initPreselect(){
   const pre=document.getElementById('preselect');
   const app=document.getElementById('app-root');
@@ -630,9 +750,9 @@ function initPreselect(){
   function renderFiliais(){
     filiaisBox.innerHTML='';
     const cidade=cidadeSel.value;
-    if(!cidade||!FILIAIS[cidade]) return;
-    FILIAIS[cidade].forEach((nome,idx)=>{
-      filiaisBox.insertAdjacentHTML('beforeend',`
+    if(!cidade || !FILIAIS[cidade]) return;
+    FILIAIS[cidade].forEach((nome)=>{
+      filiaisBox.insertAdjacentHTML('beforeend', `
         <label class="checkbox-option">
           <input type="checkbox" value="${nome}">
           <span class="checkbox-custom"></span>${nome}
@@ -640,51 +760,93 @@ function initPreselect(){
       `);
     });
   }
-  cidadeSel.addEventListener('change',renderFiliais);
-  btnCancel.addEventListener('click',()=>{cidadeSel.value='';filiaisBox.innerHTML='';});
-  btnCont.addEventListener('click',()=>{
+
+  cidadeSel.addEventListener('change', renderFiliais);
+
+  btnCancel.addEventListener('click', ()=>{
+    cidadeSel.value=''; filiaisBox.innerHTML='';
+  });
+
+  btnCont.addEventListener('click', ()=>{
     const cidade=cidadeSel.value;
-    if(!cidade){alert('Selecione a cidade.');return;}
+    if(!cidade){ alert('Selecione a cidade.'); return; }
     const marcadas=[...filiaisBox.querySelectorAll('input[type="checkbox"]:checked')].map(i=>i.value);
-    if(!marcadas.length){alert('Selecione pelo menos uma filial.');return;}
-    badgeCidade.textContent=cidade;badgeFiliais.textContent=marcadas.join(', ');
-    inputCidade.value=cidade;inputFiliais.value=marcadas.join(', ');
-    pre.style.display='none';app.style.display='block';
+    if(!marcadas.length){ alert('Selecione pelo menos uma filial.'); return; }
+
+    badgeCidade.textContent = cidade;
+    badgeFiliais.textContent = marcadas.join(', ');
+    inputCidade.value = cidade;
+    inputFiliais.value = marcadas.join(', ');
+
+    pre.style.display='none';
+    app.style.display='block';
   });
 }
 
-/* Máscaras e init */
-document.addEventListener('DOMContentLoaded',()=>{
+/* ===== Máscaras e init ===== */
+document.addEventListener('DOMContentLoaded', ()=>{
+  // inicia anti-tela
   initPreselect();
-  toggleFilhosQuantidade();toggleCNHCategoria();toggleLinguas();toggleFormacaoAcademica();toggleExperienciaProfissional();
 
+  toggleFilhosQuantidade(); toggleCNHCategoria(); toggleLinguas(); toggleFormacaoAcademica(); toggleExperienciaProfissional();
+
+  // CPF (máscara)
   const cpf=document.getElementById('cpf');
-  if(cpf){cpf.addEventListener('input',e=>{let v=e.target.value.replace(/\D/g,'');if(v.length>9)v=v.replace(/^(\d{3})(\d{3})(\d{3})(\d{0,2}).*/,'$1.$2.$3-$4');else if(v.length>6)v=v.replace(/^(\d{3})(\d{3})(\d{0,3}).*/,'$1.$2.$3');else if(v.length>3)v=v.replace(/^(\d{3})(\d{0,3}).*/,'$1.$2');e.target.value=v;});}
+  if(cpf){
+    cpf.addEventListener('input',e=>{
+      let v=e.target.value.replace(/\D/g,'');
+      if(v.length>9) v=v.replace(/^(\d{3})(\d{3})(\d{3})(\d{0,2}).*/,'$1.$2.$3-$4');
+      else if(v.length>6) v=v.replace(/^(\d{3})(\d{3})(\d{0,3}).*/,'$1.$2.$3');
+      else if(v.length>3) v=v.replace(/^(\d{3})(\d{0,3}).*/,'$1.$2');
+      e.target.value=v;
+    });
+  }
+
   const tel=document.getElementById('telefone');
-  if(tel){tel.addEventListener('input',e=>{let v=e.target.value.replace(/\D/g,'');if(v.length>10)v=v.replace(/^(\d\d)(\d{5})(\d{4}).*/,'($1) $2-$3');else if(v.length>6)v=v.replace(/^(\d\d)(\d{4})(\d{0,4}).*/,'($1) $2-$3');else if(v.length>2)v=v.replace(/^(\d\d)(\d{0,5})/,'($1) $2');e.target.value=v;});}
+  if(tel){tel.addEventListener('input',e=>{
+    let v=e.target.value.replace(/\D/g,'');
+    if(v.length>10) v=v.replace(/^(\d\d)(\d{5})(\d{4}).*/,'($1) $2-$3');
+    else if(v.length>6) v=v.replace(/^(\d\d)(\d{4})(\d{0,4}).*/,'($1) $2-$3');
+    else if(v.length>2) v=v.replace(/^(\d\d)(\d{0,5})/,'($1) $2');
+    e.target.value=v;
+  });}
+
   const cel=document.getElementById('celular');
-  if(cel){cel.addEventListener('input',e=>{let v=e.target.value.replace(/\D/g,'');if(v.length>11)v=v.replace(/^(\d\d)(\d{5})(\d{4}).*/,'($1) $2-$3');else if(v.length>7)v=v.replace(/^(\d\d)(\d{5})(\d{0,4}).*/,'($1) $2-$3');else if(v.length>2)v=v.replace(/^(\d\d)(\d{0,5})/,'($1) $2');e.target.value=v;});}
+  if(cel){cel.addEventListener('input',e=>{
+    let v=e.target.value.replace(/\D/g,'');
+    if(v.length>11) v=v.replace(/^(\d\d)(\d{5})(\d{4}).*/,'($1) $2-$3');
+    else if(v.length>7) v=v.replace(/^(\d\d)(\d{5})(\d{0,4}).*/,'($1) $2-$3');
+    else if(v.length>2) v=v.replace(/^(\d\d)(\d{0,5})/,'($1) $2');
+    e.target.value=v;
+  });}
+
   const pret=document.getElementById('pretensao-salarial');
-  if(pret){pret.addEventListener('input',e=>{let v=e.target.value.replace(/\D/g,'');v=(parseInt(v||'0',10)/100).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});e.target.value=v;});}
+  if(pret){pret.addEventListener('input',e=>{
+    let v=e.target.value.replace(/\D/g,''); v=(parseInt(v||'0',10)/100).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); e.target.value=v;
+  });}
 });
 
-/* Envio */
-document.getElementById('job-application-form').addEventListener('submit',async function(event){
+/* ===== Envio ===== */
+document.getElementById('job-application-form').addEventListener('submit', async function(event){
   event.preventDefault();
 
+  // Valida declaração de veracidade
   const decl=document.getElementById('declaracao-veracidade');
-  if(!decl.checked){alert('Você precisa aceitar a Declaração de Veracidade para prosseguir.');decl.scrollIntoView({behavior:'smooth',block:'center'});decl.focus();return;}
+  if(!decl.checked){
+    alert('Você precisa aceitar a Declaração de Veracidade para prosseguir.');
+    decl.scrollIntoView({behavior:'smooth',block:'center'}); decl.focus(); return;
+  }
 
   const form=event.target;
   const fd=new FormData(form);
 
-  /* Data de Nascimento em formato BR */
+  // Data de Nascimento em formato BR (se vier yyyy-mm-dd)
   const dn=form.querySelector('#data-nascimento')?.value || '';
   if(dn && /^\d{4}-\d{2}-\d{2}$/.test(dn)){
     const [y,m,d]=dn.split('-'); fd.set('data-nascimento', `${d}/${m}/${y}`);
   }
 
-  /* Cursos (JSON) */
+  // Cursos dinâmicos (JSON)
   const cursos=[];
   document.querySelectorAll('.course-card').forEach((card,idx)=>{
     const i=card.getAttribute('data-curso') || (idx+1);
@@ -697,7 +859,7 @@ document.getElementById('job-application-form').addEventListener('submit',async 
   });
   if(cursos.length) fd.set('cursos', JSON.stringify(cursos));
 
-  /* Experiências (JSON) — robusto */
+  // Experiências dinâmicas (JSON)
   if(document.querySelector('input[name="tem-experiencia"]:checked')?.value==='sim'){
     const exps=[];
     document.querySelectorAll('.experience-card').forEach((card,idx)=>{
@@ -716,17 +878,20 @@ document.getElementById('job-application-form').addEventListener('submit',async 
     if(exps.length) fd.set('experiencias', JSON.stringify(exps));
   }
 
+  // Flag veracidade explícita
   fd.set('declaracao-veracidade', decl.checked ? 'Aceito' : 'Não aceito');
 
   try{
-    let response=await fetch(form.action,{method:'POST',body:fd});
+    // Tenta CORS normal
+    let response=await fetch(form.action,{ method:'POST', body:fd });
     if(response.ok){
       alert('Formulário enviado com sucesso!');
       form.reset();
       return;
     }
-    await fetch(form.action,{method:'POST',mode:'no-cors',body:fd});
-    alert('Formulário enviado! (sem leitura da resposta pelo navegador).');
+    // Fallback no-cors
+    await fetch(form.action,{ method:'POST', mode:'no-cors', body:fd });
+    alert('Formulário enviado! (o navegador não conseguiu ler a resposta, mas o envio foi realizado).');
     form.reset();
   }catch(err){
     console.error(err);
