@@ -97,11 +97,25 @@ input::placeholder,textarea::placeholder{color:#999}
 .hidden-section{display:none}
 .hidden-section.show{display:block}
 
-/* Avisos/Declarações */
-.info-text{font-size:.95em;line-height:1.6;color:#e0e0e0}
+/* Declarações */
 .declaration-container{background:#4a4a4a;border:2px solid #555;border-radius:10px;padding:20px;transition:.3s}
 .declaration-container:hover{border-color:#4CAF50;box-shadow:0 5px 15px rgba(0,0,0,.3)}
 .declaration-text{font-size:.95em;line-height:1.6;color:#e0e0e0;text-align:justify}
+
+/* Seleção de loja (anti-tela) */
+#preselect{
+  position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:1000
+}
+.preselect-card{
+  width:min(680px,92vw);background:#2a2a2a;border:2px solid #555;border-radius:14px;box-shadow:0 6px 30px rgba(0,0,0,.5);padding:24px
+}
+.preselect-card h3{color:#fff;margin-bottom:10px}
+.preselect-row{display:grid;grid-template-columns:1fr;gap:16px}
+.preselect-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:16px}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;background:#3a3a3a;border:1px solid #555;color:#e0e0e0;border-radius:999px;
+  padding:6px 12px;font-size:.9em
+}
 
 /* Botões */
 .form-actions{display:flex;gap:20px;justify-content:center;margin-top:40px;padding-top:30px;border-top:2px solid #555}
@@ -114,7 +128,7 @@ input::placeholder,textarea::placeholder{color:#999}
 .btn-secondary{background:#444;color:#fff;border:2px solid #666;text-transform:none;letter-spacing:0}
 .btn-submit:hover,.btn-reset:hover,.btn-secondary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,.3)}
 
-/* Animações */
+/* Animações / Acessibilidade */
 @keyframes slideInUp{to{opacity:1;transform:translateY(0)}}
 input:valid{border-color:#4CAF50}
 input:invalid:not(:placeholder-shown){border-color:#f44336}
@@ -134,7 +148,34 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
   </style>
 </head>
 <body>
-  <div class="container">
+
+  <!-- Anti-tela: escolha Cidade e Filiais -->
+  <div id="preselect" role="dialog" aria-modal="true">
+    <div class="preselect-card">
+      <h3><i class="fas fa-store"></i> Escolha a cidade e filial(is) para sua candidatura</h3>
+      <div class="preselect-row">
+        <div class="form-group">
+          <label for="cidade-select">Cidade *</label>
+          <select id="cidade-select" style="background:#4a4a4a;border:2px solid #555;border-radius:8px;padding:12px 15px;color:#e0e0e0">
+            <option value="">Selecione...</option>
+            <option value="Uberaba">Uberaba</option>
+            <option value="Uberlândia">Uberlândia</option>
+            <option value="Poços de Caldas">Poços de Caldas</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Filial(is) *</label>
+          <div id="filiais-box" class="checkbox-group"></div>
+        </div>
+        <div class="preselect-actions">
+          <button type="button" class="btn-secondary" id="btn-cancel-pre">Cancelar</button>
+          <button type="button" class="btn-submit" id="btn-continue-pre">Continuar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" id="app-root" style="display:none">
     <header class="form-header">
       <div class="header-content">
         <i class="fas fa-briefcase header-icon"></i>
@@ -145,7 +186,19 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
     </header>
 
     <div class="form-container">
-      <form id="job-application-form" class="job-form" action="https://script.google.com/macros/s/AKfycbzdMkDG0N6xwF_px9n2N2gqqGFjYyv0D_8jOtremC3WSFQBy57_tHwtBg8CEsf-G93N/exec" method="POST">
+      <!-- Resumo da seleção de Cidade/Filiais -->
+      <div class="form-block">
+        <div class="block-header"><i class="fas fa-map-pin"></i><h3>Vaga selecionada</h3></div>
+        <div class="block-content">
+          <span class="badge"><i class="fas fa-city"></i> <strong id="badge-cidade"></strong></span>
+          <span class="badge" style="margin-left:8px"><i class="fas fa-store"></i> <strong id="badge-filiais"></strong></span>
+        </div>
+      </div>
+
+      <form id="job-application-form" class="job-form" action="https://script.google.com/macros/s/AKfycbzdMkDG0N6xwF_px9n2N2gqqGFjYyv0D_8jOtremC3WSFQBy57_tHwtBg8CEsf-G93N/exec" method="POST" enctype="multipart/form-data">
+        <!-- campos ocultos para enviar cidade/filiais -->
+        <input type="hidden" name="cidade" id="cidade-hidden">
+        <input type="hidden" name="filiais" id="filiais-hidden">
 
         <!-- 1. Dados Pessoais -->
         <div class="form-block">
@@ -170,8 +223,7 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
               </div>
               <div class="form-group">
                 <label for="cpf">CPF *</label>
-                <!-- pattern corrigido (sem barras duplas) -->
-                <input type="text" id="cpf" name="cpf" pattern="[0-9]{3}[.][0-9]{3}[.][0-9]{3}-[0-9]{2}" placeholder="000.000.000-00" required>
+                <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" required>
               </div>
               <div class="form-group">
                 <label for="naturalidade">Naturalidade *</label>
@@ -192,8 +244,7 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
             <div class="form-grid">
               <div class="form-group">
                 <label for="cep">CEP *</label>
-                <!-- pattern corrigido (sem barras duplas) -->
-                <input type="text" id="cep" name="cep" pattern="[0-9]{5}-?[0-9]{3}" placeholder="00000-000" required onblur="buscarCEP()">
+                <input type="text" id="cep" name="cep" placeholder="00000-000" required onblur="buscarCEP()">
               </div>
               <div class="form-group large">
                 <label for="endereco">Endereço *</label>
@@ -283,7 +334,6 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
                   <input type="number" id="quantidade-filhos" name="quantidade-filhos" min="0" disabled>
                 </div>
 
-                <!-- Menores de 14: escondido e só aparece se "Possui Filhos" = sim -->
                 <div class="conditional-field" id="menores-14-container" style="display:none;margin-top:10px">
                   <label>Menores de 14 anos:</label>
                   <div class="radio-group">
@@ -326,19 +376,19 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
                 <label class="checkbox-option">
                   <input type="checkbox" id="possui-formacao" name="possui-formacao" onchange="toggleFormacaoAcademica()">
                   <span class="checkbox-custom"></span>
-                  Possuo formação acadêmica (curso técnico/superior, pós etc.)
+                  Possuo formação acadêmica
                 </label>
               </div>
             </div>
 
             <div class="hidden-section" id="formacao-academica-section">
-              <div class="course-container" id="course-container"></div>
-
+              <div class="education-grid">
+                <div class="course-container" id="course-container"></div>
+              </div>
               <div style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap">
                 <button type="button" class="btn-secondary" id="btn-add-curso" onclick="adicionarCurso()">Adicionar curso</button>
                 <button type="button" class="btn-secondary" id="btn-remover-curso" onclick="removerUltimoCurso()">Remover último</button>
               </div>
-              <p class="info-text" style="margin-top:8px">Ao marcar “Possuo formação acadêmica”, aparece 1 cartão de curso. Use “Adicionar curso” para incluir mais.</p>
             </div>
           </div>
         </div>
@@ -409,7 +459,7 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
           </div>
         </div>
 
-        <!-- 8. Experiências Profissionais (obrigatório escolher Sim ou Não) -->
+        <!-- 8. Experiências Profissionais -->
         <div class="form-block">
           <div class="block-header"><i class="fas fa-history"></i><h3>Experiências Profissionais</h3></div>
           <div class="block-content">
@@ -430,7 +480,6 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
                 <button type="button" class="btn-secondary" onclick="adicionarExperiencia()">Adicionar experiência</button>
                 <button type="button" class="btn-secondary" onclick="removerUltimaExperiencia()">Remover última</button>
               </div>
-              <p class="info-text" style="margin-top:8px">Incluímos campos de <b>Responsável</b> e <b>Contato</b> (telefone do gestor/líder da época).</p>
             </div>
           </div>
         </div>
@@ -449,7 +498,6 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
                 <input type="text" id="disponibilidade-inicio" name="disponibilidade-inicio">
               </div>
 
-              <!-- Disponibilidade de horário agora é RADIO (uma opção apenas) -->
               <div class="form-group full-width">
                 <label>Disponibilidade de Horário *</label>
                 <div class="radio-group">
@@ -478,12 +526,10 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
           <div class="block-header"><i class="fas fa-file-signature"></i><h3>Declaração de Veracidade</h3></div>
           <div class="block-content">
             <div class="declaration-container">
-              <label class="checkbox-option declaration-checkbox" style="background:transparent;border:none;padding:0">
+              <label class="checkbox-option" style="background:transparent;border:none;padding:0">
                 <input type="checkbox" id="declaracao-veracidade" name="declaracao-veracidade">
                 <span class="checkbox-custom"></span>
-                <span class="declaration-text">
-                  Declaro, para os devidos fins, que as informações prestadas neste formulário são verdadeiras e completas, assumindo total responsabilidade pelas mesmas.
-                </span>
+                <span class="declaration-text">Declaro, para os devidos fins, que as informações prestadas neste formulário são verdadeiras e completas.</span>
               </label>
             </div>
           </div>
@@ -495,9 +541,7 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
           <div class="block-content">
             <div class="declaration-container">
               <p class="declaration-text">
-                A Hering Store se compromete a tratar seus dados pessoais com confidencialidade e segurança, utilizando-os exclusivamente para análise
-                desta candidatura e processos seletivos relacionados. As informações não serão compartilhadas com terceiros não autorizados e serão
-                armazenadas pelo período necessário ao processo, em conformidade com a legislação aplicável (LGPD).
+                A Hering Store se compromete a tratar seus dados pessoais com confidencialidade e segurança, utilizando-os exclusivamente para análise desta candidatura e processos seletivos relacionados.
               </p>
             </div>
           </div>
@@ -514,7 +558,22 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
   </div>
 
 <script>
-/* ===== CEP ===== */
+/* ====== Mapa de filiais por cidade (anti-tela) ====== */
+const FILIAIS = {
+  "Uberaba": [
+    "Hering - Prudente de Morais",
+    "Hering - Shopping Uberaba"
+  ],
+  "Uberlândia": [
+    "Hering - Floriano Peixoto",
+    "Hering - Uberlândia Shopping"
+  ],
+  "Poços de Caldas": [
+    "Hering - Rio de Janeiro"
+  ]
+};
+
+/* ====== CEP ====== */
 async function buscarCEP(){
   const cepInput=document.getElementById('cep');
   const enderecoInput=document.getElementById('endereco');
@@ -604,10 +663,8 @@ function cursoCardTemplate(idx){
     </div>
   </div>`;
 }
-function adicionarCurso(){
-  cursoCount++; const ctn=document.getElementById('course-container');
-  ctn.insertAdjacentHTML('beforeend', cursoCardTemplate(cursoCount));
-}
+function adicionarCurso(){ cursoCount++; document.getElementById('course-container')
+  .insertAdjacentHTML('beforeend', cursoCardTemplate(cursoCount)); }
 function removerUltimoCurso(){
   const ctn=document.getElementById('course-container');
   if(ctn.lastElementChild){ctn.removeChild(ctn.lastElementChild);cursoCount=Math.max(0,cursoCount-1);}
@@ -617,7 +674,7 @@ function toggleFormacaoAcademica(){
   const sec=document.getElementById('formacao-academica-section');
   if(chk.checked){
     sec.classList.add('show');
-    if(cursoCount===0) adicionarCurso(); // apenas 1 por padrão ao abrir
+    if(cursoCount===0) adicionarCurso();
   }else{
     sec.classList.remove('show');
   }
@@ -639,8 +696,7 @@ function experienciaCardTemplate(idx){
     <div class="form-grid">
       <div class="form-group"><label for="empresa${idx}">Empresa</label><input type="text" id="empresa${idx}" name="empresa${idx}"></div>
       <div class="form-group"><label for="cargo${idx}">Cargo</label><input type="text" id="cargo${idx}" name="cargo${idx}"></div>
-      <div class="form-group"><label for="data-entrada${idx}">Data de Entrada</label><input type="date" id="data-entrada${idx}" name="data-entrada${idx}"></div>
-      <div class="form-group"><label for="data-saida${idx}">Data de Saída</label><input type="date" id="data-saida${idx}" name="data-saida${idx}"></div>
+      <div class="form-group"><label for="periodo${idx}">Período (meses/anos)</label><input type="text" id="periodo${idx}" name="periodo${idx}" placeholder="Ex.: 1 ano e 6 meses"></div>
       <div class="form-group"><label for="responsavel${idx}">Responsável (gestor/líder)</label><input type="text" id="responsavel${idx}" name="responsavel${idx}"></div>
       <div class="form-group"><label for="contato${idx}">Contato do responsável</label><input type="tel" id="contato${idx}" name="contato${idx}" placeholder="(00) 00000-0000"></div>
       <div class="form-group full-width"><label for="atividades${idx}">Principais Atividades</label><textarea id="atividades${idx}" name="atividades${idx}" rows="3"></textarea></div>
@@ -648,8 +704,8 @@ function experienciaCardTemplate(idx){
   </div>`;
 }
 function adicionarExperiencia(){
-  expCount++; const ctn=document.getElementById('experience-container');
-  ctn.insertAdjacentHTML('beforeend', experienciaCardTemplate(expCount));
+  expCount++; document.getElementById('experience-container')
+    .insertAdjacentHTML('beforeend', experienciaCardTemplate(expCount));
 }
 function removerUltimaExperiencia(){
   const ctn=document.getElementById('experience-container');
@@ -668,16 +724,22 @@ function toggleExperienciaProfissional(){
 
 /* ===== Máscaras ===== */
 document.addEventListener('DOMContentLoaded', ()=>{
+  // inicia anti-tela
+  initPreselect();
+
   toggleFilhosQuantidade(); toggleCNHCategoria(); toggleLinguas(); toggleFormacaoAcademica(); toggleExperienciaProfissional();
 
+  // CPF (máscara) + validação flexível
   const cpf=document.getElementById('cpf');
-  if(cpf){cpf.addEventListener('input',e=>{
-    let v=e.target.value.replace(/\D/g,'');
-    if(v.length>9) v=v.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/,'$1.$2.$3-$4');
-    else if(v.length>6) v=v.replace(/^(\d{3})(\d{3})(\d{3})$/,'$1.$2.$3');
-    else if(v.length>3) v=v.replace(/^(\d{3})(\d{3})$/,'$1.$2');
-    e.target.value=v;
-  });}
+  if(cpf){
+    cpf.addEventListener('input',e=>{
+      let v=e.target.value.replace(/\D/g,'');
+      if(v.length>9) v=v.replace(/^(\d{3})(\d{3})(\d{3})(\d{0,2}).*/,'$1.$2.$3-$4');
+      else if(v.length>6) v=v.replace(/^(\d{3})(\d{3})(\d{0,3}).*/,'$1.$2.$3');
+      else if(v.length>3) v=v.replace(/^(\d{3})(\d{0,3}).*/,'$1.$2');
+      e.target.value=v;
+    });
+  }
 
   const tel=document.getElementById('telefone');
   if(tel){tel.addEventListener('input',e=>{
@@ -703,11 +765,64 @@ document.addEventListener('DOMContentLoaded', ()=>{
   });}
 });
 
+/* ===== Anti-tela (Cidade/Filiais) ===== */
+function initPreselect(){
+  const pre=document.getElementById('preselect');
+  const app=document.getElementById('app-root');
+  const cidadeSel=document.getElementById('cidade-select');
+  const filiaisBox=document.getElementById('filiais-box');
+  const btnCancel=document.getElementById('btn-cancel-pre');
+  const btnCont=document.getElementById('btn-continue-pre');
+  const badgeCidade=document.getElementById('badge-cidade');
+  const badgeFiliais=document.getElementById('badge-filiais');
+  const inputCidade=document.getElementById('cidade-hidden');
+  const inputFiliais=document.getElementById('filiais-hidden');
+
+  function renderFiliais(){
+    filiaisBox.innerHTML='';
+    const cidade=cidadeSel.value;
+    if(!cidade || !FILIAIS[cidade]) return;
+    FILIAIS[cidade].forEach((nome,idx)=>{
+      const id = 'fil-'+idx;
+      filiaisBox.insertAdjacentHTML('beforeend', `
+        <label class="checkbox-option">
+          <input type="checkbox" value="${nome}">
+          <span class="checkbox-custom"></span>${nome}
+        </label>
+      `);
+    });
+  }
+
+  cidadeSel.addEventListener('change', renderFiliais);
+
+  btnCancel.addEventListener('click', ()=>{
+    // apenas limpa seleções
+    cidadeSel.value=''; filiaisBox.innerHTML='';
+  });
+
+  btnCont.addEventListener('click', ()=>{
+    const cidade=cidadeSel.value;
+    if(!cidade){ alert('Selecione a cidade.'); return; }
+    const marcadas=[...filiaisBox.querySelectorAll('input[type="checkbox"]:checked')].map(i=>i.value);
+    if(!marcadas.length){ alert('Selecione pelo menos uma filial.'); return; }
+
+    // Preenche resumo + hidden
+    badgeCidade.textContent = cidade;
+    badgeFiliais.textContent = marcadas.join(', ');
+    inputCidade.value = cidade;
+    inputFiliais.value = marcadas.join(', ');
+
+    // Libera app e esconde o overlay
+    pre.style.display='none';
+    app.style.display='block';
+  });
+}
+
 /* ===== Envio ===== */
 document.getElementById('job-application-form').addEventListener('submit', async function(event){
   event.preventDefault();
 
-  // Valida declaração de veracidade (sem required no HTML para evitar bug de foco)
+  // Valida declaração de veracidade
   const decl=document.getElementById('declaracao-veracidade');
   if(!decl.checked){
     alert('Você precisa aceitar a Declaração de Veracidade para prosseguir.');
@@ -715,15 +830,11 @@ document.getElementById('job-application-form').addEventListener('submit', async
   }
 
   const form=event.target;
-  const data={};
-
-  // Coleta campos simples
   const fd=new FormData(form);
-  fd.forEach((value,key)=>{ data[key]=value; });
 
-  // Monta array de cursos (se houver seção visível)
+  // Cursos dinâmicos (JSON)
   const cursos=[];
-  for(let i=1;i<=cursoCount;i++){
+  for(let i=1;i<= (window.cursoCount||0);i++){
     const card=document.querySelector(`.course-card[data-curso="${i}"]`); if(!card) continue;
     const curso=card.querySelector(`#curso${i}`)?.value?.trim();
     const inst=card.querySelector(`#instituicao${i}`)?.value?.trim();
@@ -731,68 +842,45 @@ document.getElementById('job-application-form').addEventListener('submit', async
     const ano=card.querySelector(`#ano-conclusao${i}`)?.value || '';
     if(curso || inst || status || ano){cursos.push({curso, instituicao:inst, status, anoConclusao:ano});}
   }
-  if(cursos.length) data['cursos']=JSON.stringify(cursos);
+  if(cursos.length) fd.set('cursos', JSON.stringify(cursos));
 
-  // Monta array de experiências (se marcou que tem experiência)
+  // Experiências dinâmicas (JSON)
   const temExp=document.querySelector('input[name="tem-experiencia"]:checked')?.value==='sim';
   if(temExp){
     const exps=[];
-    for(let i=1;i<=expCount;i++){
+    for(let i=1;i<= (window.expCount||0);i++){
       const card=document.querySelector(`.experience-card[data-exp="${i}"]`); if(!card) continue;
       const empresa=card.querySelector(`#empresa${i}`)?.value?.trim();
       const cargo=card.querySelector(`#cargo${i}`)?.value?.trim();
-      const dataEntrada=card.querySelector(`#data-entrada${i}`)?.value || '';
-      const dataSaida=card.querySelector(`#data-saida${i}`)?.value || '';
+      const periodo=card.querySelector(`#periodo${i}`)?.value?.trim();
       const responsavel=card.querySelector(`#responsavel${i}`)?.value?.trim();
       const contato=card.querySelector(`#contato${i}`)?.value?.trim();
       const atividades=card.querySelector(`#atividades${i}`)?.value?.trim();
-      if(empresa || cargo || dataEntrada || dataSaida || atividades || responsavel || contato){
-        exps.push({empresa,cargo,dataEntrada,dataSaida,responsavel,contato,atividades});
+      if(empresa || cargo || periodo || atividades || responsavel || contato){
+        exps.push({empresa,cargo,periodo,responsavel,contato,atividades});
       }
     }
-    if(exps.length) data['experiencias']=JSON.stringify(exps);
+    if(exps.length) fd.set('experiencias', JSON.stringify(exps));
   }
 
-  // Garante valor explícito da declaração
-  data['declaracao-veracidade']=decl.checked ? 'Aceito' : 'Não aceito';
+  // Flag veracidade explícita
+  fd.set('declaracao-veracidade', decl.checked ? 'Aceito' : 'Não aceito');
 
   try{
-    // Tenta CORS normal primeiro
-    let response=await fetch(form.action,{
-      method:'POST',
-      headers:{'Content-Type':'application/x-www-form-urlencoded'},
-      body:new URLSearchParams(data).toString()
-    });
-
+    // Tenta CORS normal
+    let response=await fetch(form.action,{ method:'POST', body:fd });
     if(response.ok){
       alert('Formulário enviado com sucesso!');
       form.reset();
-      // reset dinâmicos
-      document.getElementById('formacao-academica-section').classList.remove('show');
-      document.getElementById('course-container').innerHTML=''; cursoCount=0;
-      document.getElementById('experiencia-profissional-section').classList.remove('show');
-      document.getElementById('experience-container').innerHTML=''; expCount=0;
       return;
     }
-
     // Fallback no-cors
-    response=await fetch(form.action,{
-      method:'POST',
-      mode:'no-cors',
-      headers:{'Content-Type':'application/x-www-form-urlencoded'},
-      body:new URLSearchParams(data).toString()
-    });
-
+    await fetch(form.action,{ method:'POST', mode:'no-cors', body:fd });
     alert('Formulário enviado! (o navegador não conseguiu ler a resposta, mas o envio foi realizado).');
     form.reset();
-    document.getElementById('formacao-academica-section').classList.remove('show');
-    document.getElementById('course-container').innerHTML=''; cursoCount=0;
-    document.getElementById('experiencia-profissional-section').classList.remove('show');
-    document.getElementById('experience-container').innerHTML=''; expCount=0;
-
   }catch(err){
     console.error(err);
-    alert('Ocorreu um erro de rede. Mesmo assim, sua candidatura pode ter sido enviada. Verifique se recebeu confirmação por e-mail.');
+    alert('Ocorreu um erro de rede. Mesmo assim, sua candidatura pode ter sido enviada.');
   }
 });
 </script>
