@@ -1,903 +1,854 @@
+# 1) HTML COMPLETO (formulário com upload de foto e lógicas solicitadas)
+
+> Substitua a **URL\_DO\_SEU\_WEBAPP** pelo seu endpoint publicado (Deploy > Manage deployments > Web app).
+
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=1024">
-  <title>Formulário de Solicitação de Emprego - Hering Store</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Formulário de Candidatura – Hering Store</title>
   <style>
-/* Reset e configurações básicas */
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
-  line-height:1.6;color:#333;background:#1a1a1a;min-height:100vh;padding:20px 0;
-}
-.container{max-width:1000px;margin:0 auto;padding:0 20px}
-
-/* Header do formulário */
-.form-header{
-  background:linear-gradient(135deg,#2c3e50 0%,#34495e 100%);color:#fff;padding:40px 30px;text-align:center;
-  border-radius:15px 15px 0 0;box-shadow:0 4px 20px rgba(0,0,0,.3);position:relative;overflow:hidden
-}
-.form-header::before{
-  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
-  background:radial-gradient(circle,rgba(255,255,255,.05) 0%,transparent 70%);animation:rotate 30s linear infinite
-}
-@keyframes rotate{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-.header-content{position:relative;z-index:1}
-.header-icon{font-size:3em;margin-bottom:20px;color:#4CAF50}
-.form-header h1{font-size:2.2em;font-weight:700;margin-bottom:10px}
-.form-header h2{font-size:1.4em;font-weight:400;margin-bottom:15px;color:#ecf0f1}
-.form-header p{font-size:1.1em;opacity:.9;max-width:600px;margin:0 auto}
-
-/* Container do formulário */
-.form-container{background:#2a2a2a;border-radius:0 0 15px 15px;box-shadow:0 4px 20px rgba(0,0,0,.3);padding:30px}
-
-/* Blocos do formulário */
-.form-block{
-  background:#3a3a3a;border-radius:12px;margin-bottom:25px;box-shadow:0 4px 15px rgba(0,0,0,.2);
-  transition:.3s;border-left:4px solid #4CAF50;animation:slideInUp .6s ease-out forwards;opacity:0;transform:translateY(30px)
-}
-.form-block:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,.3)}
-.block-header{
-  background:linear-gradient(135deg,#4CAF50 0%,#45a049 100%);color:#fff;padding:20px 25px;border-radius:8px 8px 0 0;
-  display:flex;align-items:center;gap:15px
-}
-.block-header i{font-size:1.5em}
-.block-header h3{font-size:1.3em;font-weight:600;margin:0}
-.block-content{padding:25px}
-
-/* Grid */
-.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;align-items:start}
-.form-group{display:flex;flex-direction:column}
-.form-group.full-width{grid-column:1/-1}
-.form-group.large{grid-column:span 2}
-.form-group.small{grid-column:span 1;min-width:120px}
-
-/* Labels e Inputs */
-label{color:#e0e0e0;font-weight:600;margin-bottom:8px;font-size:.95em}
-input[type="text"],input[type="email"],input[type="tel"],input[type="date"],input[type="number"],textarea{
-  background:#4a4a4a;border:2px solid #555;border-radius:8px;padding:12px 15px;color:#e0e0e0;font-size:1em;transition:.3s
-}
-textarea{min-height:90px;resize:vertical}
-input:focus,textarea:focus{outline:none;border-color:#4CAF50;box-shadow:0 0 0 3px rgba(76,175,80,.2);background:#5a5a5a}
-input:disabled,textarea:disabled{background:#333;color:#888;cursor:not-allowed;opacity:.6}
-input::placeholder,textarea::placeholder{color:#999}
-
-/* Radios & Checkboxes customizados */
-.radio-group,.checkbox-group{display:flex;gap:20px;flex-wrap:wrap;margin-top:10px}
-.radio-option,.checkbox-option{
-  display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 15px;border-radius:8px;transition:.3s;
-  background:#4a4a4a;border:2px solid #555;color:#e0e0e0;font-weight:500
-}
-.radio-option:hover,.checkbox-option:hover{background:#5a5a5a;border-color:#4CAF50}
-.radio-option input[type="radio"],.checkbox-option input[type="checkbox"]{display:none}
-.radio-custom{width:20px;height:20px;border:2px solid #777;border-radius:50%;position:relative;transition:.3s}
-.radio-option input[type="radio"]:checked + .radio-custom{border-color:#4CAF50;background:#4CAF50}
-.radio-option input[type="radio"]:checked + .radio-custom::after{
-  content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:8px;height:8px;background:#fff;border-radius:50%
-}
-.radio-option input[type="radio"]:checked ~ span:not(.radio-custom){color:#4CAF50}
-
-.checkbox-custom{width:20px;height:20px;border:2px solid #777;border-radius:4px;position:relative;transition:.3s}
-.checkbox-option input[type="checkbox"]:checked + .checkbox-custom{border-color:#4CAF50;background:#4CAF50}
-.checkbox-option input[type="checkbox"]:checked + .checkbox-custom::after{
-  content:'✓';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-weight:bold;font-size:14px
-}
-.checkbox-option input[type="checkbox"]:checked ~ span:not(.checkbox-custom){color:#4CAF50}
-
-/* Cards específicos */
-.course-card,.experience-card{
-  background:#4a4a4a;border:2px solid #555;border-radius:10px;padding:20px;transition:.3s
-}
-.course-card:hover,.experience-card:hover{border-color:#4CAF50;box-shadow:0 5px 15px rgba(0,0,0,.3)}
-.course-card h4,.experience-card h4{color:#4CAF50;margin-bottom:15px;font-size:1.1em;display:flex;align-items:center;gap:10px}
-.experience-card h4::before{content:'💼';font-size:1.2em}
-.education-grid,.experience-container{display:grid;gap:20px}
-.hidden-section{display:none}
-.hidden-section.show{display:block}
-
-/* Declarações */
-.declaration-container{background:#4a4a4a;border:2px solid #555;border-radius:10px;padding:20px;transition:.3s}
-.declaration-container:hover{border-color:#4CAF50;box-shadow:0 5px 15px rgba(0,0,0,.3)}
-.declaration-text{font-size:.95em;line-height:1.6;color:#e0e0e0;text-align:justify}
-
-/* Seleção de loja (anti-tela) */
-#preselect{
-  position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:1000
-}
-.preselect-card{
-  width:min(680px,92vw);background:#2a2a2a;border:2px solid #555;border-radius:14px;box-shadow:0 6px 30px rgba(0,0,0,.5);padding:24px
-}
-.preselect-card h3{color:#fff;margin-bottom:10px}
-.preselect-row{display:grid;grid-template-columns:1fr;gap:16px}
-.preselect-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:16px}
-.badge{
-  display:inline-flex;align-items:center;gap:8px;background:#3a3a3a;border:1px solid #555;color:#e0e0e0;border-radius:999px;
-  padding:6px 12px;font-size:.9em
-}
-
-/* Botões */
-.form-actions{display:flex;gap:20px;justify-content:center;margin-top:40px;padding-top:30px;border-top:2px solid #555}
-.btn-submit,.btn-reset,.btn-secondary{
-  display:flex;align-items:center;gap:10px;padding:12px 20px;border:none;border-radius:8px;font-size:1em;font-weight:600;cursor:pointer;transition:.3s;
-  text-transform:uppercase;letter-spacing:1px;position:relative;overflow:hidden
-}
-.btn-submit{background:linear-gradient(135deg,#4CAF50 0%,#45a049 100%);color:#fff;box-shadow:0 4px 15px rgba(76,175,80,.3)}
-.btn-reset{background:linear-gradient(135deg,#f44336 0%,#d32f2f 100%);color:#fff;box-shadow:0 4px 15px rgba(244,67,54,.3)}
-.btn-secondary{background:#444;color:#fff;border:2px solid #666;text-transform:none;letter-spacing:0}
-.btn-submit:hover,.btn-reset:hover,.btn-secondary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,.3)}
-
-/* Animações / Acessibilidade */
-@keyframes slideInUp{to{opacity:1;transform:translateY(0)}}
-input:valid{border-color:#4CAF50}
-input:invalid:not(:placeholder-shown){border-color:#f44336}
-input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
-::-webkit-scrollbar{width:8px}
-::-webkit-scrollbar-track{background:#2a2a2a}
-::-webkit-scrollbar-thumb{background:#4CAF50;border-radius:4px}
-::-webkit-scrollbar-thumb:hover{background:#45a049}
-
-/* loader CEP */
-.loading-cep{position:relative}
-.loading-cep::after{
-  content:'';position:absolute;right:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;border:2px solid #4CAF50;border-top:2px solid transparent;border-radius:50%;
-  animation:spin 1s linear infinite
-}
-@keyframes spin{0%{transform:translateY(-50%) rotate(0)}100%{transform:translateY(-50%) rotate(360deg)}}
+    :root{--bg:#121212;--card:#1b1b1b;--muted:#9aa0a6;--text:#e8eaed;--accent:#61dafb;--ok:#22c55e;--warn:#f97316}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;background:var(--bg);color:var(--text)}
+    .container{max-width:1000px;margin:0 auto;padding:24px}
+    .card{background:var(--card);border:1px solid #2a2a2a;border-radius:14px;padding:22px;margin-bottom:18px}
+    h1{margin:0 0 14px;font-size:28px}
+    h2{margin:18px 0 8px;font-size:20px;border-left:4px solid var(--accent);padding-left:10px}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+    .col-12{grid-column:span 12}
+    .col-6{grid-column:span 6}
+    .col-4{grid-column:span 4}
+    .col-3{grid-column:span 3}
+    label{display:block;margin-bottom:6px;color:var(--muted);font-size:14px}
+    input,select,textarea{width:100%;padding:10px 12px;border:1px solid #303134;border-radius:10px;background:#0f0f10;color:var(--text)}
+    textarea{min-height:90px}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    .radio-group{display:flex;gap:14px;flex-wrap:wrap}
+    .muted{color:var(--muted);font-size:12px}
+    button, .btn{cursor:pointer;background:#0f172a;border:1px solid #243b53;border-radius:12px;color:#e2e8f0;padding:10px 14px}
+    button:hover{background:#111827}
+    .btn-accent{background:#0b2530;border-color:#114b5f}
+    .btn-ok{background:#032d13;border-color:#0d5132}
+    .btn-warn{background:#2b1608;border-color:#6b3412}
+    img.preview{max-width:220px;border-radius:10px;border:2px solid #333}
+    .divider{height:1px;background:#2a2a2a;margin:12px 0}
   </style>
 </head>
 <body>
+  <div class="container">
+    <div class="card">
+      <h1>Formulário de Candidatura</h1>
+      <p class="muted">Preencha seus dados e anexe uma foto (opcional). Campos com * são obrigatórios.</p>
+      <form id="form-candidato" method="POST" action="URL_DO_SEU_WEBAPP" enctype="multipart/form-data">
 
-  <!-- Anti-tela: escolha Cidade e Filiais -->
-  <div id="preselect" role="dialog" aria-modal="true">
-    <div class="preselect-card">
-      <h3><i class="fas fa-store"></i> Escolha a cidade e filial(is) para sua candidatura</h3>
-      <div class="preselect-row">
-        <div class="form-group">
-          <label for="cidade-select">Cidade *</label>
-          <select id="cidade-select" style="background:#4a4a4a;border:2px solid #555;border-radius:8px;padding:12px 15px;color:#e0e0e0">
-            <option value="">Selecione...</option>
-            <option value="Uberaba">Uberaba</option>
-            <option value="Uberlândia">Uberlândia</option>
-            <option value="Poços de Caldas">Poços de Caldas</option>
-          </select>
+        <!-- UNIDADE -->
+        <h2>Unidade Escolhida</h2>
+        <div class="grid">
+          <div class="col-6">
+            <label for="cidade">Cidade *</label>
+            <input id="cidade" name="cidade" required />
+          </div>
+          <div class="col-6">
+            <label for="filiais">Filial(is) *</label>
+            <select id="filiais" name="filiais" multiple required>
+              <option value="ARTUR">ARTUR</option>
+              <option value="FLORIANO">FLORIANO</option>
+              <option value="JOTA">JOTA</option>
+              <option value="MODA">MODA</option>
+              <option value="PONTO">PONTO</option>
+            </select>
+            <div class="muted">Segure CTRL (ou ⌘) para selecionar múltiplas.</div>
+          </div>
         </div>
-        <div class="form-group">
-          <label>Filial(is) *</label>
-          <div id="filiais-box" class="checkbox-group"></div>
+
+        <!-- DADOS PESSOAIS -->
+        <h2>Dados Pessoais</h2>
+        <div class="grid">
+          <div class="col-6">
+            <label for="nome-completo">Nome Completo *</label>
+            <input id="nome-completo" name="nome-completo" required />
+          </div>
+          <div class="col-3">
+            <label for="data-nascimento">Data de Nascimento *</label>
+            <input type="date" id="data-nascimento" name="data-nascimento" required />
+          </div>
+          <div class="col-3">
+            <label for="cpf">CPF *</label>
+            <input id="cpf" name="cpf" required />
+          </div>
+          <div class="col-3">
+            <label for="rg">RG</label>
+            <input id="rg" name="rg" />
+          </div>
+          <div class="col-3">
+            <label for="orgao-emissor">Órgão Emissor</label>
+            <input id="orgao-emissor" name="orgao-emissor" />
+          </div>
+          <div class="col-4">
+            <label for="naturalidade">Naturalidade</label>
+            <input id="naturalidade" name="naturalidade" />
+          </div>
+          <div class="col-2">
+            <label for="uf-naturalidade">UF</label>
+            <input id="uf-naturalidade" name="uf-naturalidade" maxlength="2" />
+          </div>
+          <!-- FOTO DO CANDIDATO -->
+          <div class="col-12">
+            <label for="foto-candidato">Foto do candidato (JPG/PNG, até 5 MB)</label>
+            <input type="file" id="foto-candidato" name="foto-candidato" accept="image/*" capture="environment" />
+            <div id="preview-foto" style="margin-top:10px;display:none">
+              <img id="preview-foto-img" class="preview" alt="Prévia da foto" />
+            </div>
+          </div>
         </div>
-        <div class="preselect-actions">
-          <button type="button" class="btn-secondary" id="btn-cancel-pre">Cancelar</button>
-          <button type="button" class="btn-submit" id="btn-continue-pre">Continuar</button>
+
+        <!-- ENDEREÇO -->
+        <h2>Endereço</h2>
+        <div class="grid">
+          <div class="col-2">
+            <label for="cep">CEP</label>
+            <input id="cep" name="cep" />
+          </div>
+          <div class="col-6">
+            <label for="endereco">Endereço</label>
+            <input id="endereco" name="endereco" />
+          </div>
+          <div class="col-2">
+            <label for="numero">Número</label>
+            <input id="numero" name="numero" />
+          </div>
+          <div class="col-2">
+            <label for="bairro">Bairro</label>
+            <input id="bairro" name="bairro" />
+          </div>
+          <div class="col-6">
+            <label for="municipio">Município</label>
+            <input id="municipio" name="municipio" />
+          </div>
+          <div class="col-2">
+            <label for="uf">UF</label>
+            <input id="uf" name="uf" maxlength="2" />
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="container" id="app-root" style="display:none">
-    <header class="form-header">
-      <div class="header-content">
-        <i class="fas fa-briefcase header-icon"></i>
-        <h1>FORMULÁRIO DE SOLICITAÇÃO DE EMPREGO</h1>
-        <h2>HERING STORE</h2>
-        <p>Preencha todos os campos para que sua candidatura seja validada</p>
-      </div>
-    </header>
-
-    <div class="form-container">
-      <!-- Resumo da seleção de Cidade/Filiais -->
-      <div class="form-block">
-        <div class="block-header"><i class="fas fa-map-pin"></i><h3>Vaga selecionada</h3></div>
-        <div class="block-content">
-          <span class="badge"><i class="fas fa-city"></i> <strong id="badge-cidade"></strong></span>
-          <span class="badge" style="margin-left:8px"><i class="fas fa-store"></i> <strong id="badge-filiais"></strong></span>
+        <!-- CONTATOS -->
+        <h2>Contatos</h2>
+        <div class="grid">
+          <div class="col-4">
+            <label for="celular">Celular *</label>
+            <input id="celular" name="celular" required />
+          </div>
+          <div class="col-4">
+            <label for="telefone">Telefone</label>
+            <input id="telefone" name="telefone" />
+          </div>
+          <div class="col-4">
+            <label for="email">E-mail *</label>
+            <input type="email" id="email" name="email" required />
+          </div>
         </div>
-      </div>
 
-      <form id="job-application-form" class="job-form" action="https://script.google.com/macros/s/AKfycbzdMkDG0N6xwF_px9n2N2gqqGFjYyv0D_8jOtremC3WSFQBy57_tHwtBg8CEsf-G93N/exec" method="POST" enctype="multipart/form-data">
-        <!-- campos ocultos para enviar cidade/filiais -->
-        <input type="hidden" name="cidade" id="cidade-hidden">
-        <input type="hidden" name="filiais" id="filiais-hidden">
+        <!-- FAMILIARES -->
+        <h2>Informações Familiares</h2>
+        <div class="grid">
+          <div class="col-6">
+            <label for="nome-pai">Nome do Pai</label>
+            <input id="nome-pai" name="nome-pai" />
+          </div>
+          <div class="col-6">
+            <label for="nome-mae">Nome da Mãe</label>
+            <input id="nome-mae" name="nome-mae" />
+          </div>
+          <div class="col-3">
+            <label for="estado-civil">Estado Civil</label>
+            <select id="estado-civil" name="estado-civil">
+              <option value="">Selecione…</option>
+              <option>Solteiro(a)</option>
+              <option>Casado(a)</option>
+              <option>Divorciado(a)</option>
+              <option>Viúvo(a)</option>
+              <option>União Estável</option>
+            </select>
+          </div>
+          <div class="col-3">
+            <label for="residencia">Residência</label>
+            <select id="residencia" name="residencia">
+              <option value="">Selecione…</option>
+              <option>Própria</option>
+              <option>Alugada</option>
+              <option>Com familiares</option>
+            </select>
+          </div>
+          <!-- Fluxo de filhos conforme solicitado -->
+          <div class="col-12">
+            <label>Possui Filhos?</label>
+            <div class="radio-group">
+              <label><input type="radio" name="possui-filhos" value="sim"/> Sim</label>
+              <label><input type="radio" name="possui-filhos" value="nao"/> Não</label>
+            </div>
 
-        <!-- 1. Dados Pessoais -->
-        <div class="form-block">
-          <div class="block-header"><i class="fas fa-user"></i><h3>Dados Pessoais</h3></div>
-          <div class="block-content">
-            <div class="form-grid">
-              <div class="form-group full-width">
-                <label for="nome-completo">Nome Completo *</label>
-                <input type="text" id="nome-completo" name="nome-completo" required>
+            <div id="menores-14-container" style="display:none;margin-top:10px">
+              <label>Possui filhos menores de 14 anos?</label>
+              <div class="radio-group">
+                <label><input type="radio" name="menores-14" value="sim"/> Sim</label>
+                <label><input type="radio" name="menores-14" value="nao"/> Não</label>
               </div>
-              <div class="form-group">
-                <label for="data-nascimento">Data de Nascimento *</label>
-                <input type="date" id="data-nascimento" name="data-nascimento" required>
-              </div>
-              <div class="form-group">
-                <label for="rg">RG *</label>
-                <input type="text" id="rg" name="rg" required>
-              </div>
-              <div class="form-group">
-                <label for="orgao-emissor">Órgão Emissor *</label>
-                <input type="text" id="orgao-emissor" name="orgao-emissor" required>
-              </div>
-              <div class="form-group">
-                <label for="cpf">CPF *</label>
-                <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" required>
-              </div>
-              <div class="form-group">
-                <label for="naturalidade">Naturalidade *</label>
-                <input type="text" id="naturalidade" name="naturalidade" required>
-              </div>
-              <div class="form-group">
-                <label for="uf-naturalidade">UF *</label>
-                <input type="text" id="uf-naturalidade" name="uf-naturalidade" maxlength="2" required>
+            </div>
+
+            <div id="qtd-menores-14-container" style="display:none;margin-top:10px">
+              <label for="qtd-menores-14">Quantidade de filhos menores de 14 anos</label>
+              <input type="number" id="qtd-menores-14" name="qtd-menores-14" min="0" disabled />
+            </div>
+          </div>
+        </div>
+
+        <!-- ESCOLARIDADE -->
+        <h2>Escolaridade</h2>
+        <div class="grid">
+          <div class="col-6">
+            <label for="escolaridade">Nível</label>
+            <select id="escolaridade" name="escolaridade">
+              <option value="">Selecione…</option>
+              <option>Fundamental</option>
+              <option>Médio</option>
+              <option>Técnico</option>
+              <option>Superior</option>
+              <option>Pós / MBA</option>
+              <option>Mestrado</option>
+              <option>Doutorado</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- FORMAÇÃO ACADÊMICA (dinâmica) -->
+        <h2>Formação Acadêmica</h2>
+        <div id="lista-cursos" class="card" style="padding:14px"></div>
+        <div class="row">
+          <button type="button" class="btn btn-accent" id="add-curso">+ Adicionar curso</button>
+        </div>
+        <input type="hidden" name="cursos" id="cursos-json" />
+
+        <!-- INFORMAÇÕES ADICIONAIS (sem CNH e sem Línguas) -->
+        <h2>Informações Adicionais</h2>
+        <div class="grid">
+          <div class="col-3">
+            <label>Título de Eleitor</label>
+            <input name="titulo-eleitor" />
+          </div>
+          <div class="col-2">
+            <label>Zona</label>
+            <input name="zona" />
+          </div>
+          <div class="col-4">
+            <label>Condução Própria</label>
+            <div class="radio-group">
+              <label><input type="radio" name="conducao-propria" value="sim"/> Sim</label>
+              <label><input type="radio" name="conducao-propria" value="nao"/> Não</label>
+            </div>
+            <div id="vale-transporte-container" style="display:none;margin-top:8px">
+              <label>Precisará de vale-transporte?</label>
+              <div class="radio-group">
+                <label><input type="radio" name="precisa-vale-transporte" value="sim"/> Sim</label>
+                <label><input type="radio" name="precisa-vale-transporte" value="nao"/> Não</label>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- 2. Endereço -->
-        <div class="form-block">
-          <div class="block-header"><i class="fas fa-map-marker-alt"></i><h3>Endereço</h3></div>
-          <div class="block-content">
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="cep">CEP *</label>
-                <input type="text" id="cep" name="cep" placeholder="00000-000" required onblur="buscarCEP()">
-              </div>
-              <div class="form-group large">
-                <label for="endereco">Endereço *</label>
-                <input type="text" id="endereco" name="endereco" required readonly>
-              </div>
-              <div class="form-group small">
-                <label for="numero">Nº *</label>
-                <input type="text" id="numero" name="numero" required>
-              </div>
-              <div class="form-group">
-                <label for="bairro">Bairro *</label>
-                <input type="text" id="bairro" name="bairro" required readonly>
-              </div>
-              <div class="form-group">
-                <label for="municipio">Município *</label>
-                <input type="text" id="municipio" name="municipio" required readonly>
-              </div>
-              <div class="form-group small">
-                <label for="uf">UF *</label>
-                <input type="text" id="uf" name="uf" maxlength="2" required readonly>
-              </div>
+        <!-- EXPERIÊNCIAS -->
+        <h2>Experiências Profissionais</h2>
+        <div class="grid">
+          <div class="col-12">
+            <label>Tem experiência?</label>
+            <div class="radio-group">
+              <label><input type="radio" name="tem-experiencia" value="sim"/> Sim</label>
+              <label><input type="radio" name="tem-experiencia" value="nao"/> Não</label>
+            </div>
+          </div>
+        </div>
+        <div id="lista-experiencias" class="card" style="padding:14px"></div>
+        <div class="row">
+          <button type="button" class="btn btn-accent" id="add-exp">+ Adicionar experiência</button>
+        </div>
+        <input type="hidden" name="experiencias" id="experiencias-json" />
+
+        <!-- FINAIS -->
+        <h2>Informações Finais</h2>
+        <div class="grid">
+          <div class="col-3">
+            <label for="pretensao-salarial">Pretensão Salarial</label>
+            <input id="pretensao-salarial" name="pretensao-salarial" />
+          </div>
+          <div class="col-3">
+            <label for="disponibilidade-inicio">Disponibilidade para início</label>
+            <input id="disponibilidade-inicio" name="disponibilidade-inicio" placeholder="Imediato / data" />
+          </div>
+          <div class="col-6">
+            <label for="disponibilidade-horario">Disponibilidade de horário</label>
+            <select id="disponibilidade-horario" name="disponibilidade-horario" multiple>
+              <option>Manhã</option>
+              <option>Tarde</option>
+              <option>Noite</option>
+              <option>Finais de semana</option>
+            </select>
+            <div class="muted">Você pode escolher vários.</div>
+          </div>
+          <div class="col-6">
+            <label for="como-soube">Como soube da vaga?</label>
+            <input id="como-soube" name="como-soube" />
+          </div>
+          <div class="col-6">
+            <label>Declaração de Veracidade *</label>
+            <div class="radio-group">
+              <label><input type="radio" name="declaracao-veracidade" value="Li e concordo" required/> Li e concordo</label>
             </div>
           </div>
         </div>
 
-        <!-- 3. Contatos -->
-        <div class="form-block">
-          <div class="block-header"><i class="fas fa-phone"></i><h3>Contatos Pessoais</h3></div>
-          <div class="block-content">
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="telefone">Telefone</label>
-                <input type="tel" id="telefone" name="telefone" placeholder="(00) 0000-0000">
-              </div>
-              <div class="form-group">
-                <label for="celular">Celular *</label>
-                <input type="tel" id="celular" name="celular" placeholder="(00) 00000-0000" required>
-              </div>
-              <div class="form-group full-width">
-                <label for="email">E-mail *</label>
-                <input type="email" id="email" name="email" required>
-              </div>
-            </div>
-          </div>
+        <div class="divider"></div>
+        <div class="row">
+          <button class="btn btn-ok" type="submit">Enviar candidatura</button>
+          <button class="btn btn-warn" type="reset">Limpar</button>
         </div>
 
-        <!-- 4. Informações Familiares -->
-        <div class="form-block">
-          <div class="block-header"><i class="fas fa-users"></i><h3>Informações Familiares</h3></div>
-          <div class="block-content">
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="nome-pai">Nome do Pai</label>
-                <input type="text" id="nome-pai" name="nome-pai">
-              </div>
-              <div class="form-group">
-                <label for="nome-mae">Nome da Mãe *</label>
-                <input type="text" id="nome-mae" name="nome-mae" required>
-              </div>
-
-              <div class="form-group full-width">
-                <label>Estado Civil *</label>
-                <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="estado-civil" value="casado" required><span class="radio-custom"></span>Casado(a)</label>
-                  <label class="radio-option"><input type="radio" name="estado-civil" value="solteiro" required><span class="radio-custom"></span>Solteiro(a)</label>
-                  <label class="radio-option"><input type="radio" name="estado-civil" value="divorciado" required><span class="radio-custom"></span>Divorciado(a)</label>
-                </div>
-              </div>
-
-              <div class="form-group full-width">
-                <label>Residência *</label>
-                <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="residencia" value="propria" required><span class="radio-custom"></span>Própria</label>
-                  <label class="radio-option"><input type="radio" name="residencia" value="alugada" required><span class="radio-custom"></span>Alugada</label>
-                </div>
-              </div>
-
-              <div class="form-group full-width">
-                <label>Possui Filhos?</label>
-                <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="possui-filhos" value="sim" onchange="toggleFilhosQuantidade()"><span class="radio-custom"></span>Sim</label>
-                  <label class="radio-option"><input type="radio" name="possui-filhos" value="nao" onchange="toggleFilhosQuantidade()"><span class="radio-custom"></span>Não</label>
-                </div>
-
-                <div class="conditional-field" id="quantidade-filhos-container" style="display:none;margin-top:10px">
-                  <label for="quantidade-filhos">Quantos filhos?</label>
-                  <input type="number" id="quantidade-filhos" name="quantidade-filhos" min="0" disabled>
-                </div>
-
-                <div class="conditional-field" id="menores-14-container" style="display:none;margin-top:10px">
-                  <label>Menores de 14 anos:</label>
-                  <div class="radio-group">
-                    <label class="radio-option"><input type="radio" name="menores-14" value="sim"><span class="radio-custom"></span>Sim</label>
-                    <label class="radio-option"><input type="radio" name="menores-14" value="nao"><span class="radio-custom"></span>Não</label>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- 5. Escolaridade -->
-        <div class="form-block">
-          <div class="block-header"><i class="fas fa-graduation-cap"></i><h3>Grau de Escolaridade</h3></div>
-          <div class="block-content">
-            <div class="form-grid">
-              <div class="form-group full-width">
-                <label>Selecione seu nível de escolaridade *</label>
-                <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="escolaridade" value="fundamental-completo" required><span class="radio-custom"></span>Fundamental Completo</label>
-                  <label class="radio-option"><input type="radio" name="escolaridade" value="fundamental-incompleto" required><span class="radio-custom"></span>Fundamental Incompleto</label>
-                  <label class="radio-option"><input type="radio" name="escolaridade" value="medio-completo" required><span class="radio-custom"></span>Médio Completo</label>
-                  <label class="radio-option"><input type="radio" name="escolaridade" value="medio-incompleto" required><span class="radio-custom"></span>Médio Incompleto</label>
-                  <label class="radio-option"><input type="radio" name="escolaridade" value="superior-completo" required><span class="radio-custom"></span>Superior Completo</label>
-                  <label class="radio-option"><input type="radio" name="escolaridade" value="superior-incompleto" required><span class="radio-custom"></span>Superior Incompleto</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 6. Formação Acadêmica (dinâmico) -->
-        <div class="form-block">
-          <div class="block-header"><i class="fas fa-certificate"></i><h3>Formação Acadêmica</h3></div>
-          <div class="block-content">
-            <div class="form-grid">
-              <div class="form-group full-width">
-                <label class="checkbox-option">
-                  <input type="checkbox" id="possui-formacao" name="possui-formacao" onchange="toggleFormacaoAcademica()">
-                  <span class="checkbox-custom"></span>
-                  Possuo formação acadêmica
-                </label>
-              </div>
-            </div>
-
-            <div class="hidden-section" id="formacao-academica-section">
-              <div class="education-grid">
-                <div class="course-container" id="course-container"></div>
-              </div>
-              <div style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap">
-                <button type="button" class="btn-secondary" id="btn-add-curso" onclick="adicionarCurso()">Adicionar curso</button>
-                <button type="button" class="btn-secondary" id="btn-remover-curso" onclick="removerUltimoCurso()">Remover último</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 7. Informações Adicionais -->
-        <div class="form-block">
-          <div class="block-header"><i class="fas fa-info-circle"></i><h3>Informações Adicionais</h3></div>
-          <div class="block-content">
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="titulo-eleitor">Título de Eleitor nº</label>
-                <input type="text" id="titulo-eleitor" name="titulo-eleitor">
-              </div>
-              <div class="form-group">
-                <label for="zona">Zona</label>
-                <input type="text" id="zona" name="zona">
-              </div>
-
-              <div class="form-group full-width">
-                <label>CNH</label>
-                <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="cnh" value="sim" onchange="toggleCNHCategoria()"><span class="radio-custom"></span>Sim</label>
-                  <label class="radio-option"><input type="radio" name="cnh" value="nao" onchange="toggleCNHCategoria()"><span class="radio-custom"></span>Não</label>
-                </div>
-                <div class="conditional-field" id="categoria-cnh-container" style="display:none">
-                  <label for="categoria-cnh">Categoria</label>
-                  <input type="text" id="categoria-cnh" name="categoria-cnh" disabled>
-                </div>
-              </div>
-
-              <div class="form-group full-width">
-                <label>Condução Própria</label>
-                <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="conducao-propria" value="sim"><span class="radio-custom"></span>Sim</label>
-                  <label class="radio-option"><input type="radio" name="conducao-propria" value="nao"><span class="radio-custom"></span>Não</label>
-                </div>
-              </div>
-
-              <div class="form-group full-width">
-                <label>Possui alguma deficiência</label>
-                <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="deficiencia" value="sim"><span class="radio-custom"></span>Sim</label>
-                  <label class="radio-option"><input type="radio" name="deficiencia" value="nao"><span class="radio-custom"></span>Não</label>
-                </div>
-              </div>
-
-              <div class="form-group full-width">
-                <label>Línguas estrangeiras</label>
-                <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="linguas-estrangeiras" value="sim" onchange="toggleLinguas()"><span class="radio-custom"></span>Sim</label>
-                  <label class="radio-option"><input type="radio" name="linguas-estrangeiras" value="nao" onchange="toggleLinguas()"><span class="radio-custom"></span>Não</label>
-                </div>
-                <div class="conditional-field" id="quais-linguas-container" style="display:none">
-                  <label for="quais-linguas">Quais línguas?</label>
-                  <input type="text" id="quais-linguas" name="quais-linguas" disabled>
-                </div>
-              </div>
-
-              <div class="form-group full-width">
-                <label>Conhecimento de Informática</label>
-                <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="informatica" value="basico"><span class="radio-custom"></span>Básico</label>
-                  <label class="radio-option"><input type="radio" name="informatica" value="intermediario"><span class="radio-custom"></span>Intermediário</label>
-                  <label class="radio-option"><input type="radio" name="informatica" value="avancado"><span class="radio-custom"></span>Avançado</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 8. Experiências Profissionais -->
-        <div class="form-block">
-          <div class="block-header"><i class="fas fa-history"></i><h3>Experiências Profissionais</h3></div>
-          <div class="block-content">
-            <div class="form-grid">
-              <div class="form-group full-width">
-                <label>Você possui experiência profissional? *</label>
-                <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="tem-experiencia" value="sim" required onchange="toggleExperienciaProfissional()"><span class="radio-custom"></span>Possuo experiência profissional</label>
-                  <label class="radio-option"><input type="radio" name="tem-experiencia" value="nao" required onchange="toggleExperienciaProfissional()"><span class="radio-custom"></span>Não possuo experiência profissional</label>
-                </div>
-              </div>
-            </div>
-
-            <div class="hidden-section" id="experiencia-profissional-section">
-              <div class="experience-container" id="experience-container"></div>
-
-              <div style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap">
-                <button type="button" class="btn-secondary" onclick="adicionarExperiencia()">Adicionar experiência</button>
-                <button type="button" class="btn-secondary" onclick="removerUltimaExperiencia()">Remover última</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 9. Informações Finais (com ajustes pedidos) -->
-        <div class="form-block">
-          <div class="block-header"><i class="fas fa-clipboard-check"></i><h3>Informações Finais</h3></div>
-          <div class="block-content">
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="pretensao-salarial">Pretensão Salarial</label>
-                <input type="text" id="pretensao-salarial" name="pretensao-salarial" placeholder="R$ 0.000,00">
-              </div>
-              <div class="form-group">
-                <label for="pretensao-cargo">Pretensão de Cargo</label>
-                <input type="text" id="pretensao-cargo" name="pretensao-cargo" placeholder="Ex.: Vendedor, Caixa, Estoquista...">
-              </div>
-
-              <div class="form-group full-width">
-                <label>Disponibilidade para início imediato *</label>
-                <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="disponibilidade-inicio" value="sim" required><span class="radio-custom"></span>Sim</label>
-                  <label class="radio-option"><input type="radio" name="disponibilidade-inicio" value="nao" required><span class="radio-custom"></span>Não</label>
-                </div>
-              </div>
-
-              <div class="form-group full-width">
-                <label>Disponibilidade de Horário *</label>
-                <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="disponibilidade-horario" value="manha" required><span class="radio-custom"></span>Manhã</label>
-                  <label class="radio-option"><input type="radio" name="disponibilidade-horario" value="tarde" required><span class="radio-custom"></span>Tarde</label>
-                  <label class="radio-option"><input type="radio" name="disponibilidade-horario" value="noite" required><span class="radio-custom"></span>Noite</label>
-                  <label class="radio-option"><input type="radio" name="disponibilidade-horario" value="integral" required><span class="radio-custom"></span>Integral</label>
-                </div>
-              </div>
-
-              <div class="form-group full-width">
-                <label>Como soube da vaga?</label>
-                <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="como-soube" value="site"><span class="radio-custom"></span>Site de Empregos</label>
-                  <label class="radio-option"><input type="radio" name="como-soube" value="indicacao"><span class="radio-custom"></span>Indicação</label>
-                  <label class="radio-option"><input type="radio" name="como-soube" value="redes-sociais"><span class="radio-custom"></span>Redes Sociais</label>
-                  <label class="radio-option"><input type="radio" name="como-soube" value="outro"><span class="radio-custom"></span>Outro</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 10-A. Declaração de Veracidade -->
-        <div class="form-block">
-          <div class="block-header"><i class="fas fa-file-signature"></i><h3>Declaração de Veracidade</h3></div>
-          <div class="block-content">
-            <div class="declaration-container">
-              <label class="checkbox-option" style="background:transparent;border:none;padding:0">
-                <input type="checkbox" id="declaracao-veracidade" name="declaracao-veracidade">
-                <span class="checkbox-custom"></span>
-                <span class="declaration-text">Declaro, para os devidos fins, que as informações prestadas neste formulário são verdadeiras e completas.</span>
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <!-- 10-B. Declaração de Confidencialidade (texto completo LGPD) -->
-        <div class="form-block">
-          <div class="block-header"><i class="fas fa-shield-alt"></i><h3>Declaração de Confidencialidade</h3></div>
-          <div class="block-content">
-            <div class="declaration-container">
-              <p class="declaration-text">
-                A Hering Store se compromete a tratar seus dados pessoais com confidencialidade e segurança, utilizando-os exclusivamente para análise
-                desta candidatura e processos seletivos relacionados. As informações não serão compartilhadas com terceiros não autorizados e serão
-                armazenadas pelo período necessário ao processo, em conformidade com a legislação aplicável (LGPD).
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Ações -->
-        <div class="form-actions">
-          <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Enviar Candidatura</button>
-          <button type="reset" class="btn-reset"><i class="fas fa-eraser"></i> Limpar Formulário</button>
-        </div>
-
+        <!--
+          Hiddens que receberão os JSONs das listas dinâmicas
+        -->
+        <input type="hidden" id="_dummy"/>
       </form>
     </div>
   </div>
 
 <script>
-/* ====== Mapa de filiais por cidade (anti-tela) ====== */
-const FILIAIS = {
-  "Uberaba": [
-    "Hering - Prudente de Morais",
-    "Hering - Shopping Uberaba"
-  ],
-  "Uberlândia": [
-    "Hering - Floriano Peixoto",
-    "Hering - Uberlândia Shopping"
-  ],
-  "Poços de Caldas": [
-    "Hering - Rio de Janeiro"
-  ]
-};
+// ===== Preview e validação da foto =====
+const fotoInput = document.getElementById('foto-candidato');
+if (fotoInput) {
+  fotoInput.addEventListener('change', () => {
+    const file = fotoInput.files?.[0];
+    const previewWrap = document.getElementById('preview-foto');
+    const previewImg  = document.getElementById('preview-foto-img');
 
-/* ====== CEP ====== */
-async function buscarCEP(){
-  const cepInput=document.getElementById('cep');
-  const enderecoInput=document.getElementById('endereco');
-  const bairroInput=document.getElementById('bairro');
-  const municipioInput=document.getElementById('municipio');
-  const ufInput=document.getElementById('uf');
-  const cep=cepInput.value.replace(/\D/g,'');
-  if(cep.length!==8) return;
-  cepInput.classList.add('loading-cep');
-  try{
-    const resp=await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-    const data=await resp.json();
-    if(data.erro){
-      alert('CEP não encontrado.');enderecoInput.value='';bairroInput.value='';municipioInput.value='';ufInput.value='';
-    }else{
-      enderecoInput.value=data.logradouro||'';bairroInput.value=data.bairro||'';municipioInput.value=data.localidade||'';ufInput.value=data.uf||'';
-    }
-  }catch(e){console.error(e);alert('Erro ao buscar CEP.');}
-  finally{cepInput.classList.remove('loading-cep');}
-}
+    if (!file) { previewWrap.style.display='none'; previewImg.src=''; return; }
+    if (!/^image\//.test(file.type)) { alert('Envie uma imagem (JPG/PNG).'); fotoInput.value=''; return; }
+    if (file.size > 5 * 1024 * 1024) { alert('Tamanho máximo: 5 MB.'); fotoInput.value=''; return; }
 
-/* ===== Familiares ===== */
-function toggleFilhosQuantidade(){
-  const possuiFilhosSim=document.querySelector('input[name="possui-filhos"][value="sim"]');
-  const qtdWrap=document.getElementById('quantidade-filhos-container');
-  const qtdInput=document.getElementById('quantidade-filhos');
-  const menoresWrap=document.getElementById('menores-14-container');
-  if(possuiFilhosSim && possuiFilhosSim.checked){
-    qtdWrap.style.display='block';qtdInput.disabled=false;
-    menoresWrap.style.display='block';
-  }else{
-    qtdWrap.style.display='none';qtdInput.disabled=true;qtdInput.value='';
-    menoresWrap.style.display='none';
-    const m14=document.querySelectorAll('input[name="menores-14"]'); m14.forEach(r=>r.checked=false);
-  }
-}
-
-/* ===== CNH ===== */
-function toggleCNHCategoria(){
-  const cnhSim=document.querySelector('input[name="cnh"][value="sim"]');
-  const wrap=document.getElementById('categoria-cnh-container');
-  const input=document.getElementById('categoria-cnh');
-  if(cnhSim && cnhSim.checked){wrap.style.display='block';input.disabled=false;}
-  else{wrap.style.display='none';input.disabled=true;input.value='';}
-}
-
-/* ===== Línguas ===== */
-function toggleLinguas(){
-  const linguasSim=document.querySelector('input[name="linguas-estrangeiras"][value="sim"]');
-  const wrap=document.getElementById('quais-linguas-container');
-  const input=document.getElementById('quais-linguas');
-  if(linguasSim && linguasSim.checked){wrap.style.display='block';input.disabled=false;}
-  else{wrap.style.display='none';input.disabled=true;input.value='';}
-}
-
-/* ===== Formação Acadêmica Dinâmica ===== */
-let cursoCount=0;
-function cursoCardTemplate(idx){
-  return `
-  <div class="course-card" data-curso="${idx}">
-    <h4>Curso ${idx}</h4>
-    <div class="form-grid">
-      <div class="form-group">
-        <label for="curso${idx}">Curso</label>
-        <input type="text" id="curso${idx}" name="curso${idx}">
-      </div>
-      <div class="form-group">
-        <label for="instituicao${idx}">Instituição</label>
-        <input type="text" id="instituicao${idx}" name="instituicao${idx}">
-      </div>
-      <div class="form-group full-width">
-        <div class="checkbox-group">
-          <label class="checkbox-option">
-            <input type="checkbox" name="status-curso${idx}" value="cursando" onchange="toggleConclusao(${idx})">
-            <span class="checkbox-custom"></span>Cursando
-          </label>
-          <label class="checkbox-option">
-            <input type="checkbox" name="status-curso${idx}" value="concluido" onchange="toggleConclusao(${idx})">
-            <span class="checkbox-custom"></span>Concluído
-          </label>
-        </div>
-        <div class="conditional-field" id="ano-conclusao${idx}-container" style="display:none">
-          <label for="ano-conclusao${idx}">Ano de conclusão</label>
-          <input type="number" id="ano-conclusao${idx}" name="ano-conclusao${idx}" min="1950" max="2030" disabled>
-        </div>
-      </div>
-    </div>
-  </div>`;
-}
-function adicionarCurso(){
-  cursoCount++; const ctn=document.getElementById('course-container');
-  ctn.insertAdjacentHTML('beforeend', cursoCardTemplate(cursoCount));
-}
-function removerUltimoCurso(){
-  const ctn=document.getElementById('course-container');
-  if(ctn.lastElementChild){ctn.removeChild(ctn.lastElementChild);cursoCount=Math.max(0,cursoCount-1);}
-}
-function toggleFormacaoAcademica(){
-  const chk=document.getElementById('possui-formacao');
-  const sec=document.getElementById('formacao-academica-section');
-  if(chk.checked){
-    sec.classList.add('show');
-    if(cursoCount===0) adicionarCurso(); // abre com 1 curso
-  }else{
-    sec.classList.remove('show');
-  }
-}
-function toggleConclusao(idx){
-  const concluido=document.querySelector(`input[name="status-curso${idx}"][value="concluido"]`);
-  const wrap=document.getElementById(`ano-conclusao${idx}-container`);
-  const input=document.getElementById(`ano-conclusao${idx}`);
-  if(concluido && concluido.checked){wrap.style.display='block';input.disabled=false;}
-  else{wrap.style.display='none';input.disabled=true;input.value='';}
-}
-
-/* ===== Experiências Dinâmicas ===== */
-function experienciaCardTemplate(idx){
-  return `
-  <div class="experience-card" data-exp="${idx}">
-    <h4>Experiência ${idx}</h4>
-    <div class="form-grid">
-      <div class="form-group"><label for="empresa${idx}">Empresa</label><input type="text" id="empresa${idx}" name="empresa${idx}"></div>
-      <div class="form-group"><label for="cargo${idx}">Cargo</label><input type="text" id="cargo${idx}" name="cargo${idx}"></div>
-      <div class="form-group"><label for="periodo${idx}">Período (meses/anos)</label><input type="text" id="periodo${idx}" name="periodo${idx}" placeholder="Ex.: 1 ano e 6 meses"></div>
-      <div class="form-group"><label for="responsavel${idx}">Responsável (gestor/líder)</label><input type="text" id="responsavel${idx}" name="responsavel${idx}"></div>
-      <div class="form-group"><label for="contato${idx}">Contato do responsável</label><input type="tel" id="contato${idx}" name="contato${idx}" placeholder="(00) 00000-0000"></div>
-      <div class="form-group full-width"><label for="atividades${idx}">Principais Atividades</label><textarea id="atividades${idx}" name="atividades${idx}" rows="3"></textarea></div>
-    </div>
-  </div>`;
-}
-function adicionarExperiencia(){
-  const ctn=document.getElementById('experience-container');
-  const idx=ctn.children.length+1;
-  ctn.insertAdjacentHTML('beforeend', experienciaCardTemplate(idx));
-}
-function removerUltimaExperiencia(){
-  const ctn=document.getElementById('experience-container');
-  if(ctn.lastElementChild){ctn.removeChild(ctn.lastElementChild);}
-}
-function toggleExperienciaProfissional(){
-  const tem=document.querySelector('input[name="tem-experiencia"]:checked')?.value;
-  const sec=document.getElementById('experiencia-profissional-section');
-  if(tem==='sim'){
-    sec.classList.add('show');
-    if(!document.querySelector('.experience-card')) adicionarExperiencia();
-  }else{
-    sec.classList.remove('show');
-  }
-}
-
-/* ===== Anti-tela (Cidade/Filiais) ===== */
-function initPreselect(){
-  const pre=document.getElementById('preselect');
-  const app=document.getElementById('app-root');
-  const cidadeSel=document.getElementById('cidade-select');
-  const filiaisBox=document.getElementById('filiais-box');
-  const btnCancel=document.getElementById('btn-cancel-pre');
-  const btnCont=document.getElementById('btn-continue-pre');
-  const badgeCidade=document.getElementById('badge-cidade');
-  const badgeFiliais=document.getElementById('badge-filiais');
-  const inputCidade=document.getElementById('cidade-hidden');
-  const inputFiliais=document.getElementById('filiais-hidden');
-
-  function renderFiliais(){
-    filiaisBox.innerHTML='';
-    const cidade=cidadeSel.value;
-    if(!cidade || !FILIAIS[cidade]) return;
-    FILIAIS[cidade].forEach((nome)=>{
-      filiaisBox.insertAdjacentHTML('beforeend', `
-        <label class="checkbox-option">
-          <input type="checkbox" value="${nome}">
-          <span class="checkbox-custom"></span>${nome}
-        </label>
-      `);
-    });
-  }
-
-  cidadeSel.addEventListener('change', renderFiliais);
-
-  btnCancel.addEventListener('click', ()=>{
-    cidadeSel.value=''; filiaisBox.innerHTML='';
-  });
-
-  btnCont.addEventListener('click', ()=>{
-    const cidade=cidadeSel.value;
-    if(!cidade){ alert('Selecione a cidade.'); return; }
-    const marcadas=[...filiaisBox.querySelectorAll('input[type="checkbox"]:checked')].map(i=>i.value);
-    if(!marcadas.length){ alert('Selecione pelo menos uma filial.'); return; }
-
-    badgeCidade.textContent = cidade;
-    badgeFiliais.textContent = marcadas.join(', ');
-    inputCidade.value = cidade;
-    inputFiliais.value = marcadas.join(', ');
-
-    pre.style.display='none';
-    app.style.display='block';
+    const reader = new FileReader();
+    reader.onload = e => { previewImg.src = e.target.result; previewWrap.style.display = 'block'; };
+    reader.readAsDataURL(file);
   });
 }
 
-/* ===== Máscaras e init ===== */
-document.addEventListener('DOMContentLoaded', ()=>{
-  // inicia anti-tela
-  initPreselect();
+// ===== Fluxo Filhos -> Menores de 14 -> Quantidade =====
+function setupFilhosFlow(){
+  const rPossui = document.querySelectorAll('input[name="possui-filhos"]');
+  const wrapMenores = document.getElementById('menores-14-container');
+  const rMenores = document.querySelectorAll('input[name="menores-14"]');
+  const wrapQtd = document.getElementById('qtd-menores-14-container');
+  const inputQtd = document.getElementById('qtd-menores-14');
 
-  toggleFilhosQuantidade(); toggleCNHCategoria(); toggleLinguas(); toggleFormacaoAcademica(); toggleExperienciaProfissional();
+  function refresh(){
+    const possui = document.querySelector('input[name="possui-filhos"]:checked')?.value;
+    const menores = document.querySelector('input[name="menores-14"]:checked')?.value;
 
-  // CPF (máscara)
-  const cpf=document.getElementById('cpf');
-  if(cpf){
-    cpf.addEventListener('input',e=>{
-      let v=e.target.value.replace(/\D/g,'');
-      if(v.length>9) v=v.replace(/^(\d{3})(\d{3})(\d{3})(\d{0,2}).*/,'$1.$2.$3-$4');
-      else if(v.length>6) v=v.replace(/^(\d{3})(\d{3})(\d{0,3}).*/,'$1.$2.$3');
-      else if(v.length>3) v=v.replace(/^(\d{3})(\d{0,3}).*/,'$1.$2');
-      e.target.value=v;
-    });
-  }
-
-  const tel=document.getElementById('telefone');
-  if(tel){tel.addEventListener('input',e=>{
-    let v=e.target.value.replace(/\D/g,'');
-    if(v.length>10) v=v.replace(/^(\d\d)(\d{5})(\d{4}).*/,'($1) $2-$3');
-    else if(v.length>6) v=v.replace(/^(\d\d)(\d{4})(\d{0,4}).*/,'($1) $2-$3');
-    else if(v.length>2) v=v.replace(/^(\d\d)(\d{0,5})/,'($1) $2');
-    e.target.value=v;
-  });}
-
-  const cel=document.getElementById('celular');
-  if(cel){cel.addEventListener('input',e=>{
-    let v=e.target.value.replace(/\D/g,'');
-    if(v.length>11) v=v.replace(/^(\d\d)(\d{5})(\d{4}).*/,'($1) $2-$3');
-    else if(v.length>7) v=v.replace(/^(\d\d)(\d{5})(\d{0,4}).*/,'($1) $2-$3');
-    else if(v.length>2) v=v.replace(/^(\d\d)(\d{0,5})/,'($1) $2');
-    e.target.value=v;
-  });}
-
-  const pret=document.getElementById('pretensao-salarial');
-  if(pret){pret.addEventListener('input',e=>{
-    let v=e.target.value.replace(/\D/g,''); v=(parseInt(v||'0',10)/100).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); e.target.value=v;
-  });}
-});
-
-/* ===== Envio ===== */
-document.getElementById('job-application-form').addEventListener('submit', async function(event){
-  event.preventDefault();
-
-  // Valida declaração de veracidade
-  const decl=document.getElementById('declaracao-veracidade');
-  if(!decl.checked){
-    alert('Você precisa aceitar a Declaração de Veracidade para prosseguir.');
-    decl.scrollIntoView({behavior:'smooth',block:'center'}); decl.focus(); return;
-  }
-
-  const form=event.target;
-  const fd=new FormData(form);
-
-  // Data de Nascimento em formato BR (se vier yyyy-mm-dd)
-  const dn=form.querySelector('#data-nascimento')?.value || '';
-  if(dn && /^\d{4}-\d{2}-\d{2}$/.test(dn)){
-    const [y,m,d]=dn.split('-'); fd.set('data-nascimento', `${d}/${m}/${y}`);
-  }
-
-  // Cursos dinâmicos (JSON)
-  const cursos=[];
-  document.querySelectorAll('.course-card').forEach((card,idx)=>{
-    const i=card.getAttribute('data-curso') || (idx+1);
-    const get=(sel)=> (card.querySelector(sel)?.value||'').trim();
-    const curso=get(`#curso${i}`) || get('[id^="curso"]');
-    const instituicao=get(`#instituicao${i}`) || get('[id^="instituicao"]');
-    const status=(document.querySelector(`input[name="status-curso${i}"]:checked`)?.value)||'';
-    const ano=get(`#ano-conclusao${i}`) || get('[id^="ano-conclusao"]');
-    if(curso||instituicao||status||ano) cursos.push({curso, instituicao, status, anoConclusao:ano});
-  });
-  if(cursos.length) fd.set('cursos', JSON.stringify(cursos));
-
-  // Experiências dinâmicas (JSON)
-  if(document.querySelector('input[name="tem-experiencia"]:checked')?.value==='sim'){
-    const exps=[];
-    document.querySelectorAll('.experience-card').forEach((card,idx)=>{
-      const i=card.getAttribute('data-exp') || (idx+1);
-      const get=(sel)=> (card.querySelector(sel)?.value||'').trim();
-      const empresa=get(`#empresa${i}`) || get('[id^="empresa"]');
-      const cargo=get(`#cargo${i}`) || get('[id^="cargo"]');
-      const periodo=get(`#periodo${i}`) || get('[id^="periodo"]');
-      const responsavel=get(`#responsavel${i}`) || get('[id^="responsavel"]');
-      const contato=get(`#contato${i}`) || get('[id^="contato"]');
-      const atividades=get(`#atividades${i}`) || get('[id^="atividades"]');
-      if(empresa||cargo||periodo||responsavel||contato||atividades){
-        exps.push({empresa,cargo,periodo,responsavel,contato,atividades});
+    if (possui === 'sim') {
+      wrapMenores.style.display = 'block';
+      if (menores === 'sim') {
+        wrapQtd.style.display = 'block';
+        inputQtd.disabled = false;
+      } else {
+        wrapQtd.style.display = 'none';
+        inputQtd.disabled = true; inputQtd.value = '';
       }
-    });
-    if(exps.length) fd.set('experiencias', JSON.stringify(exps));
-  }
-
-  // Flag veracidade explícita
-  fd.set('declaracao-veracidade', decl.checked ? 'Aceito' : 'Não aceito');
-
-  try{
-    // Tenta CORS normal
-    let response=await fetch(form.action,{ method:'POST', body:fd });
-    if(response.ok){
-      alert('Formulário enviado com sucesso!');
-      form.reset();
-      return;
+    } else {
+      wrapMenores.style.display = 'none';
+      rMenores.forEach(r => r.checked = false);
+      wrapQtd.style.display = 'none';
+      inputQtd.disabled = true; inputQtd.value = '';
     }
-    // Fallback no-cors
-    await fetch(form.action,{ method:'POST', mode:'no-cors', body:fd });
-    alert('Formulário enviado! (o navegador não conseguiu ler a resposta, mas o envio foi realizado).');
-    form.reset();
-  }catch(err){
-    console.error(err);
-    alert('Ocorreu um erro de rede. Mesmo assim, sua candidatura pode ter sido enviada.');
   }
+
+  rPossui.forEach(r => r.addEventListener('change', refresh));
+  rMenores.forEach(r => r.addEventListener('change', refresh));
+  refresh();
+}
+
+// ===== Fluxo Condução -> Vale-transporte =====
+function setupConducao(){
+  const radios = document.querySelectorAll('input[name="conducao-propria"]');
+  const wrapVT = document.getElementById('vale-transporte-container');
+  function refresh(){
+    const v = document.querySelector('input[name="conducao-propria"]:checked')?.value;
+    if (v === 'nao') wrapVT.style.display = 'block';
+    else {
+      wrapVT.style.display = 'none';
+      document.querySelectorAll('input[name="precisa-vale-transporte"]').forEach(r=> r.checked=false);
+    }
+  }
+  radios.forEach(r=> r.addEventListener('change', refresh));
+  refresh();
+}
+
+// ===== Blocos dinâmicos: cursos =====
+const listaCursos = document.getElementById('lista-cursos');
+const btnAddCurso = document.getElementById('add-curso');
+function renderCurso(idx, data={}){
+  const el = document.createElement('div');
+  el.className = 'card';
+  el.style.marginBottom = '10px';
+  el.innerHTML = `
+    <div class="grid">
+      <div class="col-5"><label>Curso</label><input data-k="curso" value="${data.curso||''}"></div>
+      <div class="col-4"><label>Instituição</label><input data-k="instituicao" value="${data.instituicao||''}"></div>
+      <div class="col-2"><label>Status</label><input data-k="status" value="${data.status||''}"></div>
+      <div class="col-1"><label>Ano</label><input data-k="anoConclusao" value="${data.anoConclusao||''}"></div>
+      <div class="col-12 row"><button type="button" class="btn btn-warn btn-del">Remover</button></div>
+    </div>`;
+  el.querySelector('.btn-del').onclick = () => el.remove();
+  listaCursos.appendChild(el);
+}
+btnAddCurso?.addEventListener('click', ()=> renderCurso());
+
+// ===== Blocos dinâmicos: experiências =====
+const listaExp = document.getElementById('lista-experiencias');
+const btnAddExp = document.getElementById('add-exp');
+function renderExp(idx, data={}){
+  const el = document.createElement('div');
+  el.className = 'card';
+  el.style.marginBottom = '10px';
+  el.innerHTML = `
+    <div class="grid">
+      <div class="col-4"><label>Empresa</label><input data-k="empresa" value="${data.empresa||''}"></div>
+      <div class="col-3"><label>Cargo</label><input data-k="cargo" value="${data.cargo||''}"></div>
+      <div class="col-5"><label>Período (ex: 01/2022 a 03/2024)</label><input data-k="periodo" value="${data.periodo||''}"></div>
+      <div class="col-4"><label>Responsável</label><input data-k="responsavel" value="${data.responsavel||''}"></div>
+      <div class="col-4"><label>Contato</label><input data-k="contato" value="${data.contato||''}"></div>
+      <div class="col-12"><label>Atividades</label><textarea data-k="atividades">${data.atividades||''}</textarea></div>
+      <div class="col-12 row"><button type="button" class="btn btn-warn btn-del">Remover</button></div>
+    </div>`;
+  el.querySelector('.btn-del').onclick = () => el.remove();
+  listaExp.appendChild(el);
+}
+btnAddExp?.addEventListener('click', ()=> renderExp());
+
+// ===== Serialização antes de enviar =====
+function serializeList(wrapper){
+  const out = [];
+  wrapper.querySelectorAll('.card').forEach(block=>{
+    const item={};
+    block.querySelectorAll('[data-k]').forEach(inp=>{
+      item[inp.getAttribute('data-k')] = inp.value?.trim?.() || '';
+    });
+    // somente adiciona se tiver algum valor
+    if (Object.values(item).some(v=>v)) out.push(item);
+  });
+  return out;
+}
+
+function serializeMultiSelect(sel){
+  return Array.from(sel?.selectedOptions||[]).map(o=>o.value);
+}
+
+// ===== Inits =====
+document.addEventListener('DOMContentLoaded', ()=>{
+  setupFilhosFlow();
+  setupConducao();
+  // adiciona 1 bloco inicial para exemplo
+  // renderCurso();
+  // renderExp();
+
+  const form = document.getElementById('form-candidato');
+  form.addEventListener('submit', ()=>{
+    // cursos e exp em JSON
+    const cursos = serializeList(document.getElementById('lista-cursos'));
+    const exp = serializeList(document.getElementById('lista-experiencias'));
+    document.getElementById('cursos-json').value = JSON.stringify(cursos);
+    document.getElementById('experiencias-json').value = JSON.stringify(exp);
+
+    // disponibilidade-horario (multi) -> o Apps Script também aceita e.parameters
+    const dispSel = document.getElementById('disponibilidade-horario');
+    const vals = serializeMultiSelect(dispSel);
+    // Truque: garantir pelo menos 1 option selecionada se usuário marcou nenhuma (opcional)
+    // if (!vals.length) alert('Escolha ao menos uma disponibilidade.');
+  });
 });
 </script>
 </body>
 </html>
+```
+
+---
+
+# 2) Google Apps Script COMPLETO (recebendo foto, Drive, e PDF com imagem)
+
+> Publique como **Web app** (Execute as: *Me* / Who has access: *Anyone*). Crie (ou informe) a pasta de fotos.
+
+```javascript
+/**
+ * Web App
+ * - Publish > Deploy as web app (Manage deployments)
+ * - Execute as: Me
+ * - Who has access: Anyone
+ */
+
+// ====== Config ======
+const FOLDER_ID = ''; // Opcional: ID da pasta onde as fotos serão salvas. Vazio => cria/usa "Candidatos_Fotos".
+
+function getFotosFolder_() {
+  if (FOLDER_ID) return DriveApp.getFolderById(FOLDER_ID);
+  const name = 'Candidatos_Fotos';
+  const it = DriveApp.getFoldersByName(name);
+  if (it.hasNext()) return it.next();
+  return DriveApp.createFolder(name);
+}
+
+function doGet() {
+  return ContentService.createTextOutput('OK');
+}
+
+function doPost(e) {
+  try {
+    if (!e || (!e.postData && !e.parameter)) {
+      return jsonOut({ success: false, message: 'Nenhum dado recebido.' });
+    }
+
+    // --- Parâmetros simples/múltiplos
+    var p = e.parameter || {};
+    var multi = e.parameters || {};
+
+    var filiais = [];
+    if (multi['filiais'] && multi['filiais'].join) filiais = multi['filiais'];
+    else if (p['filiais']) filiais = [String(p['filiais'])];
+
+    // disponibilidade-horario pode vir múltiplo
+    if (multi['disponibilidade-horario'] && multi['disponibilidade-horario'].join) {
+      p['disponibilidade-horario'] = multi['disponibilidade-horario'].join(', ');
+    }
+
+    // JSONs dinâmicos
+    var cursos = [];
+    var experiencias = [];
+    if (p.cursos)       { try { cursos       = JSON.parse(p.cursos); }       catch (_) {} }
+    if (p.experiencias) { try { experiencias = JSON.parse(p.experiencias); } catch (_) {} }
+
+    // Utils
+    function val(k, dflt) { return (p[k] || dflt || '').toString().trim(); }
+    function toBRDate(iso) {
+      if (!iso) return '';
+      var m = String(iso).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+      return m ? (m[3] + '/' + m[2] + '/' + m[1]) : String(iso);
+    }
+    function cityUF(cidade, uf) {
+      var c = (cidade || '').toString().trim();
+      var u = (uf || '').toString().trim();
+      if (c && u) return c + ' / ' + u;
+      return c || u || '';
+    }
+    function periodoFromExp(ex) {
+      if (ex.periodo) return ex.periodo;
+      var de = ex.dataEntrada || '';
+      var ate = ex.dataSaida || '';
+      if (de || ate) return (de || '') + (de || ate ? ' a ' : '') + (ate || '');
+      return '';
+    }
+
+    // --- FOTO (se enviada)
+    var fotoBlob = null;
+    if (e && e.files && e.files['foto-candidato']) {
+      fotoBlob = e.files['foto-candidato']; // Blob (image/*)
+    }
+
+    // --- Monta corpo do e-mail (removido CNH e Línguas estrangeiras)
+    var linhas = [];
+
+    // Unidade
+    linhas.push('--- UNIDADE ESCOLHIDA ---');
+    linhas.push('Cidade: ' + (val('cidade') || '-'));
+    linhas.push('Filial(is): ' + (filiais.length ? filiais.join(', ') : '-'));
+    linhas.push('');
+
+    // Dados pessoais
+    linhas.push('--- DADOS PESSOAIS ---');
+    linhas.push('Nome Completo: ' + val('nome-completo'));
+    linhas.push('Data de Nascimento: ' + toBRDate(val('data-nascimento')));
+    linhas.push('CPF: ' + val('cpf'));
+    linhas.push('RG / Órgão: ' + val('rg') + (val('orgao-emissor') ? ' / ' + val('orgao-emissor') : ''));
+    linhas.push('Naturalidade: ' + val('naturalidade') + (val('uf-naturalidade') ? ' / ' + val('uf-naturalidade').toUpperCase() : ''));
+    linhas.push('');
+
+    // Endereço
+    linhas.push('--- ENDEREÇO ---');
+    linhas.push('CEP: ' + val('cep'));
+    var endLinha = [val('endereco')].filter(Boolean).join('');
+    if (val('numero')) endLinha += (endLinha ? ', nº ' : 'nº ') + val('numero');
+    linhas.push('Endereço: ' + endLinha);
+    linhas.push('Bairro: ' + val('bairro'));
+    linhas.push('Município: ' + cityUF(val('municipio'), val('uf')));
+    linhas.push('');
+
+    // Contatos
+    linhas.push('--- CONTATOS ---');
+    linhas.push('Celular: ' + val('celular'));
+    linhas.push('Telefone: ' + val('telefone'));
+    linhas.push('E-mail: ' + val('email'));
+    linhas.push('');
+
+    // Familiares
+    linhas.push('--- INFORMAÇÕES FAMILIARES ---');
+    linhas.push('Possui Filhos: ' + (val('possui-filhos') || '-'));
+    if (val('possui-filhos') === 'sim') {
+      linhas.push('Menores de 14: ' + (val('menores-14') || '-'));
+      if (val('menores-14') === 'sim') {
+        linhas.push('Qtd menores de 14: ' + (val('qtd-menores-14') || '0'));
+      }
+    }
+    linhas.push('');
+
+    // Escolaridade
+    linhas.push('--- ESCOLARIDADE ---');
+    linhas.push('Nível: ' + (val('escolaridade') || '-'));
+    linhas.push('');
+
+    // Formação Acadêmica
+    linhas.push('--- FORMAÇÃO ACADÊMICA ---');
+    if (cursos && cursos.length) {
+      cursos.forEach(function (c, i) {
+        linhas.push('Curso ' + (i + 1) + ': ' + (c.curso || ''));
+        linhas.push('  Instituição: ' + (c.instituicao || ''));
+        linhas.push('  Status: ' + (c.status || ''));
+        linhas.push('  Ano de conclusão: ' + (c.anoConclusao || ''));
+      });
+    } else {
+      linhas.push('[nenhum curso informado]');
+    }
+    linhas.push('');
+
+    // Adicionais
+    linhas.push('--- INFORMAÇÕES ADICIONAIS ---');
+    linhas.push('Condução Própria: ' + (val('conducao-propria') || '-'));
+    if (val('conducao-propria') === 'nao') {
+      linhas.push('Precisa de vale-transporte: ' + (val('precisa-vale-transporte') || '-'));
+    }
+    linhas.push('Título de Eleitor: ' + (val('titulo-eleitor') || ''));
+    linhas.push('Zona: ' + (val('zona') || ''));
+    linhas.push('');
+
+    // Experiências
+    linhas.push('--- EXPERIÊNCIAS PROFISSIONAIS ---');
+    var temExp = (val('tem-experiencia') || '').toLowerCase();
+    linhas.push('Tem Experiência: ' + (temExp || '-'));
+    if (temExp === 'sim' && experiencias && experiencias.length) {
+      experiencias.forEach(function (ex, i) {
+        linhas.push('Experiência ' + (i + 1) + ':');
+        linhas.push('  Empresa: ' + (ex.empresa || ''));
+        linhas.push('  Cargo: ' + (ex.cargo || ''));
+        linhas.push('  Período: ' + (periodoFromExp(ex) || '-'));
+        linhas.push('  Responsável: ' + (ex.responsavel || ''));
+        linhas.push('  Contato: ' + (ex.contato || ''));
+        linhas.push('  Atividades: ' + (ex.atividades || ''));
+      });
+    } else if (temExp === 'sim') {
+      linhas.push('[experiências não informadas]');
+    }
+    linhas.push('');
+
+    // Finais
+    linhas.push('--- INFORMAÇÕES FINAIS ---');
+    linhas.push('Pretensão Salarial: ' + (val('pretensao-salarial') || '-'));
+    linhas.push('Disponibilidade para Início: ' + (val('disponibilidade-inicio') || '-'));
+    linhas.push('Disponibilidade de Horário: ' + (val('disponibilidade-horario') || '-'));
+    linhas.push('Como soube da vaga: ' + (val('como-soube') || '-'));
+    linhas.push('');
+
+    // Declarações
+    linhas.push('--- DECLARAÇÕES ---');
+    linhas.push('Declaração de Veracidade: ' + (val('declaracao-veracidade') || '-'));
+
+    var corpoEmail = linhas.join('\n');
+
+    // --- Gera PDF com foto (se houver)
+    var pdfBlob = gerarPdfCandidato_(p, cursos, experiencias, filiais, fotoBlob);
+
+    // --- Se houver foto: salvar no Drive e anexar + link
+    var fotoFile = null, fotoUrl = '';
+    if (fotoBlob) {
+      var folder = getFotosFolder_();
+      var nomeBase = (val('nome-completo') || 'Sem_Nome').replace([^\w\s-]+/g,'_');
+      var ts = Utilities.formatDate(new Date(), Session.getScriptTimeZone() || 'America/Sao_Paulo', 'yyyyMMdd_HHmmss');
+      fotoBlob.setName('FOTO_' + nomeBase + '_' + ts);
+      fotoFile = folder.createFile(fotoBlob);
+      fotoUrl = 'https://drive.google.com/file/d/' + fotoFile.getId() + '/view';
+      corpoEmail += '\n\n[Link da foto no Drive]\n' + fotoUrl;
+    }
+
+    // --- Envia e-mail
+    var recipientEmail = 'hs.contratacao@gmail.com ';
+    var subject = 'Nova Candidatura de Emprego - Hering Store';
+    var anexos = [pdfBlob];
+    if (fotoFile) anexos.push(fotoFile.getAs(fotoFile.getMimeType()));
+
+    MailApp.sendEmail({
+      to: recipientEmail,
+      subject: subject,
+      body: corpoEmail,
+      attachments: anexos
+    });
+
+    return jsonOut({ success: true, message: 'Formulário enviado com sucesso!' });
+
+  } catch (err) {
+    return jsonOut({ success: false, message: 'Erro: ' + err });
+  }
+}
+
+/**
+ * Gera um PDF com os dados da candidatura (com foto opcional no topo).
+ */
+function gerarPdfCandidato_(dados, cursos, experiencias, filiais, fotoBlob) {
+  function v(k, d) { return (dados[k] || d || '').toString().trim(); }
+  function toBRDate(iso) {
+    if (!iso) return '';
+    var m = String(iso).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    return m ? (m[3] + '/' + m[2] + '/' + m[1]) : String(iso);
+  }
+  function cityUF(cidade, uf) {
+    var c = (cidade || '').toString().trim();
+    var u = (uf || '').toString().trim();
+    if (c && u) return c + ' / ' + u;
+    return c || u || '';
+  }
+  function periodoFromExp(ex) {
+    if (ex.periodo) return ex.periodo;
+    var de = ex.dataEntrada || '';
+    var ate = ex.dataSaida || '';
+    if (de || ate) return (de || '') + (de || ate ? ' a ' : '') + (ate || '');
+    return '';
+  }
+  function addBoldHeading(body, text) {
+    return body.appendParagraph(text).setHeading(DocumentApp.ParagraphHeading.HEADING2);
+  }
+  function addBoldLine(body, text) {
+    var para = body.appendParagraph(text);
+    para.editAsText().setBold(true);
+  }
+  function appendKV_(body, k, val) {
+    body.appendParagraph(k + ': ' + (val || ''));
+  }
+
+  var doc = DocumentApp.create('Candidatura - ' + (v('nome-completo') || 'Sem Nome'));
+  var body = doc.getBody();
+  body.clear();
+
+  body.appendParagraph('CANDIDATURA - HERING STORE')
+      .setHeading(DocumentApp.ParagraphHeading.HEADING1);
+
+  // Foto no topo (se enviada)
+  if (fotoBlob) {
+    try {
+      var img = body.appendImage(fotoBlob);
+      img.setWidth(180);
+      body.appendParagraph('');
+    } catch (e) {
+      body.appendParagraph('[Falha ao inserir foto no PDF]').setItalic(true);
+    }
+  }
+
+  // Unidade
+  addBoldHeading(body, '\nUnidade Escolhida');
+  appendKV_(body, 'Cidade', v('cidade'));
+  appendKV_(body, 'Filial(is)', (filiais && filiais.length ? filiais.join(', ') : ''));
+
+  // Dados Pessoais
+  addBoldHeading(body, '\nDados Pessoais');
+  appendKV_(body, 'Nome Completo', v('nome-completo'));
+  appendKV_(body, 'Data de Nascimento', toBRDate(v('data-nascimento')));
+  appendKV_(body, 'CPF', v('cpf'));
+  appendKV_(body, 'RG / Órgão', (v('rg') || '') + (v('orgao-emissor') ? ' / ' + v('orgao-emissor') : ''));
+  appendKV_(body, 'Naturalidade', v('naturalidade') + (v('uf-naturalidade') ? ' / ' + v('uf-naturalidade').toUpperCase() : ''));
+
+  // Endereço
+  addBoldHeading(body, '\nEndereço');
+  appendKV_(body, 'CEP', v('cep'));
+  appendKV_(body, 'Endereço', v('endereco') + (v('numero') ? ', nº ' + v('numero') : ''));
+  appendKV_(body, 'Bairro', v('bairro'));
+  appendKV_(body, 'Município', cityUF(v('municipio'), v('uf')));
+
+  // Contatos
+  addBoldHeading(body, '\nContatos');
+  appendKV_(body, 'Celular', v('celular'));
+  appendKV_(body, 'Telefone', v('telefone'));
+  appendKV_(body, 'E-mail', v('email'));
+
+  // Familiares (fluxo solicitado)
+  addBoldHeading(body, '\nInformações Familiares');
+  appendKV_(body, 'Possui Filhos', v('possui-filhos'));
+  if (v('possui-filhos') === 'sim') {
+    appendKV_(body, 'Menores de 14', v('menores-14'));
+    if (v('menores-14') === 'sim') {
+      appendKV_(body, 'Qtd menores de 14', v('qtd-menores-14'));
+    }
+  }
+
+  // Escolaridade
+  addBoldHeading(body, '\nEscolaridade');
+  appendKV_(body, 'Nível', v('escolaridade'));
+
+  // Formação Acadêmica
+  addBoldHeading(body, '\nFormação Acadêmica');
+  if (cursos && cursos.length) {
+    cursos.forEach(function (c, i) {
+      addBoldLine(body, 'Curso ' + (i + 1));
+      appendKV_(body, 'Curso', c.curso || '');
+      appendKV_(body, 'Instituição', c.instituicao || '');
+      appendKV_(body, 'Status', c.status || '');
+      appendKV_(body, 'Ano de conclusão', c.anoConclusao || '');
+      body.appendParagraph('');
+    });
+  } else {
+    body.appendParagraph('[nenhum curso informado]').setItalic(true);
+  }
+
+  // Experiências
+  addBoldHeading(body, '\nExperiências Profissionais');
+  appendKV_(body, 'Tem experiência', (v('tem-experiencia') || '').toLowerCase());
+  if ((v('tem-experiencia') || '').toLowerCase() === 'sim' && experiencias && experiencias.length) {
+    experiencias.forEach(function (ex, i) {
+      addBoldLine(body, 'Experiência ' + (i + 1));
+      appendKV_(body, 'Empresa', ex.empresa || '');
+      appendKV_(body, 'Cargo', ex.cargo || '');
+      appendKV_(body, 'Período', periodoFromExp(ex));
+      appendKV_(body, 'Responsável', ex.responsavel || '');
+      appendKV_(body, 'Contato', ex.contato || '');
+      appendKV_(body, 'Atividades', ex.atividades || '');
+      body.appendParagraph('');
+    });
+  }
+
+  // Finais
+  addBoldHeading(body, '\nInformações Finais');
+  appendKV_(body, 'Pretensão Salarial', v('pretensao-salarial'));
+  appendKV_(body, 'Disponibilidade para Início', v('disponibilidade-inicio'));
+  appendKV_(body, 'Disponibilidade de Horário', v('disponibilidade-horario'));
+  appendKV_(body, 'Como soube da vaga', v('como-soube'));
+
+  // Declarações
+  addBoldHeading(body, '\nDeclarações');
+  appendKV_(body, 'Declaração de Veracidade', v('declaracao-veracidade'));
+
+  // Gera PDF
+  doc.saveAndClose();
+  var file = DriveApp.getFileById(doc.getId());
+  var pdf = file.getAs(MimeType.PDF).setName('Candidatura - ' + (v('nome-completo') || 'Sem Nome') + '.pdf');
+  file.setTrashed(true); // manter só o PDF
+  return pdf;
+}
+
+// ===== Helpers =====
+function jsonOut(obj) {
+  return ContentService
+    .createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+```
