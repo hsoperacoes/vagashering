@@ -234,7 +234,7 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
                 <input type="text" id="uf-naturalidade" name="uf-naturalidade" maxlength="2" required />
               </div>
 
-              <!-- FOTO DO CANDIDATO (NOVO) -->
+              <!-- FOTO DO CANDIDATO -->
               <div class="form-group full-width">
                 <label for="foto-candidato">Foto do candidato (JPG/PNG, até 5 MB)</label>
                 <input type="file" id="foto-candidato" name="foto-candidato" accept="image/*" />
@@ -848,41 +848,45 @@ document.addEventListener('DOMContentLoaded', ()=>{
   });}
 });
 
-/* ===== Envio ===== */
-document.getElementById('job-application-form').addEventListener('submit', async function(event){
-  event.preventDefault();
+/* ===== Envio (SUBMISSÃO NATIVA, sem fetch) ===== */
+document.getElementById('job-application-form').addEventListener('submit', function onSubmit(event){
+  // NÃO fazemos preventDefault. Só bloqueia se faltar algo obrigatório.
+  const form = event.target;
 
-  // Valida declaração de veracidade
+  // 1) Valida declaração de veracidade
   const decl=document.getElementById('declaracao-veracidade');
   if(!decl.checked){
+    event.preventDefault();
     alert('Você precisa aceitar a Declaração de Veracidade para prosseguir.');
-    decl.scrollIntoView({behavior:'smooth',block:'center'}); decl.focus(); return;
+    decl.scrollIntoView({behavior:'smooth',block:'center'}); 
+    decl.focus(); 
+    return;
   }
 
-  const form=event.target;
-  const fd=new FormData(form);
+  // 2) Gera campos ocultos para cursos/experiências como JSON
+  form.querySelectorAll('input[name="cursos"], input[name="experiencias"]').forEach(el => el.remove());
 
-  // Data de Nascimento em formato BR (se vier yyyy-mm-dd)
-  const dn=form.querySelector('#data-nascimento')?.value || '';
-  if(dn && /^\d{4}-\d{2}-\d{2}$/.test(dn)){
-    const [y,m,d]=dn.split('-'); fd.set('data-nascimento', `${d}/${m}/${y}`);
-  }
-
-  // Cursos dinâmicos (JSON)
+  // Cursos
   const cursos=[];
   document.querySelectorAll('.course-card').forEach((card,idx)=>{
     const i=card.getAttribute('data-curso') || (idx+1);
     const get=(sel)=> (card.querySelector(sel)?.value||'').trim();
     const curso=get(`#curso${i}`) || get('[id^="curso"]');
     const instituicao=get(`#instituicao${i}`) || get('[id^="instituicao"]');
-    const status=(document.querySelector(`input[name="status-curso${i}"]:checked`)?.value)||'';
+    const status=(card.querySelector(`input[name="status-curso${i}"]:checked`)?.value)||'';
     const ano=get(`#ano-conclusao${i}`) || get('[id^="ano-conclusao"]');
     if(curso||instituicao||status||ano) cursos.push({curso, instituicao, status, anoConclusao:ano});
   });
-  if(cursos.length) fd.set('cursos', JSON.stringify(cursos));
+  if(cursos.length){
+    const inputCursos=document.createElement('input');
+    inputCursos.type='hidden'; inputCursos.name='cursos';
+    inputCursos.value=JSON.stringify(cursos);
+    form.appendChild(inputCursos);
+  }
 
-  // Experiências dinâmicas (JSON)
-  if(document.querySelector('input[name="tem-experiencia"]:checked')?.value==='sim'){
+  // Experiências (se “tem experiência” = sim)
+  const temExp = document.querySelector('input[name="tem-experiencia"]:checked')?.value === 'sim';
+  if (temExp) {
     const exps=[];
     document.querySelectorAll('.experience-card').forEach((card,idx)=>{
       const i=card.getAttribute('data-exp') || (idx+1);
@@ -897,28 +901,26 @@ document.getElementById('job-application-form').addEventListener('submit', async
         exps.push({empresa,cargo,periodo,responsavel,contato,atividades});
       }
     });
-    if(exps.length) fd.set('experiencias', JSON.stringify(exps));
-  }
-
-  // Flag veracidade explícita
-  fd.set('declaracao-veracidade', decl.checked ? 'Aceito' : 'Não aceito');
-
-  try{
-    // Tenta CORS normal
-    let response=await fetch(form.action,{ method:'POST', body:fd });
-    if(response.ok){
-      alert('Formulário enviado com sucesso!');
-      form.reset();
-      return;
+    if(exps.length){
+      const inputExps=document.createElement('input');
+      inputExps.type='hidden'; inputExps.name='experiencias';
+      inputExps.value=JSON.stringify(exps);
+      form.appendChild(inputExps);
     }
-    // Fallback no-cors
-    await fetch(form.action,{ method:'POST', mode:'no-cors', body:fd });
-    alert('Formulário enviado! (o navegador não conseguiu ler a resposta, mas o envio foi realizado).');
-    form.reset();
-  }catch(err){
-    console.error(err);
-    alert('Ocorreu um erro de rede. Mesmo assim, sua candidatura pode ter sido enviada.');
   }
+
+  // 3) Declaração de veracidade explícita
+  const oldDecl = form.querySelector('input[name="declaracao-veracidade-hidden"]');
+  if (oldDecl) oldDecl.remove();
+  const declHidden = document.createElement('input');
+  declHidden.type = 'hidden';
+  declHidden.name = 'declaracao-veracidade';
+  declHidden.value = decl.checked ? 'Aceito' : 'Não aceito';
+  declHidden.id = 'declaracao-veracidade-hidden';
+  form.appendChild(declHidden);
+
+  // 4) Deixa o navegador enviar o multipart (inclui a foto).
+  // Nada a fazer: como não demos preventDefault, o envio segue normalmente.
 });
 </script>
 </body>
