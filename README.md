@@ -72,4 +72,22 @@
         try { payload = await res.json(); } catch(_){}
 
         if (payload && payload.success === true) {
-          msg.textCont
+          msg.textContent = 'OK! Verifique o e-mail — a foto deve estar anexada.';
+          form.reset();
+          document.getElementById('preview').style.display='none';
+        } else if (payload && payload.success === false) {
+          msg.textContent = 'Erro: ' + (payload.message || 'Falha no envio.');
+        } else if (res.ok) {
+          // caiu em no-cors/JSON ilegível, mas o POST foi enviado
+          msg.textContent = 'Pode ter enviado, mas não deu pra ler a resposta (CORS). Confira o e-mail.';
+        } else {
+          msg.textContent = 'Falha no envio. Código HTTP: ' + res.status;
+        }
+      } catch (e) {
+        console.error(e);
+        msg.textContent = 'Falha de rede. Veja no Apps Script se registrou o doPost e confira o e-mail.';
+      }
+    });
+  </script>
+</body>
+</html>
