@@ -8,21 +8,12 @@
   <style>
 /* Reset e configurações básicas */
 *{margin:0;padding:0;box-sizing:border-box}
-body{
-  font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
-  line-height:1.6;color:#333;background:#1a1a1a;min-height:100vh;padding:20px 0;
-}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;line-height:1.6;color:#333;background:#1a1a1a;min-height:100vh;padding:20px 0}
 .container{max-width:1000px;margin:0 auto;padding:0 20px}
 
 /* Header do formulário */
-.form-header{
-  background:linear-gradient(135deg,#2c3e50 0%,#34495e 100%);color:#fff;padding:40px 30px;text-align:center;
-  border-radius:15px 15px 0 0;box-shadow:0 4px 20px rgba(0,0,0,.3);position:relative;overflow:hidden
-}
-.form-header::before{
-  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
-  background:radial-gradient(circle,rgba(255,255,255,.05) 0%,transparent 70%);animation:rotate 30s linear infinite
-}
+.form-header{background:linear-gradient(135deg,#2c3e50 0%,#34495e 100%);color:#fff;padding:40px 30px;text-align:center;border-radius:15px 15px 0 0;box-shadow:0 4px 20px rgba(0,0,0,.3);position:relative;overflow:hidden}
+.form-header::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,.05) 0%,transparent 70%);animation:rotate 30s linear infinite}
 @keyframes rotate{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 .header-content{position:relative;z-index:1}
 .header-icon{font-size:3em;margin-bottom:20px;color:#4CAF50}
@@ -34,15 +25,9 @@ body{
 .form-container{background:#2a2a2a;border-radius:0 0 15px 15px;box-shadow:0 4px 20px rgba(0,0,0,.3);padding:30px}
 
 /* Blocos do formulário */
-.form-block{
-  background:#3a3a3a;border-radius:12px;margin-bottom:25px;box-shadow:0 4px 15px rgba(0,0,0,.2);
-  transition:.3s;border-left:4px solid #4CAF50;animation:slideInUp .6s ease-out forwards;opacity:0;transform:translateY(30px)
-}
+.form-block{background:#3a3a3a;border-radius:12px;margin-bottom:25px;box-shadow:0 4px 15px rgba(0,0,0,.2);transition:.3s;border-left:4px solid #4CAF50;animation:slideInUp .6s ease-out forwards;opacity:0;transform:translateY(30px)}
 .form-block:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,.3)}
-.block-header{
-  background:linear-gradient(135deg,#4CAF50 0%,#45a049 100%);color:#fff;padding:20px 25px;border-radius:8px 8px 0 0;
-  display:flex;align-items:center;gap:15px
-}
+.block-header{background:linear-gradient(135deg,#4CAF50 0%,#45a049 100%);color:#fff;padding:20px 25px;border-radius:8px 8px 0 0;display:flex;align-items:center;gap:15px}
 .block-header i{font-size:1.5em}
 .block-header h3{font-size:1.3em;font-weight:600;margin:0}
 .block-content{padding:25px}
@@ -56,9 +41,7 @@ body{
 
 /* Labels e Inputs */
 label{color:#e0e0e0;font-weight:600;margin-bottom:8px;font-size:.95em}
-input[type="text"],input[type="email"],input[type="tel"],input[type="date"],input[type="number"],textarea{
-  background:#4a4a4a;border:2px solid #555;border-radius:8px;padding:12px 15px;color:#e0e0e0;font-size:1em;transition:.3s
-}
+input[type="text"],input[type="email"],input[type="tel"],input[type="date"],input[type="number"],textarea{background:#4a4a4a;border:2px solid #555;border-radius:8px;padding:12px 15px;color:#e0e0e0;font-size:1em;transition:.3s}
 textarea{min-height:90px;resize:vertical}
 input:focus,textarea:focus{outline:none;border-color:#4CAF50;box-shadow:0 0 0 3px rgba(76,175,80,.2);background:#5a5a5a}
 input:disabled,textarea:disabled{background:#333;color:#888;cursor:not-allowed;opacity:.6}
@@ -66,30 +49,21 @@ input::placeholder,textarea::placeholder{color:#999}
 
 /* Radios & Checkboxes customizados */
 .radio-group,.checkbox-group{display:flex;gap:20px;flex-wrap:wrap;margin-top:10px}
-.radio-option,.checkbox-option{
-  display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 15px;border-radius:8px;transition:.3s;
-  background:#4a4a4a;border:2px solid #555;color:#e0e0e0;font-weight:500
-}
+.radio-option,.checkbox-option{display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 15px;border-radius:8px;transition:.3s;background:#4a4a4a;border:2px solid #555;color:#e0e0e0;font-weight:500}
 .radio-option:hover,.checkbox-option:hover{background:#5a5a5a;border-color:#4CAF50}
 .radio-option input[type="radio"],.checkbox-option input[type="checkbox"]{display:none}
 .radio-custom{width:20px;height:20px;border:2px solid #777;border-radius:50%;position:relative;transition:.3s}
 .radio-option input[type="radio"]:checked + .radio-custom{border-color:#4CAF50;background:#4CAF50}
-.radio-option input[type="radio"]:checked + .radio-custom::after{
-  content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:8px;height:8px;background:#fff;border-radius:50%
-}
+.radio-option input[type="radio"]:checked + .radio-custom::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:8px;height:8px;background:#fff;border-radius:50%}
 .radio-option input[type="radio"]:checked ~ span:not(.radio-custom){color:#4CAF50}
 
 .checkbox-custom{width:20px;height:20px;border:2px solid #777;border-radius:4px;position:relative;transition:.3s}
 .checkbox-option input[type="checkbox"]:checked + .checkbox-custom{border-color:#4CAF50;background:#4CAF50}
-.checkbox-option input[type="checkbox"]:checked + .checkbox-custom::after{
-  content:'✓';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-weight:bold;font-size:14px
-}
+.checkbox-option input[type="checkbox"]:checked + .checkbox-custom::after{content:'✓';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-weight:bold;font-size:14px}
 .checkbox-option input[type="checkbox"]:checked ~ span:not(.checkbox-custom){color:#4CAF50}
 
 /* Cards específicos */
-.course-card,.experience-card{
-  background:#4a4a4a;border:2px solid #555;border-radius:10px;padding:20px;transition:.3s
-}
+.course-card,.experience-card{background:#4a4a4a;border:2px solid #555;border-radius:10px;padding:20px;transition:.3s}
 .course-card:hover,.experience-card:hover{border-color:#4CAF50;box-shadow:0 5px 15px rgba(0,0,0,.3)}
 .course-card h4,.experience-card h4{color:#4CAF50;margin-bottom:15px;font-size:1.1em;display:flex;align-items:center;gap:10px}
 .experience-card h4::before{content:'💼';font-size:1.2em}
@@ -103,26 +77,16 @@ input::placeholder,textarea::placeholder{color:#999}
 .declaration-text{font-size:.95em;line-height:1.6;color:#e0e0e0;text-align:justify}
 
 /* Seleção de loja (anti-tela) */
-#preselect{
-  position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:1000
-}
-.preselect-card{
-  width:min(680px,92vw);background:#2a2a2a;border:2px solid #555;border-radius:14px;box-shadow:0 6px 30px rgba(0,0,0,.5);padding:24px
-}
+#preselect{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:1000}
+.preselect-card{width:min(680px,92vw);background:#2a2a2a;border:2px solid #555;border-radius:14px;box-shadow:0 6px 30px rgba(0,0,0,.5);padding:24px}
 .preselect-card h3{color:#fff;margin-bottom:10px}
 .preselect-row{display:grid;grid-template-columns:1fr;gap:16px}
 .preselect-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:16px}
-.badge{
-  display:inline-flex;align-items:center;gap:8px;background:#3a3a3a;border:1px solid #555;color:#e0e0e0;border-radius:999px;
-  padding:6px 12px;font-size:.9em
-}
+.badge{display:inline-flex;align-items:center;gap:8px;background:#3a3a3a;border:1px solid #555;color:#e0e0e0;border-radius:999px;padding:6px 12px;font-size:.9em}
 
 /* Botões */
 .form-actions{display:flex;gap:20px;justify-content:center;margin-top:40px;padding-top:30px;border-top:2px solid #555}
-.btn-submit,.btn-reset,.btn-secondary{
-  display:flex;align-items:center;gap:10px;padding:12px 20px;border:none;border-radius:8px;font-size:1em;font-weight:600;cursor:pointer;transition:.3s;
-  text-transform:uppercase;letter-spacing:1px;position:relative;overflow:hidden
-}
+.btn-submit,.btn-reset,.btn-secondary{display:flex;align-items:center;gap:10px;padding:12px 20px;border:none;border-radius:8px;font-size:1em;font-weight:600;cursor:pointer;transition:.3s;text-transform:uppercase;letter-spacing:1px;position:relative;overflow:hidden}
 .btn-submit{background:linear-gradient(135deg,#4CAF50 0%,#45a049 100%);color:#fff;box-shadow:0 4px 15px rgba(76,175,80,.3)}
 .btn-reset{background:linear-gradient(135deg,#f44336 0%,#d32f2f 100%);color:#fff;box-shadow:0 4px 15px rgba(244,67,54,.3)}
 .btn-secondary{background:#444;color:#fff;border:2px solid #666;text-transform:none;letter-spacing:0}
@@ -140,10 +104,7 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
 
 /* loader CEP */
 .loading-cep{position:relative}
-.loading-cep::after{
-  content:'';position:absolute;right:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;border:2px solid #4CAF50;border-top:2px solid transparent;border-radius:50%;
-  animation:spin 1s linear infinite
-}
+.loading-cep::after{content:'';position:absolute;right:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;border:2px solid #4CAF50;border-top:2px solid transparent;border-radius:50%;animation:spin 1s linear infinite}
 @keyframes spin{0%{transform:translateY(-50%) rotate(0)}100%{transform:translateY(-50%) rotate(360deg)}}
   </style>
 </head>
@@ -186,7 +147,7 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
     </header>
 
     <div class="form-container">
-      <!-- Resumo da seleção de Cidade/Filiais -->
+      <!-- Resumo Cidade/Filiais -->
       <div class="form-block">
         <div class="block-header"><i class="fas fa-map-pin"></i><h3>Vaga selecionada</h3></div>
         <div class="block-content">
@@ -196,7 +157,7 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
       </div>
 
       <form id="job-application-form" class="job-form" action="https://script.google.com/macros/s/AKfycbzdMkDG0N6xwF_px9n2N2gqqGFjYyv0D_8jOtremC3WSFQBy57_tHwtBg8CEsf-G93N/exec" method="POST" enctype="multipart/form-data">
-        <!-- campos ocultos para enviar cidade/filiais -->
+        <!-- ocultos -->
         <input type="hidden" name="cidade" id="cidade-hidden" />
         <input type="hidden" name="filiais" id="filiais-hidden" />
 
@@ -234,10 +195,10 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
                 <input type="text" id="uf-naturalidade" name="uf-naturalidade" maxlength="2" required />
               </div>
 
-              <!-- FOTO DO CANDIDATO -->
+              <!-- FOTO (name=foto) -->
               <div class="form-group full-width">
-                <label for="foto-candidato">Foto do candidato (JPG/PNG, até 5 MB)</label>
-                <input type="file" id="foto-candidato" name="foto-candidato" accept="image/*" />
+                <label for="foto">Foto do candidato (JPG/PNG, até 5 MB)</label>
+                <input type="file" id="foto" name="foto" accept="image/*" />
                 <div id="preview-foto" style="display:none;margin-top:10px">
                   <img id="preview-foto-img" alt="Prévia" style="max-width:220px;border-radius:10px;border:2px solid #555"/>
                 </div>
@@ -331,7 +292,7 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
                 </div>
               </div>
 
-              <!-- Fluxo AJUSTADO -->
+              <!-- Fluxo filhos -->
               <div class="form-group full-width">
                 <label>Possui Filhos?</label>
                 <div class="radio-group">
@@ -339,7 +300,6 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
                   <label class="radio-option"><input type="radio" name="possui-filhos" value="nao" /><span class="radio-custom"></span>Não</label>
                 </div>
 
-                <!-- aparece se possui-filhos = sim -->
                 <div class="conditional-field" id="menores-14-container" style="display:none;margin-top:10px">
                   <label>Possui filhos menores de 14 anos?</label>
                   <div class="radio-group">
@@ -348,7 +308,6 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
                   </div>
                 </div>
 
-                <!-- aparece se menores-14 = sim -->
                 <div class="conditional-field" id="qtd-menores-14-container" style="display:none;margin-top:10px">
                   <label for="qtd-menores-14">Quantidade de filhos menores de 14 anos</label>
                   <input type="number" id="qtd-menores-14" name="qtd-menores-14" min="0" disabled />
@@ -419,15 +378,12 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
                 <input type="text" id="zona" name="zona" />
               </div>
 
-              <!-- REMOVIDO: CNH -->
-
               <div class="form-group full-width">
                 <label>Condução Própria</label>
                 <div class="radio-group">
                   <label class="radio-option"><input type="radio" name="conducao-propria" value="sim" /><span class="radio-custom"></span>Sim</label>
                   <label class="radio-option"><input type="radio" name="conducao-propria" value="nao" /><span class="radio-custom"></span>Não</label>
                 </div>
-                <!-- aparece se condução = nao -->
                 <div id="vale-transporte-container" class="conditional-field" style="display:none;margin-top:10px">
                   <label>Precisará de vale-transporte?</label>
                   <div class="radio-group">
@@ -436,8 +392,6 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
                   </div>
                 </div>
               </div>
-
-              <!-- REMOVIDO: Línguas estrangeiras -->
 
               <div class="form-group full-width">
                 <label>Conhecimento de Informática</label>
@@ -560,19 +514,11 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
   </div>
 
 <script>
-/* ====== Mapa de filiais por cidade (anti-tela) ====== */
+/* ====== Mapa de filiais por cidade ====== */
 const FILIAIS = {
-  "Uberaba": [
-    "Hering - Prudente de Morais",
-    "Hering - Shopping Uberaba"
-  ],
-  "Uberlândia": [
-    "Hering - Floriano Peixoto",
-    "Hering - Uberlândia Shopping"
-  ],
-  "Poços de Caldas": [
-    "Hering - Rio de Janeiro"
-  ]
+  "Uberaba": ["Hering - Prudente de Morais","Hering - Shopping Uberaba"],
+  "Uberlândia": ["Hering - Floriano Peixoto","Hering - Uberlândia Shopping"],
+  "Poços de Caldas": ["Hering - Rio de Janeiro"]
 };
 
 /* ====== CEP ====== */
@@ -646,9 +592,9 @@ async function buscarCEP(){
   refresh();
 })();
 
-/* ===== Foto: preview e validação ===== */
+/* ===== Foto: preview e validação (id=foto) ===== */
 (function(){
-  const fotoInput = document.getElementById('foto-candidato');
+  const fotoInput = document.getElementById('foto');
   if (!fotoInput) return;
   fotoInput.addEventListener('change', () => {
     const file = fotoInput.files?.[0];
@@ -670,24 +616,12 @@ function cursoCardTemplate(idx){
   <div class="course-card" data-curso="${idx}">
     <h4>Curso ${idx}</h4>
     <div class="form-grid">
-      <div class="form-group">
-        <label for="curso${idx}">Curso</label>
-        <input type="text" id="curso${idx}" name="curso${idx}">
-      </div>
-      <div class="form-group">
-        <label for="instituicao${idx}">Instituição</label>
-        <input type="text" id="instituicao${idx}" name="instituicao${idx}">
-      </div>
+      <div class="form-group"><label for="curso${idx}">Curso</label><input type="text" id="curso${idx}" name="curso${idx}"></div>
+      <div class="form-group"><label for="instituicao${idx}">Instituição</label><input type="text" id="instituicao${idx}" name="instituicao${idx}"></div>
       <div class="form-group full-width">
         <div class="checkbox-group">
-          <label class="checkbox-option">
-            <input type="checkbox" name="status-curso${idx}" value="cursando" onchange="toggleConclusao(${idx})">
-            <span class="checkbox-custom"></span>Cursando
-          </label>
-          <label class="checkbox-option">
-            <input type="checkbox" name="status-curso${idx}" value="concluido" onchange="toggleConclusao(${idx})">
-            <span class="checkbox-custom"></span>Concluído
-          </label>
+          <label class="checkbox-option"><input type="checkbox" name="status-curso${idx}" value="cursando" onchange="toggleConclusao(${idx})"><span class="checkbox-custom"></span>Cursando</label>
+          <label class="checkbox-option"><input type="checkbox" name="status-curso${idx}" value="concluido" onchange="toggleConclusao(${idx})"><span class="checkbox-custom"></span>Concluído</label>
         </div>
         <div class="conditional-field" id="ano-conclusao${idx}-container" style="display:none">
           <label for="ano-conclusao${idx}">Ano de conclusão</label>
@@ -697,31 +631,10 @@ function cursoCardTemplate(idx){
     </div>
   </div>`;
 }
-function adicionarCurso(){
-  cursoCount++; const ctn=document.getElementById('course-container');
-  ctn.insertAdjacentHTML('beforeend', cursoCardTemplate(cursoCount));
-}
-function removerUltimoCurso(){
-  const ctn=document.getElementById('course-container');
-  if(ctn.lastElementChild){ctn.removeChild(ctn.lastElementChild);cursoCount=Math.max(0,cursoCount-1);}
-}
-function toggleFormacaoAcademica(){
-  const chk=document.getElementById('possui-formacao');
-  const sec=document.getElementById('formacao-academica-section');
-  if(chk.checked){
-    sec.classList.add('show');
-    if(cursoCount===0) adicionarCurso(); // abre com 1 curso
-  }else{
-    sec.classList.remove('show');
-  }
-}
-function toggleConclusao(idx){
-  const concluido=document.querySelector(`input[name="status-curso${idx}"][value="concluido"]`);
-  const wrap=document.getElementById(`ano-conclusao${idx}-container`);
-  const input=document.getElementById(`ano-conclusao${idx}`);
-  if(concluido && concluido.checked){wrap.style.display='block';input.disabled=false;}
-  else{wrap.style.display='none';input.disabled=true;input.value='';}
-}
+function adicionarCurso(){ cursoCount++; document.getElementById('course-container').insertAdjacentHTML('beforeend', cursoCardTemplate(cursoCount)); }
+function removerUltimoCurso(){ const ctn=document.getElementById('course-container'); if(ctn.lastElementChild){ctn.removeChild(ctn.lastElementChild);cursoCount=Math.max(0,cursoCount-1);} }
+function toggleFormacaoAcademica(){ const chk=document.getElementById('possui-formacao'); const sec=document.getElementById('formacao-academica-section'); if(chk.checked){ sec.classList.add('show'); if(cursoCount===0) adicionarCurso(); } else { sec.classList.remove('show'); } }
+function toggleConclusao(idx){ const concluido=document.querySelector(`input[name="status-curso${idx}"][value="concluido"]`); const wrap=document.getElementById(`ano-conclusao${idx}-container`); const input=document.getElementById(`ano-conclusao${idx}`); if(concluido && concluido.checked){wrap.style.display='block';input.disabled=false;} else {wrap.style.display='none';input.disabled=true;input.value='';} }
 
 /* ===== Experiências Dinâmicas ===== */
 function experienciaCardTemplate(idx){
@@ -738,25 +651,9 @@ function experienciaCardTemplate(idx){
     </div>
   </div>`;
 }
-function adicionarExperiencia(){
-  const ctn=document.getElementById('experience-container');
-  const idx=ctn.children.length+1;
-  ctn.insertAdjacentHTML('beforeend', experienciaCardTemplate(idx));
-}
-function removerUltimaExperiencia(){
-  const ctn=document.getElementById('experience-container');
-  if(ctn.lastElementChild){ctn.removeChild(ctn.lastElementChild);}
-}
-function toggleExperienciaProfissional(){
-  const tem=document.querySelector('input[name="tem-experiencia"]:checked')?.value;
-  const sec=document.getElementById('experiencia-profissional-section');
-  if(tem==='sim'){
-    sec.classList.add('show');
-    if(!document.querySelector('.experience-card')) adicionarExperiencia();
-  }else{
-    sec.classList.remove('show');
-  }
-}
+function adicionarExperiencia(){ const ctn=document.getElementById('experience-container'); const idx=ctn.children.length+1; ctn.insertAdjacentHTML('beforeend', experienciaCardTemplate(idx)); }
+function removerUltimaExperiencia(){ const ctn=document.getElementById('experience-container'); if(ctn.lastElementChild){ctn.removeChild(ctn.lastElementChild);} }
+function toggleExperienciaProfissional(){ const tem=document.querySelector('input[name="tem-experiencia"]:checked')?.value; const sec=document.getElementById('experiencia-profissional-section'); if(tem==='sim'){ sec.classList.add('show'); if(!document.querySelector('.experience-card')) adicionarExperiencia(); } else { sec.classList.remove('show'); } }
 
 /* ===== Anti-tela (Cidade/Filiais) ===== */
 function initPreselect(){
@@ -809,10 +706,8 @@ function initPreselect(){
 
 /* ===== Máscaras e init ===== */
 document.addEventListener('DOMContentLoaded', ()=>{
-  // inicia anti-tela
   initPreselect();
 
-  // CPF (máscara)
   const cpf=document.getElementById('cpf');
   if(cpf){
     cpf.addEventListener('input',e=>{
@@ -848,12 +743,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
   });}
 });
 
-/* ===== Envio (SUBMISSÃO NATIVA, sem fetch) ===== */
+/* ===== Envio (nativo, sem fetch) ===== */
 document.getElementById('job-application-form').addEventListener('submit', function onSubmit(event){
-  // NÃO fazemos preventDefault. Só bloqueia se faltar algo obrigatório.
   const form = event.target;
 
-  // 1) Valida declaração de veracidade
+  // 1) valida declaração
   const decl=document.getElementById('declaracao-veracidade');
   if(!decl.checked){
     event.preventDefault();
@@ -863,10 +757,9 @@ document.getElementById('job-application-form').addEventListener('submit', funct
     return;
   }
 
-  // 2) Gera campos ocultos para cursos/experiências como JSON
+  // 2) remove antigos e recria JSONs
   form.querySelectorAll('input[name="cursos"], input[name="experiencias"]').forEach(el => el.remove());
 
-  // Cursos
   const cursos=[];
   document.querySelectorAll('.course-card').forEach((card,idx)=>{
     const i=card.getAttribute('data-curso') || (idx+1);
@@ -884,7 +777,6 @@ document.getElementById('job-application-form').addEventListener('submit', funct
     form.appendChild(inputCursos);
   }
 
-  // Experiências (se “tem experiência” = sim)
   const temExp = document.querySelector('input[name="tem-experiencia"]:checked')?.value === 'sim';
   if (temExp) {
     const exps=[];
@@ -909,7 +801,7 @@ document.getElementById('job-application-form').addEventListener('submit', funct
     }
   }
 
-  // 3) Declaração de veracidade explícita
+  // 3) declaração escondida
   const oldDecl = form.querySelector('input[name="declaracao-veracidade-hidden"]');
   if (oldDecl) oldDecl.remove();
   const declHidden = document.createElement('input');
@@ -919,8 +811,7 @@ document.getElementById('job-application-form').addEventListener('submit', funct
   declHidden.id = 'declaracao-veracidade-hidden';
   form.appendChild(declHidden);
 
-  // 4) Deixa o navegador enviar o multipart (inclui a foto).
-  // Nada a fazer: como não demos preventDefault, o envio segue normalmente.
+  // 4) deixa o navegador enviar o multipart (inclui a foto em name=foto).
 });
 </script>
 </body>
