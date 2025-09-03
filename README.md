@@ -19,12 +19,14 @@
   <div class="card">
     <h2>Teste • Enviar foto anexada</h2>
 
-    <form id="f" action="COLE_AQUI_A_URL_DO_SEU_WEBAPP_EXEC" method="POST" enctype="multipart/form-data">
+    <!-- SUA URL já inserida -->
+    <form id="f" action="https://script.google.com/macros/s/AKfycbzdMkDG0N6xwF_px9n2N2gqqGFjYyv0D_8jOtremC3WSFQBy57_tHwtBg8CEsf-G93N/exec"
+          method="POST" enctype="multipart/form-data">
       <label for="nome">Nome</label>
       <input id="nome" name="nome" type="text" required>
 
       <label for="foto">Foto (JPG ou PNG, até 5MB)</label>
-      <input id="foto" name="foto" type="file" accept="image/jpeg,image/png" required>
+      <input id="foto" name="foto-candidato" type="file" accept="image/jpeg,image/png" required>
 
       <div id="preview"><img id="previmg" alt="Prévia"></div>
 
@@ -34,7 +36,7 @@
   </div>
 
   <script>
-    // prévia da imagem + validação simples
+    // Prévia + validação
     (function(){
       const inp = document.getElementById('foto');
       const prev = document.getElementById('preview');
@@ -50,19 +52,18 @@
       });
     })();
 
-    // envia via fetch pra ler a resposta JSON bonitinha
+    // Envia via fetch pra tentar ler a resposta; se cair em no-cors, segue o baile
     document.getElementById('f').addEventListener('submit', async (ev) => {
       ev.preventDefault();
-      const fd = new FormData(ev.target);
+      const fd  = new FormData(ev.target);
       const msg = document.getElementById('msg');
       msg.textContent = 'Enviando...';
 
       try {
         const res = await fetch(ev.target.action, { method:'POST', body: fd });
-        // alguns deployments devolvem JSON legível; outros ficam no-cors
-        let ok = res.ok, payload = null;
+        let payload = null;
         try { payload = await res.json(); } catch(_){}
-        if (ok || (payload && payload.success)) {
+        if (res.ok || (payload && payload.success)) {
           msg.textContent = 'OK! Verifique o e-mail — a foto deve estar anexada.';
           ev.target.reset();
           document.getElementById('preview').style.display='none';
