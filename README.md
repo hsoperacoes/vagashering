@@ -1,3 +1,4 @@
+<!-- INÍCIO DA PARTE 1 -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -12,7 +13,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;line-height:1.6;col
 .container{max-width:1000px;margin:0 auto;padding:0 20px}
 
 /* Header do formulário */
-.form-header{background:linear-gradient(135deg,#2c3e50 0%,#34495e 100%);color:#fff;padding:40px 30px;text-align:center;border-radius:15px 15px 0 0;box-shadow:0 4px 20px rgba(0,0,0,.3);position:relative;overflow:hidden}
+.form-header{background:linear-gradient(135deg,#2c3e50 0%,#34495e 100% );color:#fff;padding:40px 30px;text-align:center;border-radius:15px 15px 0 0;box-shadow:0 4px 20px rgba(0,0,0,.3);position:relative;overflow:hidden}
 .form-header::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,.05) 0%,transparent 70%);animation:rotate 30s linear infinite}
 @keyframes rotate{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 .header-content{position:relative;z-index:1}
@@ -91,6 +92,7 @@ input::placeholder,textarea::placeholder{color:#999}
 .btn-reset{background:linear-gradient(135deg,#f44336 0%,#d32f2f 100%);color:#fff;box-shadow:0 4px 15px rgba(244,67,54,.3)}
 .btn-secondary{background:#444;color:#fff;border:2px solid #666;text-transform:none;letter-spacing:0}
 .btn-submit:hover,.btn-reset:hover,.btn-secondary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,.3)}
+.btn-submit:disabled { background: #555; cursor: not-allowed; }
 
 /* Animações / Acessibilidade */
 @keyframes slideInUp{to{opacity:1;transform:translateY(0)}}
@@ -156,7 +158,7 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
         </div>
       </div>
 
-      <form id="job-application-form" class="job-form" action="https://script.google.com/macros/s/AKfycbzdMkDG0N6xwF_px9n2N2gqqGFjYyv0D_8jOtremC3WSFQBy57_tHwtBg8CEsf-G93N/exec" method="POST" enctype="multipart/form-data">
+      <form id="job-application-form" class="job-form" action="https://script.google.com/macros/s/AKfycbzdMkDG0N6xwF_px9n2N2gqqGFjYyv0D_8jOtremC3WSFQBy57_tHwtBg8CEsf-G93N/exec" method="POST">
         <!-- ocultos -->
         <input type="hidden" name="cidade" id="cidade-hidden" />
         <input type="hidden" name="filiais" id="filiais-hidden" />
@@ -195,7 +197,7 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
                 <input type="text" id="uf-naturalidade" name="uf-naturalidade" maxlength="2" required />
               </div>
 
-              <!-- FOTO (name=foto) -->
+              <!-- FOTO (name=foto ) -->
               <div class="form-group full-width">
                 <label for="foto">Foto do candidato (JPG/PNG, até 5 MB)</label>
                 <input type="file" id="foto" name="foto" accept="image/*" />
@@ -316,8 +318,7 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
 
             </div>
           </div>
-        </div>
-
+          <!-- INÍCIO DA PARTE 2 -->
         <!-- 5. Escolaridade -->
         <div class="form-block">
           <div class="block-header"><i class="fas fa-graduation-cap"></i><h3>Grau de Escolaridade</h3></div>
@@ -429,9 +430,7 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
             </div>
           </div>
         </div>
-
-        <!-- 9. Informações Finais -->
-        <div class="form-block">
+                <div class="form-block">
           <div class="block-header"><i class="fas fa-clipboard-check"></i><h3>Informações Finais</h3></div>
           <div class="block-content">
             <div class="form-grid">
@@ -532,7 +531,7 @@ async function buscarCEP(){
   if(cep.length!==8) return;
   cepInput.classList.add('loading-cep');
   try{
-    const resp=await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+    const resp=await fetch(`https://viacep.com.br/ws/${cep}/json/` );
     const data=await resp.json();
     if(data.erro){
       alert('CEP não encontrado.');enderecoInput.value='';bairroInput.value='';municipioInput.value='';ufInput.value='';
@@ -743,76 +742,120 @@ document.addEventListener('DOMContentLoaded', ()=>{
   });}
 });
 
-/* ===== Envio (nativo, sem fetch) ===== */
-document.getElementById('job-application-form').addEventListener('submit', function onSubmit(event){
+/* ===== NOVO ENVIO (com fetch e base64) ===== */
+document.getElementById('job-application-form').addEventListener('submit', async function onSubmit(event){
+  event.preventDefault(); // Previne o envio padrão do formulário
   const form = event.target;
+  const submitButton = form.querySelector('.btn-submit');
 
-  // 1) valida declaração
-  const decl=document.getElementById('declaracao-veracidade');
-  if(!decl.checked){
-    event.preventDefault();
+  // 1) Valida declaração
+  const decl = document.getElementById('declaracao-veracidade');
+  if (!decl.checked) {
     alert('Você precisa aceitar a Declaração de Veracidade para prosseguir.');
-    decl.scrollIntoView({behavior:'smooth',block:'center'}); 
-    decl.focus(); 
+    decl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    decl.focus();
     return;
   }
 
-  // 2) remove antigos e recria JSONs
-  form.querySelectorAll('input[name="cursos"], input[name="experiencias"]').forEach(el => el.remove());
+  // Desabilita o botão para evitar envios múltiplos
+  submitButton.disabled = true;
+  submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
 
-  const cursos=[];
-  document.querySelectorAll('.course-card').forEach((card,idx)=>{
-    const i=card.getAttribute('data-curso') || (idx+1);
-    const get=(sel)=> (card.querySelector(sel)?.value||'').trim();
-    const curso=get(`#curso${i}`) || get('[id^="curso"]');
-    const instituicao=get(`#instituicao${i}`) || get('[id^="instituicao"]');
-    const status=(card.querySelector(`input[name="status-curso${i}"]:checked`)?.value)||'';
-    const ano=get(`#ano-conclusao${i}`) || get('[id^="ano-conclusao"]');
-    if(curso||instituicao||status||ano) cursos.push({curso, instituicao, status, anoConclusao:ano});
+  // 2) Prepara os dados do formulário
+  const formData = new FormData(form);
+
+  // 3) Converte cursos e experiências para JSON
+  const cursos = [];
+  document.querySelectorAll('.course-card').forEach((card, idx) => {
+    const i = card.getAttribute('data-curso') || (idx + 1);
+    const get = (sel) => (card.querySelector(sel)?.value || '').trim();
+    const curso = get(`#curso${i}`) || get('[id^="curso"]');
+    const instituicao = get(`#instituicao${i}`) || get('[id^="instituicao"]');
+    const status = (card.querySelector(`input[name="status-curso${i}"]:checked`)?.value) || '';
+    const ano = get(`#ano-conclusao${i}`) || get('[id^="ano-conclusao"]');
+    if (curso || instituicao || status || ano) cursos.push({ curso, instituicao, status, anoConclusao: ano });
   });
-  if(cursos.length){
-    const inputCursos=document.createElement('input');
-    inputCursos.type='hidden'; inputCursos.name='cursos';
-    inputCursos.value=JSON.stringify(cursos);
-    form.appendChild(inputCursos);
+  if (cursos.length) {
+    formData.append('cursos', JSON.stringify(cursos));
   }
 
   const temExp = document.querySelector('input[name="tem-experiencia"]:checked')?.value === 'sim';
   if (temExp) {
-    const exps=[];
-    document.querySelectorAll('.experience-card').forEach((card,idx)=>{
-      const i=card.getAttribute('data-exp') || (idx+1);
-      const get=(sel)=> (card.querySelector(sel)?.value||'').trim();
-      const empresa=get(`#empresa${i}`) || get('[id^="empresa"]');
-      const cargo=get(`#cargo${i}`) || get('[id^="cargo"]');
-      const periodo=get(`#periodo${i}`) || get('[id^="periodo"]');
-      const responsavel=get(`#responsavel${i}`) || get('[id^="responsavel"]');
-      const contato=get(`#contato${i}`) || get('[id^="contato"]');
-      const atividades=get(`#atividades${i}`) || get('[id^="atividades"]');
-      if(empresa||cargo||periodo||responsavel||contato||atividades){
-        exps.push({empresa,cargo,periodo,responsavel,contato,atividades});
+    const exps = [];
+    document.querySelectorAll('.experience-card').forEach((card, idx) => {
+      const i = card.getAttribute('data-exp') || (idx + 1);
+      const get = (sel) => (card.querySelector(sel)?.value || '').trim();
+      const empresa = get(`#empresa${i}`) || get('[id^="empresa"]');
+      const cargo = get(`#cargo${i}`) || get('[id^="cargo"]');
+      const periodo = get(`#periodo${i}`) || get('[id^="periodo"]');
+      const responsavel = get(`#responsavel${i}`) || get('[id^="responsavel"]');
+      const contato = get(`#contato${i}`) || get('[id^="contato"]');
+      const atividades = get(`#atividades${i}`) || get('[id^="atividades"]');
+      if (empresa || cargo || periodo || responsavel || contato || atividades) {
+        exps.push({ empresa, cargo, periodo, responsavel, contato, atividades });
       }
     });
-    if(exps.length){
-      const inputExps=document.createElement('input');
-      inputExps.type='hidden'; inputExps.name='experiencias';
-      inputExps.value=JSON.stringify(exps);
-      form.appendChild(inputExps);
+    if (exps.length) {
+      formData.append('experiencias', JSON.stringify(exps));
     }
   }
+  
+  // 4) Processa a foto para base64
+  const fotoInput = document.getElementById('foto');
+  const fotoFile = fotoInput.files?.[0];
 
-  // 3) declaração escondida
-  const oldDecl = form.querySelector('input[name="declaracao-veracidade-hidden"]');
-  if (oldDecl) oldDecl.remove();
-  const declHidden = document.createElement('input');
-  declHidden.type = 'hidden';
-  declHidden.name = 'declaracao-veracidade';
-  declHidden.value = decl.checked ? 'Aceito' : 'Não aceito';
-  declHidden.id = 'declaracao-veracidade-hidden';
-  form.appendChild(declHidden);
+  if (fotoFile) {
+    try {
+      const dataUrl = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(fotoFile);
+      });
+      formData.append('foto_b64', dataUrl); // Adiciona o base64
+    } catch (error) {
+      console.error('Erro ao converter a imagem:', error);
+      alert('Ocorreu um erro ao processar sua foto. Tente novamente.');
+      submitButton.disabled = false;
+      submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Candidatura';
+      return;
+    }
+  }
+  
+  // Remove o campo de arquivo para não ser enviado
+  formData.delete('foto');
 
-  // 4) deixa o navegador enviar o multipart (inclui a foto em name=foto).
+  // 5) Envia os dados usando fetch
+  try {
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: new URLSearchParams(formData) // Envia como x-www-form-urlencoded
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      alert('Candidatura enviada com sucesso!');
+      form.reset();
+      document.getElementById('preview-foto').style.display = 'none';
+      document.getElementById('preview-foto-img').src = '';
+      // Opcional: recarregar a página ou redirecionar
+      window.location.reload();
+    } else {
+      throw new Error(result.message || 'Erro desconhecido no servidor.');
+    }
+  } catch (error) {
+    console.error('Erro ao enviar o formulário:', error);
+    alert(`Ocorreu um erro ao enviar sua candidatura: ${error.message}. Por favor, tente novamente.`);
+  } finally {
+    // Reabilita o botão
+    submitButton.disabled = false;
+    submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Candidatura';
+  }
 });
 </script>
 </body>
 </html>
+
+
+
