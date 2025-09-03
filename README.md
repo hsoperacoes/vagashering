@@ -8,12 +8,21 @@
   <style>
 /* Reset e configurações básicas */
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;line-height:1.6;color:#333;background:#1a1a1a;min-height:100vh;padding:20px 0}
+body{
+  font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+  line-height:1.6;color:#333;background:#1a1a1a;min-height:100vh;padding:20px 0;
+}
 .container{max-width:1000px;margin:0 auto;padding:0 20px}
 
 /* Header do formulário */
-.form-header{background:linear-gradient(135deg,#2c3e50 0%,#34495e 100%);color:#fff;padding:40px 30px;text-align:center;border-radius:15px 15px 0 0;box-shadow:0 4px 20px rgba(0,0,0,.3);position:relative;overflow:hidden}
-.form-header::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,.05) 0%,transparent 70%);animation:rotate 30s linear infinite}
+.form-header{
+  background:linear-gradient(135deg,#2c3e50 0%,#34495e 100%);color:#fff;padding:40px 30px;text-align:center;
+  border-radius:15px 15px 0 0;box-shadow:0 4px 20px rgba(0,0,0,.3);position:relative;overflow:hidden
+}
+.form-header::before{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:radial-gradient(circle,rgba(255,255,255,.05) 0%,transparent 70%);animation:rotate 30s linear infinite
+}
 @keyframes rotate{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 .header-content{position:relative;z-index:1}
 .header-icon{font-size:3em;margin-bottom:20px;color:#4CAF50}
@@ -25,66 +34,112 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;line-height:1.6;col
 .form-container{background:#2a2a2a;border-radius:0 0 15px 15px;box-shadow:0 4px 20px rgba(0,0,0,.3);padding:30px}
 
 /* Blocos do formulário */
-.form-block{background:#3a3a3a;border-radius:12px;margin-bottom:25px;box-shadow:0 4px 15px rgba(0,0,0,.2);transition:.3s;border-left:4px solid #4CAF50;animation:slideInUp .6s ease-out forwards;opacity:0;transform:translateY(30px)}
+.form-block{
+  background:#3a3a3a;border-radius:12px;margin-bottom:25px;box-shadow:0 4px 15px rgba(0,0,0,.2);
+  transition:.3s;border-left:4px solid #4CAF50;animation:slideInUp .6s ease-out forwards;opacity:0;transform:translateY(30px)
+}
 .form-block:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,.3)}
-.block-header{background:linear-gradient(135deg,#4CAF50 0%,#45a049 100%);color:#fff;padding:20px 25px;border-radius:8px 8px 0 0;display:flex;align-items:center;gap:15px}
+.block-header{
+  background:linear-gradient(135deg,#4CAF50 0%,#45a049 100%);color:#fff;padding:20px 25px;border-radius:8px 8px 0 0;
+  display:flex;align-items:center;gap:15px
+}
 .block-header i{font-size:1.5em}
 .block-header h3{font-size:1.3em;font-weight:600;margin:0}
 .block-content{padding:25px}
 
-/* Grid/inputs/etc (mesmo do seu) */
+/* Grid */
 .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;align-items:start}
 .form-group{display:flex;flex-direction:column}
 .form-group.full-width{grid-column:1/-1}
 .form-group.large{grid-column:span 2}
 .form-group.small{grid-column:span 1;min-width:120px}
+
+/* Labels e Inputs */
 label{color:#e0e0e0;font-weight:600;margin-bottom:8px;font-size:.95em}
 input[type="text"],input[type="email"],input[type="tel"],input[type="date"],input[type="number"],textarea{
-  background:#4a4a4a;border:2px solid #555;border-radius:8px;padding:12px 15px;color:#e0e0e0;font-size:1em;transition:.3s}
+  background:#4a4a4a;border:2px solid #555;border-radius:8px;padding:12px 15px;color:#e0e0e0;font-size:1em;transition:.3s
+}
 textarea{min-height:90px;resize:vertical}
 input:focus,textarea:focus{outline:none;border-color:#4CAF50;box-shadow:0 0 0 3px rgba(76,175,80,.2);background:#5a5a5a}
 input:disabled,textarea:disabled{background:#333;color:#888;cursor:not-allowed;opacity:.6}
 input::placeholder,textarea::placeholder{color:#999}
+
+/* Radios & Checkboxes customizados */
 .radio-group,.checkbox-group{display:flex;gap:20px;flex-wrap:wrap;margin-top:10px}
-.radio-option,.checkbox-option{display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 15px;border-radius:8px;transition:.3s;background:#4a4a4a;border:2px solid #555;color:#e0e0e0;font-weight:500}
+.radio-option,.checkbox-option{
+  display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 15px;border-radius:8px;transition:.3s;
+  background:#4a4a4a;border:2px solid #555;color:#e0e0e0;font-weight:500
+}
 .radio-option:hover,.checkbox-option:hover{background:#5a5a5a;border-color:#4CAF50}
 .radio-option input[type="radio"],.checkbox-option input[type="checkbox"]{display:none}
 .radio-custom{width:20px;height:20px;border:2px solid #777;border-radius:50%;position:relative;transition:.3s}
 .radio-option input[type="radio"]:checked + .radio-custom{border-color:#4CAF50;background:#4CAF50}
-.radio-option input[type="radio"]:checked + .radio-custom::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:8px;height:8px;background:#fff;border-radius:50%}
+.radio-option input[type="radio"]:checked + .radio-custom::after{
+  content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:8px;height:8px;background:#fff;border-radius:50%
+}
 .radio-option input[type="radio"]:checked ~ span:not(.radio-custom){color:#4CAF50}
+
 .checkbox-custom{width:20px;height:20px;border:2px solid #777;border-radius:4px;position:relative;transition:.3s}
 .checkbox-option input[type="checkbox"]:checked + .checkbox-custom{border-color:#4CAF50;background:#4CAF50}
-.checkbox-option input[type="checkbox"]:checked + .checkbox-custom::after{content:'✓';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-weight:bold;font-size:14px}
-.course-card,.experience-card{background:#4a4a4a;border:2px solid #555;border-radius:10px;padding:20px;transition:.3s}
+.checkbox-option input[type="checkbox"]:checked + .checkbox-custom::after{
+  content:'✓';position:absolute;top:50%;left:50%;transform:translateY(-50%) translateX(-50%);color:#fff;font-weight:bold;font-size:14px
+}
+.checkbox-option input[type="checkbox"]:checked ~ span:not(.checkbox-custom){color:#4CAF50}
+
+/* Cards específicos */
+.course-card,.experience-card{
+  background:#4a4a4a;border:2px solid #555;border-radius:10px;padding:20px;transition:.3s
+}
 .course-card:hover,.experience-card:hover{border-color:#4CAF50;box-shadow:0 5px 15px rgba(0,0,0,.3)}
 .course-card h4,.experience-card h4{color:#4CAF50;margin-bottom:15px;font-size:1.1em;display:flex;align-items:center;gap:10px}
+.experience-card h4::before{content:'💼';font-size:1.2em}
 .education-grid,.experience-container{display:grid;gap:20px}
-.hidden-section{display:none}.hidden-section.show{display:block}
+.hidden-section{display:none}
+.hidden-section.show{display:block}
+
+/* Declarações */
 .declaration-container{background:#4a4a4a;border:2px solid #555;border-radius:10px;padding:20px;transition:.3s}
 .declaration-container:hover{border-color:#4CAF50;box-shadow:0 5px 15px rgba(0,0,0,.3)}
 .declaration-text{font-size:.95em;line-height:1.6;color:#e0e0e0;text-align:justify}
-#preselect{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:1000}
-.preselect-card{width:min(680px,92vw);background:#2a2a2a;border:2px solid #555;border-radius:14px;box-shadow:0 6px 30px rgba(0,0,0,.5);padding:24px}
+
+/* Seleção de loja (anti-tela) */
+#preselect{
+  position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:1000
+}
+.preselect-card{
+  width:min(680px,92vw);background:#2a2a2a;border:2px solid #555;border-radius:14px;box-shadow:0 6px 30px rgba(0,0,0,.5);padding:24px
+}
 .preselect-card h3{color:#fff;margin-bottom:10px}
 .preselect-row{display:grid;grid-template-columns:1fr;gap:16px}
 .preselect-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:16px}
-.badge{display:inline-flex;align-items:center;gap:8px;background:#3a3a3a;border:1px solid #555;color:#e0e0e0;border-radius:999px;padding:6px 12px;font-size:.9em}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;background:#3a3a3a;border:1px solid #555;color:#e0e0e0;border-radius:999px;
+  padding:6px 12px;font-size:.9em
+}
+
+/* Botões */
 .form-actions{display:flex;gap:20px;justify-content:center;margin-top:40px;padding-top:30px;border-top:2px solid #555}
-.btn-submit,.btn-reset,.btn-secondary{display:flex;align-items:center;gap:10px;padding:12px 20px;border:none;border-radius:8px;font-size:1em;font-weight:600;cursor:pointer;transition:.3s;text-transform:uppercase;letter-spacing:1px;position:relative;overflow:hidden}
+.btn-submit,.btn-reset,.btn-secondary{
+  display:flex;align-items:center;gap:10px;padding:12px 20px;border:none;border-radius:8px;font-size:1em;font-weight:600;cursor:pointer;transition:.3s;
+  text-transform:uppercase;letter-spacing:1px;position:relative;overflow:hidden
+}
 .btn-submit{background:linear-gradient(135deg,#4CAF50 0%,#45a049 100%);color:#fff;box-shadow:0 4px 15px rgba(76,175,80,.3)}
 .btn-reset{background:linear-gradient(135deg,#f44336 0%,#d32f2f 100%);color:#fff;box-shadow:0 4px 15px rgba(244,67,54,.3)}
 .btn-secondary{background:#444;color:#fff;border:2px solid #666;text-transform:none;letter-spacing:0}
 .btn-submit:hover,.btn-reset:hover,.btn-secondary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,.3)}
-@keyframes slideInUp{to{opacity:1;transform:translateY(0)}}
+
+/* Loader CEP */
 .loading-cep{position:relative}
-.loading-cep::after{content:'';position:absolute;right:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;border:2px solid #4CAF50;border-top:2px solid transparent;border-radius:50%;animation:spin 1s linear infinite}
+.loading-cep::after{
+  content:'';position:absolute;right:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;border:2px solid #4CAF50;border-top:2px solid transparent;border-radius:50%;
+  animation:spin 1s linear infinite
+}
 @keyframes spin{0%{transform:translateY(-50%) rotate(0)}100%{transform:translateY(-50%) rotate(360deg)}}
   </style>
 </head>
 <body>
 
-  <!-- Anti-tela (mesmo do seu) -->
+  <!-- Anti-tela: escolha Cidade e Filiais -->
   <div id="preselect" role="dialog" aria-modal="true">
     <div class="preselect-card">
       <h3><i class="fas fa-store"></i> Escolha a cidade e filial(is) para sua candidatura</h3>
@@ -121,6 +176,7 @@ input::placeholder,textarea::placeholder{color:#999}
     </header>
 
     <div class="form-container">
+      <!-- Resumo da seleção de Cidade/Filiais -->
       <div class="form-block">
         <div class="block-header"><i class="fas fa-map-pin"></i><h3>Vaga selecionada</h3></div>
         <div class="block-content">
@@ -129,11 +185,8 @@ input::placeholder,textarea::placeholder{color:#999}
         </div>
       </div>
 
-      <!-- IMPORTANTE: enctype multipart para a foto -->
-      <form id="job-application-form" class="job-form"
-            action="https://script.google.com/macros/s/AKfycbzdMkDG0N6xwF_px9n2N2gqqGFjYyv0D_8jOtremC3WSFQBy57_tHwtBg8CEsf-G93N/exec"
-            method="POST" enctype="multipart/form-data">
-
+      <form id="job-application-form" class="job-form" action="https://script.google.com/macros/s/AKfycbzdMkDG0N6xwF_px9n2N2gqqGFjYyv0D_8jOtremC3WSFQBy57_tHwtBg8CEsf-G93N/exec" method="POST" enctype="multipart/form-data">
+        <!-- campos ocultos para enviar cidade/filiais -->
         <input type="hidden" name="cidade" id="cidade-hidden" />
         <input type="hidden" name="filiais" id="filiais-hidden" />
 
@@ -237,7 +290,7 @@ input::placeholder,textarea::placeholder{color:#999}
           </div>
         </div>
 
-        <!-- 4. Informações Familiares (fluxo ajustado) -->
+        <!-- 4. Informações Familiares -->
         <div class="form-block">
           <div class="block-header"><i class="fas fa-users"></i><h3>Informações Familiares</h3></div>
           <div class="block-content">
@@ -268,6 +321,7 @@ input::placeholder,textarea::placeholder{color:#999}
                 </div>
               </div>
 
+              <!-- Fluxo AJUSTADO -->
               <div class="form-group full-width">
                 <label>Possui Filhos?</label>
                 <div class="radio-group">
@@ -313,7 +367,7 @@ input::placeholder,textarea::placeholder{color:#999}
           </div>
         </div>
 
-        <!-- 6. Formação Acadêmica (dinâmico) -->
+        <!-- 6. Formação Acadêmica -->
         <div class="form-block">
           <div class="block-header"><i class="fas fa-certificate"></i><h3>Formação Acadêmica</h3></div>
           <div class="block-content">
@@ -353,7 +407,7 @@ input::placeholder,textarea::placeholder{color:#999}
                 <input type="text" id="zona" name="zona" />
               </div>
 
-              <!-- removida CNH -->
+              <!-- REMOVIDO: CNH -->
 
               <div class="form-group full-width">
                 <label>Condução Própria</label>
@@ -370,7 +424,7 @@ input::placeholder,textarea::placeholder{color:#999}
                 </div>
               </div>
 
-              <!-- removidas línguas -->
+              <!-- REMOVIDO: Línguas estrangeiras -->
 
               <div class="form-group full-width">
                 <label>Conhecimento de Informática</label>
@@ -384,7 +438,7 @@ input::placeholder,textarea::placeholder{color:#999}
           </div>
         </div>
 
-        <!-- 8. Experiências -->
+        <!-- 8. Experiências Profissionais -->
         <div class="form-block">
           <div class="block-header"><i class="fas fa-history"></i><h3>Experiências Profissionais</h3></div>
           <div class="block-content">
@@ -409,7 +463,7 @@ input::placeholder,textarea::placeholder{color:#999}
           </div>
         </div>
 
-        <!-- 9. Informações finais -->
+        <!-- 9. Informações Finais -->
         <div class="form-block">
           <div class="block-header"><i class="fas fa-clipboard-check"></i><h3>Informações Finais</h3></div>
           <div class="block-content">
@@ -468,7 +522,7 @@ input::placeholder,textarea::placeholder{color:#999}
           </div>
         </div>
 
-        <!-- 10-B. LGPD -->
+        <!-- 10-B. Declaração de Confidencialidade -->
         <div class="form-block">
           <div class="block-header"><i class="fas fa-shield-alt"></i><h3>Declaração de Confidencialidade</h3></div>
           <div class="block-content">
@@ -482,88 +536,301 @@ input::placeholder,textarea::placeholder{color:#999}
           </div>
         </div>
 
+        <!-- Ações -->
         <div class="form-actions">
           <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Enviar Candidatura</button>
           <button type="reset" class="btn-reset"><i class="fas fa-eraser"></i> Limpar Formulário</button>
         </div>
+
       </form>
     </div>
   </div>
 
 <script>
-/* filiais */
-const FILIAIS={"Uberaba":["Hering - Prudente de Morais","Hering - Shopping Uberaba"],"Uberlândia":["Hering - Floriano Peixoto","Hering - Uberlândia Shopping"],"Poços de Caldas":["Hering - Rio de Janeiro"]};
+/* ====== Mapa de filiais por cidade (anti-tela) ====== */
+const FILIAIS = {
+  "Uberaba": [
+    "Hering - Prudente de Morais",
+    "Hering - Shopping Uberaba"
+  ],
+  "Uberlândia": [
+    "Hering - Floriano Peixoto",
+    "Hering - Uberlândia Shopping"
+  ],
+  "Poços de Caldas": [
+    "Hering - Rio de Janeiro"
+  ]
+};
 
-/* CEP */
+/* ====== CEP ====== */
 async function buscarCEP(){
-  const cepInput=document.getElementById('cep'),enderecoInput=document.getElementById('endereco'),bairroInput=document.getElementById('bairro'),municipioInput=document.getElementById('municipio'),ufInput=document.getElementById('uf');
-  const cep=cepInput.value.replace(/\D/g,''); if(cep.length!==8) return;
+  const cepInput=document.getElementById('cep');
+  const enderecoInput=document.getElementById('endereco');
+  const bairroInput=document.getElementById('bairro');
+  const municipioInput=document.getElementById('municipio');
+  const ufInput=document.getElementById('uf');
+  const cep=cepInput.value.replace(/\D/g,'');
+  if(cep.length!==8) return;
   cepInput.classList.add('loading-cep');
-  try{const r=await fetch(`https://viacep.com.br/ws/${cep}/json/`);const d=await r.json();
-    if(d.erro){alert('CEP não encontrado.');enderecoInput.value=bairroInput.value=municipioInput.value=ufInput.value='';}
-    else{enderecoInput.value=d.logradouro||'';bairroInput.value=d.bairro||'';municipioInput.value=d.localidade||'';ufInput.value=d.uf||'';}
-  }catch(e){console.error(e);alert('Erro ao buscar CEP.');}finally{cepInput.classList.remove('loading-cep');}
+  try{
+    const resp=await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+    const data=await resp.json();
+    if(data.erro){
+      alert('CEP não encontrado.');enderecoInput.value='';bairroInput.value='';municipioInput.value='';ufInput.value='';
+    }else{
+      enderecoInput.value=data.logradouro||'';bairroInput.value=data.bairro||'';municipioInput.value=data.localidade||'';ufInput.value=data.uf||'';
+    }
+  }catch(e){console.error(e);alert('Erro ao buscar CEP.');}
+  finally{cepInput.classList.remove('loading-cep');}
 }
 
-/* fluxo filhos */
+/* ===== Fluxo de filhos ===== */
 (function(){
-  const contMenores=document.getElementById('menores-14-container');
-  const contQtd=document.getElementById('qtd-menores-14-container');
-  const inpQtd=document.getElementById('qtd-menores-14');
+  const rPossui = document.querySelectorAll('input[name="possui-filhos"]');
+  const rMenores = document.querySelectorAll('input[name="menores-14"]');
+  const contMenores = document.getElementById('menores-14-container');
+  const contQtd = document.getElementById('qtd-menores-14-container');
+  const inpQtd = document.getElementById('qtd-menores-14');
+
   function refresh(){
-    const possui=document.querySelector('input[name="possui-filhos"]:checked')?.value;
-    const menores=document.querySelector('input[name="menores-14"]:checked')?.value;
-    if(possui==='sim'){contMenores.style.display='block'; if(menores==='sim'){contQtd.style.display='block';inpQtd.disabled=false;} else {contQtd.style.display='none';inpQtd.disabled=true;inpQtd.value='';}}
-    else{contMenores.style.display='none';document.querySelectorAll('input[name="menores-14"]').forEach(r=>r.checked=false);contQtd.style.display='none';inpQtd.disabled=true;inpQtd.value='';}
+    const possui = document.querySelector('input[name="possui-filhos"]:checked')?.value;
+    const menores = document.querySelector('input[name="menores-14"]:checked')?.value;
+
+    if (possui === 'sim') {
+      contMenores.style.display = 'block';
+      if (menores === 'sim') {
+        contQtd.style.display = 'block';
+        inpQtd.disabled = false;
+      } else {
+        contQtd.style.display = 'none';
+        inpQtd.disabled = true; inpQtd.value = '';
+      }
+    } else {
+      contMenores.style.display = 'none';
+      rMenores.forEach(r=> r.checked=false);
+      contQtd.style.display = 'none';
+      inpQtd.disabled = true; inpQtd.value = '';
+    }
   }
-  document.querySelectorAll('input[name="possui-filhos"]').forEach(r=>r.addEventListener('change',refresh));
-  document.querySelectorAll('input[name="menores-14"]').forEach(r=>r.addEventListener('change',refresh));
+  rPossui.forEach(r=> r.addEventListener('change', refresh));
+  rMenores.forEach(r=> r.addEventListener('change', refresh));
   refresh();
 })();
 
-/* condução -> VT */
+/* ===== Condução -> Vale-transporte ===== */
 (function(){
-  const vt=document.getElementById('vale-transporte-container');
-  function refresh(){const v=document.querySelector('input[name="conducao-propria"]:checked')?.value; if(v==='nao') vt.style.display='block'; else {vt.style.display='none'; document.querySelectorAll('input[name="precisa-vale-transporte"]').forEach(r=>r.checked=false);} }
-  document.querySelectorAll('input[name="conducao-propria"]').forEach(r=>r.addEventListener('change',refresh));
+  const radios = document.querySelectorAll('input[name="conducao-propria"]');
+  const vt = document.getElementById('vale-transporte-container');
+  function refresh(){
+    const v = document.querySelector('input[name="conducao-propria"]:checked')?.value;
+    if (v === 'nao') vt.style.display = 'block';
+    else {
+      vt.style.display = 'none';
+      document.querySelectorAll('input[name="precisa-vale-transporte"]').forEach(r=> r.checked=false);
+    }
+  }
+  radios.forEach(r=> r.addEventListener('change', refresh));
   refresh();
 })();
 
-/* preview foto */
+/* ===== Foto: preview e validação ===== */
 (function(){
-  const fotoInput=document.getElementById('foto-candidato'); if(!fotoInput) return;
-  fotoInput.addEventListener('change',()=>{
-    const file=fotoInput.files?.[0],wrap=document.getElementById('preview-foto'),img=document.getElementById('preview-foto-img');
-    if(!file){wrap.style.display='none';img.src='';return;}
-    if(!/^image\//.test(file.type)){alert('Envie uma imagem (JPG/PNG).');fotoInput.value='';return;}
-    if(file.size>5*1024*1024){alert('Tamanho máximo: 5 MB.');fotoInput.value='';return;}
-    const reader=new FileReader(); reader.onload=e=>{img.src=e.target.result;wrap.style.display='block';}; reader.readAsDataURL(file);
+  const fotoInput = document.getElementById('foto-candidato');
+  if (!fotoInput) return;
+  fotoInput.addEventListener('change', () => {
+    const file = fotoInput.files?.[0];
+    const wrap = document.getElementById('preview-foto');
+    const img  = document.getElementById('preview-foto-img');
+    if (!file) { wrap.style.display='none'; img.src=''; return; }
+    if (!/^image\//.test(file.type)) { alert('Envie uma imagem (JPG/PNG).'); fotoInput.value=''; return; }
+    if (file.size > 5*1024*1024) { alert('Tamanho máximo: 5 MB.'); fotoInput.value=''; return; }
+    const reader = new FileReader();
+    reader.onload = e => { img.src = e.target.result; wrap.style.display = 'block'; };
+    reader.readAsDataURL(file);
   });
 })();
 
-/* anti-tela */
-function initPreselect(){
-  const pre=document.getElementById('preselect'),app=document.getElementById('app-root'),cidadeSel=document.getElementById('cidade-select'),filiaisBox=document.getElementById('filiais-box');
-  const badgeCidade=document.getElementById('badge-cidade'),badgeFiliais=document.getElementById('badge-filiais'),inputCidade=document.getElementById('cidade-hidden'),inputFiliais=document.getElementById('filiais-hidden');
-  function renderFiliais(){filiaisBox.innerHTML='';const cidade=cidadeSel.value; if(!cidade||!FILIAIS[cidade]) return;
-    FILIAIS[cidade].forEach(nome=>{filiaisBox.insertAdjacentHTML('beforeend',`<label class="checkbox-option"><input type="checkbox" value="${nome}"><span class="checkbox-custom"></span>${nome}</label>`);});
+/* ===== Formação Acadêmica Dinâmica ===== */
+let cursoCount=0;
+function cursoCardTemplate(idx){
+  return `
+  <div class="course-card" data-curso="${idx}">
+    <h4>Curso ${idx}</h4>
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="curso${idx}">Curso</label>
+        <input type="text" id="curso${idx}" name="curso${idx}">
+      </div>
+      <div class="form-group">
+        <label for="instituicao${idx}">Instituição</label>
+        <input type="text" id="instituicao${idx}" name="instituicao${idx}">
+      </div>
+      <div class="form-group full-width">
+        <div class="checkbox-group">
+          <label class="checkbox-option">
+            <input type="checkbox" name="status-curso${idx}" value="cursando" onchange="toggleConclusao(${idx})">
+            <span class="checkbox-custom"></span>Cursando
+          </label>
+          <label class="checkbox-option">
+            <input type="checkbox" name="status-curso${idx}" value="concluido" onchange="toggleConclusao(${idx})">
+            <span class="checkbox-custom"></span>Concluído
+          </label>
+        </div>
+        <div class="conditional-field" id="ano-conclusao${idx}-container" style="display:none">
+          <label for="ano-conclusao${idx}">Ano de conclusão</label>
+          <input type="number" id="ano-conclusao${idx}" name="ano-conclusao${idx}" min="1950" max="2030" disabled>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+function adicionarCurso(){
+  cursoCount++; const ctn=document.getElementById('course-container');
+  ctn.insertAdjacentHTML('beforeend', cursoCardTemplate(cursoCount));
+}
+function removerUltimoCurso(){
+  const ctn=document.getElementById('course-container');
+  if(ctn.lastElementChild){ctn.removeChild(ctn.lastElementChild);cursoCount=Math.max(0,cursoCount-1);}
+}
+function toggleFormacaoAcademica(){
+  const chk=document.getElementById('possui-formacao');
+  const sec=document.getElementById('formacao-academica-section');
+  if(chk.checked){
+    sec.classList.add('show');
+    if(cursoCount===0) adicionarCurso();
+  }else{
+    sec.classList.remove('show');
   }
-  cidadeSel.addEventListener('change',renderFiliais);
-  document.getElementById('btn-cancel-pre').addEventListener('click',()=>{cidadeSel.value='';filiaisBox.innerHTML='';});
-  document.getElementById('btn-continue-pre').addEventListener('click',()=>{
-    const cidade=cidadeSel.value; if(!cidade){alert('Selecione a cidade.');return;}
-    const marcadas=[...filiaisBox.querySelectorAll('input[type="checkbox"]:checked')].map(i=>i.value); if(!marcadas.length){alert('Selecione pelo menos uma filial.');return;}
-    badgeCidade.textContent=cidade; badgeFiliais.textContent=marcadas.join(', '); inputCidade.value=cidade; inputFiliais.value=marcadas.join(', ');
-    pre.style.display='none'; app.style.display='block';
+}
+function toggleConclusao(idx){
+  const concluido=document.querySelector(`input[name="status-curso${idx}"][value="concluido"]`);
+  const wrap=document.getElementById(`ano-conclusao${idx}-container`);
+  const input=document.getElementById(`ano-conclusao${idx}`);
+  if(concluido && concluido.checked){wrap.style.display='block';input.disabled=false;}
+  else{wrap.style.display='none';input.disabled=true;input.value='';}
+}
+
+/* ===== Experiências Dinâmicas ===== */
+function experienciaCardTemplate(idx){
+  return `
+  <div class="experience-card" data-exp="${idx}">
+    <h4>Experiência ${idx}</h4>
+    <div class="form-grid">
+      <div class="form-group"><label for="empresa${idx}">Empresa</label><input type="text" id="empresa${idx}" name="empresa${idx}"></div>
+      <div class="form-group"><label for="cargo${idx}">Cargo</label><input type="text" id="cargo${idx}" name="cargo${idx}"></div>
+      <div class="form-group"><label for="periodo${idx}">Período (meses/anos)</label><input type="text" id="periodo${idx}" name="periodo${idx}" placeholder="Ex.: 1 ano e 6 meses"></div>
+      <div class="form-group"><label for="responsavel${idx}">Responsável (gestor/líder)</label><input type="text" id="responsavel${idx}" name="responsavel${idx}"></div>
+      <div class="form-group"><label for="contato${idx}">Contato do responsável</label><input type="tel" id="contato${idx}" name="contato${idx}" placeholder="(00) 00000-0000"></div>
+      <div class="form-group full-width"><label for="atividades${idx}">Principais Atividades</label><textarea id="atividades${idx}" name="atividades${idx}" rows="3"></textarea></div>
+    </div>
+  </div>`;
+}
+function adicionarExperiencia(){
+  const ctn=document.getElementById('experience-container');
+  const idx=ctn.children.length+1;
+  ctn.insertAdjacentHTML('beforeend', experienciaCardTemplate(idx));
+}
+function removerUltimaExperiencia(){
+  const ctn=document.getElementById('experience-container');
+  if(ctn.lastElementChild){ctn.removeChild(ctn.lastElementChild);}
+}
+function toggleExperienciaProfissional(){
+  const tem=document.querySelector('input[name="tem-experiencia"]:checked')?.value;
+  const sec=document.getElementById('experiencia-profissional-section');
+  if(tem==='sim'){
+    sec.classList.add('show');
+    if(!document.querySelector('.experience-card')) adicionarExperiencia();
+  }else{
+    sec.classList.remove('show');
+  }
+}
+
+/* ===== Anti-tela (Cidade/Filiais) ===== */
+function initPreselect(){
+  const pre=document.getElementById('preselect');
+  const app=document.getElementById('app-root');
+  const cidadeSel=document.getElementById('cidade-select');
+  const filiaisBox=document.getElementById('filiais-box');
+  const btnCancel=document.getElementById('btn-cancel-pre');
+  const btnCont=document.getElementById('btn-continue-pre');
+  const badgeCidade=document.getElementById('badge-cidade');
+  const badgeFiliais=document.getElementById('badge-filiais');
+  const inputCidade=document.getElementById('cidade-hidden');
+  const inputFiliais=document.getElementById('filiais-hidden');
+
+  function renderFiliais(){
+    filiaisBox.innerHTML='';
+    const cidade=cidadeSel.value;
+    if(!cidade || !FILIAIS[cidade]) return;
+    FILIAIS[cidade].forEach((nome)=>{
+      filiaisBox.insertAdjacentHTML('beforeend', `
+        <label class="checkbox-option">
+          <input type="checkbox" value="${nome}">
+          <span class="checkbox-custom"></span>${nome}
+        </label>
+      `);
+    });
+  }
+
+  cidadeSel.addEventListener('change', renderFiliais);
+
+  btnCancel.addEventListener('click', ()=>{
+    cidadeSel.value=''; filiaisBox.innerHTML='';
+  });
+
+  btnCont.addEventListener('click', ()=>{
+    const cidade=cidadeSel.value;
+    if(!cidade){ alert('Selecione a cidade.'); return; }
+    const marcadas=[...filiaisBox.querySelectorAll('input[type="checkbox"]:checked')].map(i=>i.value);
+    if(!marcadas.length){ alert('Selecione pelo menos uma filial.'); return; }
+
+    badgeCidade.textContent = cidade;
+    badgeFiliais.textContent = marcadas.join(', ');
+    inputCidade.value = cidade;
+    inputFiliais.value = marcadas.join(', ');
+
+    pre.style.display='none';
+    app.style.display='block';
   });
 }
 
-document.addEventListener('DOMContentLoaded',()=>{
+/* ===== Máscaras e init ===== */
+document.addEventListener('DOMContentLoaded', ()=>{
   initPreselect();
-  const cpf=document.getElementById('cpf'); if(cpf){cpf.addEventListener('input',e=>{let v=e.target.value.replace(/\D/g,''); if(v.length>9) v=v.replace(/^(\d{3})(\d{3})(\d{3})(\d{0,2}).*/,'$1.$2.$3-$4'); else if(v.length>6) v=v.replace(/^(\d{3})(\d{3})(\d{0,3}).*/,'$1.$2.$3'); else if(v.length>3) v=v.replace(/^(\d{3})(\d{0,3}).*/,'$1.$2'); e.target.value=v;});}
-  const tel=document.getElementById('telefone'); if(tel){tel.addEventListener('input',e=>{let v=e.target.value.replace(/\D/g,''); if(v.length>10) v=v.replace(/^(\d\d)(\d{5})(\d{4}).*/,'($1) $2-$3'); else if(v.length>6) v=v.replace(/^(\d\d)(\d{4})(\d{0,4}).*/,'($1) $2-$3'); else if(v.length>2) v=v.replace(/^(\d\d)(\d{0,5})/,'($1) $2'); e.target.value=v;});}
-  const cel=document.getElementById('celular'); if(cel){cel.addEventListener('input',e=>{let v=e.target.value.replace(/\D/g,''); if(v.length>11) v=v.replace(/^(\d\d)(\d{5})(\d{4}).*/,'($1) $2-$3'); else if(v.length>7) v=v.replace(/^(\d\d)(\d{5})(\d{0,4}).*/,'($1) $2-$3'); else if(v.length>2) v=v.replace(/^(\d\d)(\d{0,5})/,'($1) $2'); e.target.value=v;});}
-  const pret=document.getElementById('pretensao-salarial'); if(pret){pret.addEventListener('input',e=>{let v=e.target.value.replace(/\D/g,''); v=(parseInt(v||'0',10)/100).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); e.target.value=v;});}
+
+  const cpf=document.getElementById('cpf');
+  if(cpf){
+    cpf.addEventListener('input',e=>{
+      let v=e.target.value.replace(/\D/g,'');
+      if(v.length>9) v=v.replace(/^(\d{3})(\d{3})(\d{3})(\d{0,2}).*/,'$1.$2.$3-$4');
+      else if(v.length>6) v=v.replace(/^(\d{3})(\d{3})(\d{0,3}).*/,'$1.$2.$3');
+      else if(v.length>3) v=v.replace(/^(\d{3})(\d{0,3}).*/,'$1.$2');
+      e.target.value=v;
+    });
+  }
+
+  const tel=document.getElementById('telefone');
+  if(tel){tel.addEventListener('input',e=>{
+    let v=e.target.value.replace(/\D/g,'');
+    if(v.length>10) v=v.replace(/^(\d\d)(\d{5})(\d{4}).*/,'($1) $2-$3');
+    else if(v.length>6) v=v.replace(/^(\d\d)(\d{4})(\d{0,4}).*/,'($1) $2-$3');
+    else if(v.length>2) v=v.replace(/^(\d\d)(\d{0,5})/,'($1) $2');
+    e.target.value=v;
+  });}
+
+  const cel=document.getElementById('celular');
+  if(cel){cel.addEventListener('input',e=>{
+    let v=e.target.value.replace(/\D/g,'');
+    if(v.length>11) v=v.replace(/^(\d\d)(\d{5})(\d{4}).*/,'($1) $2-$3');
+    else if(v.length>7) v=v.replace(/^(\d\d)(\d{5})(\d{0,4}).*/,'($1) $2-$3');
+    else if(v.length>2) v=v.replace(/^(\d\d)(\d{0,5})/,'($1) $2');
+    e.target.value=v;
+  });}
+
+  const pret=document.getElementById('pretensao-salarial');
+  if(pret){pret.addEventListener('input',e=>{
+    let v=e.target.value.replace(/\D/g,''); v=(parseInt(v||'0',10)/100).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); e.target.value=v;
+  });}
 });
 </script>
 </body>
