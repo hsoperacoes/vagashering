@@ -108,6 +108,23 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
 .loading-cep{position:relative}
 .loading-cep::after{content:'';position:absolute;right:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;border:2px solid #4CAF50;border-top:2px solid transparent;border-radius:50%;animation:spin 1s linear infinite}
 @keyframes spin{0%{transform:translateY(-50%) rotate(0)}100%{transform:translateY(-50%) rotate(360deg)}}
+
+/* ======= INSERÇÕES PEDIDAS ======= */
+
+/* Anti-tela totalmente opaca */
+#preselect{ background:#000 !important; }
+
+/* Bloqueia o scroll enquanto a anti-tela estiver ativa */
+body.no-scroll{ overflow:hidden; }
+
+/* Esconde cabeçalho/rodapé do tema do GitHub Pages (título/links azuis) */
+.site-header, .page-header, .site-footer, .site-title, .page-title { display:none !important; }
+
+/* Mostra somente seus nós principais no body */
+body > *:not(#preselect):not(#app-root):not(script){ display:none !important; }
+
+/* Remove qualquer margem/padding do topo da página */
+html, body { margin:0; padding:0 !important; }
   </style>
 </head>
 <body>
@@ -490,7 +507,7 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
 
         <!-- 10-B. Declaração de Confidencialidade -->
         <div class="form-block">
-          <div class="block-header"><i class="fas fa-shield-alt"></i><h3>Declaração de Confidencialidade</h3></div>
+          <div class="block-header"><i class="fas a-shield-alt"></i><h3>Declaração de Confidencialidade</h3></div>
           <div class="block-content">
             <div class="declaration-container">
               <p class="declaration-text">
@@ -656,6 +673,7 @@ function toggleExperienciaProfissional(){ const tem=document.querySelector('inpu
 
 /* ===== Anti-tela (Cidade/Filiais) ===== */
 function initPreselect(){
+  document.body.classList.add('no-scroll'); // BLOQUEIA SCROLL ENQUANTO O MODAL ESTÁ ABERTO
   const pre=document.getElementById('preselect');
   const app=document.getElementById('app-root');
   const cidadeSel=document.getElementById('cidade-select');
@@ -700,6 +718,8 @@ function initPreselect(){
 
     pre.style.display='none';
     app.style.display='block';
+    document.body.classList.remove('no-scroll'); // LIBERA O SCROLL
+    window.scrollTo(0,0); // GARANTE INÍCIO NO TOPO
   });
 }
 
@@ -856,6 +876,3 @@ document.getElementById('job-application-form').addEventListener('submit', async
 </script>
 </body>
 </html>
-
-
-
