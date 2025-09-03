@@ -19,9 +19,8 @@
   <div class="card">
     <h2>Teste • Enviar foto anexada</h2>
 
-    <!-- SUA URL já inserida -->
     <form id="f" action="https://script.google.com/macros/s/AKfycbzdMkDG0N6xwF_px9n2N2gqqGFjYyv0D_8jOtremC3WSFQBy57_tHwtBg8CEsf-G93N/exec"
-          method="POST" enctype="multipart/form-data">
+          method="POST" enctype="multipart/form-data" novalidate>
       <label for="nome">Nome</label>
       <input id="nome" name="nome" type="text" required>
 
@@ -36,7 +35,7 @@
   </div>
 
   <script>
-    // Prévia + validação
+    // Prévia + validação básica de tipo/tamanho
     (function(){
       const inp = document.getElementById('foto');
       const prev = document.getElementById('preview');
@@ -52,29 +51,25 @@
       });
     })();
 
-    // Envia via fetch pra tentar ler a resposta; se cair em no-cors, segue o baile
     document.getElementById('f').addEventListener('submit', async (ev) => {
       ev.preventDefault();
-      const fd  = new FormData(ev.target);
-      const msg = document.getElementById('msg');
+      const form = ev.target;
+      const msg  = document.getElementById('msg');
+
+      // força validação do HTML5
+      if (!form.reportValidity()) return;
+
+      // garante que veio arquivo
+      const file = document.getElementById('foto').files[0];
+      if (!file) { alert('Selecione uma foto.'); return; }
+
+      const fd = new FormData(form);
       msg.textContent = 'Enviando...';
 
       try {
-        const res = await fetch(ev.target.action, { method:'POST', body: fd });
+        const res = await fetch(form.action, { method:'POST', body: fd });
         let payload = null;
         try { payload = await res.json(); } catch(_){}
-        if (res.ok || (payload && payload.success)) {
-          msg.textContent = 'OK! Verifique o e-mail — a foto deve estar anexada.';
-          ev.target.reset();
-          document.getElementById('preview').style.display='none';
-        } else {
-          msg.textContent = 'Pode ter enviado, mas não deu pra ler a resposta (CORS). Confira o e-mail.';
-        }
-      } catch (e) {
-        console.error(e);
-        msg.textContent = 'Falha de rede. Veja se chegou o e-mail mesmo assim.';
-      }
-    });
-  </script>
-</body>
-</html>
+
+        if (payload && payload.success === true) {
+          msg.textCont
