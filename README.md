@@ -112,16 +112,23 @@ input:focus-visible{outline:2px solid #4CAF50;outline-offset:2px}
 /* ======= INSERÇÕES PEDIDAS ======= */
 
 /* Anti-tela totalmente opaca */
-#preselect{ background:#000 !important; }
+#preselect { background:#000 !important; }
 
 /* Bloqueia o scroll enquanto a anti-tela estiver ativa */
-body.no-scroll{ overflow:hidden; }
+body.no-scroll { overflow:hidden; }
 
-/* Esconde cabeçalho/rodapé do tema do GitHub Pages (título/links azuis) */
-.site-header, .page-header, .site-footer, .site-title, .page-title { display:none !important; }
+/* Esconde cabeçalho/rodapé/títulos do tema do GitHub Pages */
+.site-header,
+.page-header,
+.site-footer,
+.site-title,
+.page-title,
+.site-nav,
+header[role="banner"],
+footer[role="contentinfo"] { display:none !important; }
 
-/* Mostra somente seus nós principais no body */
-body > *:not(#preselect):not(#app-root):not(script){ display:none !important; }
+/* Zera margens/paddings dos wrappers do tema para começar no topo */
+main, .page-content, .wrapper { margin:0 !important; padding:0 !important; }
 
 /* Remove qualquer margem/padding do topo da página */
 html, body { margin:0; padding:0 !important; }
@@ -447,7 +454,7 @@ html, body { margin:0; padding:0 !important; }
             </div>
           </div>
         </div>
-                <div class="form-block">
+        <div class="form-block">
           <div class="block-header"><i class="fas fa-clipboard-check"></i><h3>Informações Finais</h3></div>
           <div class="block-content">
             <div class="form-grid">
@@ -507,7 +514,7 @@ html, body { margin:0; padding:0 !important; }
 
         <!-- 10-B. Declaração de Confidencialidade -->
         <div class="form-block">
-          <div class="block-header"><i class="fas a-shield-alt"></i><h3>Declaração de Confidencialidade</h3></div>
+          <div class="block-header"><i class="fas fa-shield-alt"></i><h3>Declaração de Confidencialidade</h3></div>
           <div class="block-content">
             <div class="declaration-container">
               <p class="declaration-text">
