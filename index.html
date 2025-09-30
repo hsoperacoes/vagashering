@@ -1,4 +1,3 @@
-<!-- INÍCIO DA PARTE 1 -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -42,10 +41,10 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;line-height:1.6;col
 
 /* Labels e Inputs */
 label{color:#e0e0e0;font-weight:600;margin-bottom:8px;font-size:.95em}
-input[type="text"],input[type="email"],input[type="tel"],input[type="date"],input[type="number"],textarea{background:#4a4a4a;border:2px solid #555;border-radius:8px;padding:12px 15px;color:#e0e0e0;font-size:1em;transition:.3s}
+input[type="text"],input[type="email"],input[type="tel"],input[type="date"],input[type="number"],textarea,select{background:#4a4a4a;border:2px solid #555;border-radius:8px;padding:12px 15px;color:#e0e0e0;font-size:1em;transition:.3s}
 textarea{min-height:90px;resize:vertical}
-input:focus,textarea:focus{outline:none;border-color:#4CAF50;box-shadow:0 0 0 3px rgba(76,175,80,.2);background:#5a5a5a}
-input:disabled,textarea:disabled{background:#333;color:#888;cursor:not-allowed;opacity:.6}
+input:focus,textarea:focus,select:focus{outline:none;border-color:#4CAF50;box-shadow:0 0 0 3px rgba(76,175,80,.2);background:#5a5a5a}
+input:disabled,textarea:disabled,select:disabled{background:#333;color:#888;cursor:not-allowed;opacity:.6}
 input::placeholder,textarea::placeholder{color:#999}
 
 /* Radios & Checkboxes customizados */
@@ -251,6 +250,10 @@ html, body { margin:0; padding:0 !important; }
                 <input type="text" id="numero" name="numero" required />
               </div>
               <div class="form-group">
+                <label for="complemento">Complemento</label>
+                <input type="text" id="complemento" name="complemento" placeholder="Apto, Bloco, etc." />
+              </div>
+              <div class="form-group">
                 <label for="bairro">Bairro *</label>
                 <input type="text" id="bairro" name="bairro" required readonly />
               </div>
@@ -304,201 +307,268 @@ html, body { margin:0; padding:0 !important; }
               <div class="form-group full-width">
                 <label>Estado Civil *</label>
                 <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="estado-civil" value="casado" required /><span class="radio-custom"></span>Casado(a)</label>
-                  <label class="radio-option"><input type="radio" name="estado-civil" value="solteiro" required /><span class="radio-custom"></span>Solteiro(a)</label>
-                  <label class="radio-option"><input type="radio" name="estado-civil" value="divorciado" required /><span class="radio-custom"></span>Divorciado(a)</label>
+                  <label class="radio-option">
+                    <input type="radio" name="estado-civil" value="solteiro" />
+                    <span class="radio-custom"></span>Solteiro(a)
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="estado-civil" value="casado" />
+                    <span class="radio-custom"></span>Casado(a)
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="estado-civil" value="divorciado" />
+                    <span class="radio-custom"></span>Divorciado(a)
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="estado-civil" value="viuvo" />
+                    <span class="radio-custom"></span>Viúvo(a)
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="estado-civil" value="uniao-estavel" />
+                    <span class="radio-custom"></span>União Estável
+                  </label>
                 </div>
               </div>
 
               <div class="form-group full-width">
-                <label>Residência *</label>
+                <label>Possui filhos? *</label>
                 <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="residencia" value="propria" required /><span class="radio-custom"></span>Própria</label>
-                  <label class="radio-option"><input type="radio" name="residencia" value="alugada" required /><span class="radio-custom"></span>Alugada</label>
+                  <label class="radio-option">
+                    <input type="radio" name="possui-filhos" value="sim" />
+                    <span class="radio-custom"></span>Sim
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="possui-filhos" value="nao" />
+                    <span class="radio-custom"></span>Não
+                  </label>
                 </div>
               </div>
 
-              <!-- Fluxo filhos -->
-              <div class="form-group full-width">
-                <label>Possui Filhos?</label>
-                <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="possui-filhos" value="sim" /><span class="radio-custom"></span>Sim</label>
-                  <label class="radio-option"><input type="radio" name="possui-filhos" value="nao" /><span class="radio-custom"></span>Não</label>
-                </div>
-
-                <div class="conditional-field" id="menores-14-container" style="display:none;margin-top:10px">
-                  <label>Possui filhos menores de 14 anos?</label>
+              <div id="menores-14-container" style="display:none">
+                <div class="form-group full-width">
+                  <label>Possui filhos menores de 14 anos? *</label>
                   <div class="radio-group">
-                    <label class="radio-option"><input type="radio" name="menores-14" value="sim" /><span class="radio-custom"></span>Sim</label>
-                    <label class="radio-option"><input type="radio" name="menores-14" value="nao" /><span class="radio-custom"></span>Não</label>
+                    <label class="radio-option">
+                      <input type="radio" name="menores-14" value="sim" />
+                      <span class="radio-custom"></span>Sim
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="menores-14" value="nao" />
+                      <span class="radio-custom"></span>Não
+                    </label>
                   </div>
                 </div>
+              </div>
 
-                <div class="conditional-field" id="qtd-menores-14-container" style="display:none;margin-top:10px">
-                  <label for="qtd-menores-14">Quantidade de filhos menores de 14 anos</label>
-                  <input type="number" id="qtd-menores-14" name="qtd-menores-14" min="0" disabled />
+              <div id="qtd-menores-14-container" class="form-group" style="display:none">
+                <label for="qtd-menores-14">Quantos filhos menores de 14 anos? *</label>
+                <input type="number" id="qtd-menores-14" name="qtd-menores-14" min="1" max="10" disabled />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Informações Profissionais -->
+        <div class="form-block">
+          <div class="block-header"><i class="fas fa-briefcase"></i><h3>Informações Profissionais</h3></div>
+          <div class="block-content">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="pretensao-salarial">Pretensão Salarial *</label>
+                <input type="text" id="pretensao-salarial" name="pretensao-salarial" placeholder="R$ 0,00" required />
+              </div>
+
+              <div class="form-group full-width">
+                <label>Possui condução própria? *</label>
+                <div class="radio-group">
+                  <label class="radio-option">
+                    <input type="radio" name="conducao-propria" value="sim" />
+                    <span class="radio-custom"></span>Sim
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="conducao-propria" value="nao" />
+                    <span class="radio-custom"></span>Não
+                  </label>
                 </div>
               </div>
 
-            </div>
-          </div>
-          <!-- INÍCIO DA PARTE 2 -->
-        <!-- 5. Escolaridade -->
-        <div class="form-block">
-          <div class="block-header"><i class="fas fa-graduation-cap"></i><h3>Grau de Escolaridade</h3></div>
-          <div class="block-content">
-            <div class="form-grid">
-              <div class="form-group full-width">
-                <label>Selecione seu nível de escolaridade *</label>
+              <div id="vale-transporte-container" class="form-group full-width" style="display:none">
+                <label>Precisa de vale-transporte? *</label>
                 <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="escolaridade" value="fundamental-completo" required /><span class="radio-custom"></span>Fundamental Completo</label>
-                  <label class="radio-option"><input type="radio" name="escolaridade" value="fundamental-incompleto" required /><span class="radio-custom"></span>Fundamental Incompleto</label>
-                  <label class="radio-option"><input type="radio" name="escolaridade" value="medio-completo" required /><span class="radio-custom"></span>Médio Completo</label>
-                  <label class="radio-option"><input type="radio" name="escolaridade" value="medio-incompleto" required /><span class="radio-custom"></span>Médio Incompleto</label>
-                  <label class="radio-option"><input type="radio" name="escolaridade" value="superior-completo" required /><span class="radio-custom"></span>Superior Completo</label>
-                  <label class="radio-option"><input type="radio" name="escolaridade" value="superior-incompleto" required /><span class="radio-custom"></span>Superior Incompleto</label>
+                  <label class="radio-option">
+                    <input type="radio" name="precisa-vale-transporte" value="sim" />
+                    <span class="radio-custom"></span>Sim
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="precisa-vale-transporte" value="nao" />
+                    <span class="radio-custom"></span>Não
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group full-width">
+                <label>Como soube da vaga? *</label>
+                <div class="radio-group">
+                  <label class="radio-option">
+                    <input type="radio" name="como-soube" value="indicacao" />
+                    <span class="radio-custom"></span>Indicação
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="como-soube" value="site-empresa" />
+                    <span class="radio-custom"></span>Site da empresa
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="como-soube" value="site-empregos" />
+                    <span class="radio-custom"></span>Site de empregos
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="como-soube" value="redes-sociais" />
+                    <span class="radio-custom"></span>Redes sociais
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="como-soube" value="outros" />
+                    <span class="radio-custom"></span>Outros
+                  </label>
+                </div>
+              </div>
+
+              <div id="qual-site-container" class="form-group full-width" style="display:none">
+                <label for="qual-site">Qual site? *</label>
+                <input type="text" id="qual-site" name="qual-site" placeholder="Informe o nome do site de empregos" />
+              </div>
+
+              <div class="form-group full-width">
+                <label>Disponibilidade de horário *</label>
+                <div class="checkbox-group">
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="disponibilidade" value="manha" />
+                    <span class="checkbox-custom"></span>Manhã
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="disponibilidade" value="tarde" />
+                    <span class="checkbox-custom"></span>Tarde
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="disponibilidade" value="noite" />
+                    <span class="checkbox-custom"></span>Noite
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="disponibilidade" value="fins-semana" />
+                    <span class="checkbox-custom"></span>Fins de semana
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="disponibilidade" value="feriados" />
+                    <span class="checkbox-custom"></span>Feriados
+                  </label>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- 6. Formação Acadêmica (dinâmico) -->
+        <!-- 6. Formação Acadêmica -->
         <div class="form-block">
-          <div class="block-header"><i class="fas fa-certificate"></i><h3>Formação Acadêmica</h3></div>
+          <div class="block-header"><i class="fas fa-graduation-cap"></i><h3>Formação Acadêmica</h3></div>
           <div class="block-content">
-            <div class="form-grid">
-              <div class="form-group full-width">
-                <label class="checkbox-option">
-                  <input type="checkbox" id="possui-formacao" name="possui-formacao" onchange="toggleFormacaoAcademica()" />
-                  <span class="checkbox-custom"></span>
-                  Possuo formação acadêmica
+            <div class="form-group">
+              <label class="checkbox-option" style="background:transparent;border:none;padding:0">
+                <input type="checkbox" id="possui-formacao" name="possui-formacao" onchange="toggleFormacaoAcademica()" />
+                <span class="checkbox-custom"></span>
+                <span>Possuo formação acadêmica</span>
+              </label>
+            </div>
+
+            <div id="formacao-academica-section" class="hidden-section">
+              <div class="form-actions" style="margin:20px 0;padding:0;border:none;justify-content:flex-start">
+                <button type="button" class="btn-secondary" onclick="adicionarCurso()">
+                  <i class="fas fa-plus"></i> Adicionar Curso
+                </button>
+                <button type="button" class="btn-secondary" onclick="removerUltimoCurso()">
+                  <i class="fas fa-minus"></i> Remover Último
+                </button>
+              </div>
+              <div id="course-container" class="education-grid"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. Experiência Profissional -->
+        <div class="form-block">
+          <div class="block-header"><i class="fas fa-user-tie"></i><h3>Experiência Profissional</h3></div>
+          <div class="block-content">
+            <div class="form-group full-width">
+              <label>Possui experiência profissional? *</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="tem-experiencia" value="sim" onchange="toggleExperienciaProfissional()" />
+                  <span class="radio-custom"></span>Sim
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="tem-experiencia" value="nao" onchange="toggleExperienciaProfissional()" />
+                  <span class="radio-custom"></span>Não
                 </label>
               </div>
             </div>
 
-            <div class="hidden-section" id="formacao-academica-section">
-              <div class="education-grid">
-                <div class="course-container" id="course-container"></div>
+            <div id="experiencia-profissional-section" class="hidden-section">
+              <div class="form-actions" style="margin:20px 0;padding:0;border:none;justify-content:flex-start">
+                <button type="button" class="btn-secondary" onclick="adicionarExperiencia()">
+                  <i class="fas fa-plus"></i> Adicionar Experiência
+                </button>
+                <button type="button" class="btn-secondary" onclick="removerUltimaExperiencia()">
+                  <i class="fas fa-minus"></i> Remover Última
+                </button>
               </div>
-              <div style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap">
-                <button type="button" class="btn-secondary" id="btn-add-curso" onclick="adicionarCurso()">Adicionar curso</button>
-                <button type="button" class="btn-secondary" id="btn-remover-curso" onclick="removerUltimoCurso()">Remover último</button>
-              </div>
+              <div id="experience-container" class="experience-container"></div>
             </div>
           </div>
         </div>
 
-        <!-- 7. Informações Adicionais -->
+        <!-- 8. Informações Adicionais -->
         <div class="form-block">
           <div class="block-header"><i class="fas fa-info-circle"></i><h3>Informações Adicionais</h3></div>
           <div class="block-content">
             <div class="form-grid">
-              <div class="form-group">
-                <label for="titulo-eleitor">Título de Eleitor nº</label>
-                <input type="text" id="titulo-eleitor" name="titulo-eleitor" />
-              </div>
-              <div class="form-group">
-                <label for="zona">Zona</label>
-                <input type="text" id="zona" name="zona" />
-              </div>
-
               <div class="form-group full-width">
-                <label>Condução Própria</label>
-                <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="conducao-propria" value="sim" /><span class="radio-custom"></span>Sim</label>
-                  <label class="radio-option"><input type="radio" name="conducao-propria" value="nao" /><span class="radio-custom"></span>Não</label>
-                </div>
-                <div id="vale-transporte-container" class="conditional-field" style="display:none;margin-top:10px">
-                  <label>Precisará de vale-transporte?</label>
-                  <div class="radio-group">
-                    <label class="radio-option"><input type="radio" name="precisa-vale-transporte" value="sim" /><span class="radio-custom"></span>Sim</label>
-                    <label class="radio-option"><input type="radio" name="precisa-vale-transporte" value="nao" /><span class="radio-custom"></span>Não</label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group full-width">
-                <label>Conhecimento de Informática</label>
-                <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="informatica" value="basico" /><span class="radio-custom"></span>Básico</label>
-                  <label class="radio-option"><input type="radio" name="informatica" value="intermediario" /><span class="radio-custom"></span>Intermediário</label>
-                  <label class="radio-option"><input type="radio" name="informatica" value="avancado" /><span class="radio-custom"></span>Avançado</label>
-                </div>
+                <label for="observacoes">Observações ou informações que considera relevantes</label>
+                <textarea id="observacoes" name="observacoes" rows="4" placeholder="Descreva qualquer informação adicional que considere importante para sua candidatura..."></textarea>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- 8. Experiências Profissionais -->
+        <!-- 9. Feedback sobre a Vaga -->
         <div class="form-block">
-          <div class="block-header"><i class="fas fa-history"></i><h3>Experiências Profissionais</h3></div>
+          <div class="block-header"><i class="fas fa-comments"></i><h3>Feedback sobre a Vaga</h3></div>
           <div class="block-content">
             <div class="form-grid">
               <div class="form-group full-width">
-                <label>Você possui experiência profissional? *</label>
+                <label>As atribuições do cargo pretendido ficaram claras para você? *</label>
                 <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="tem-experiencia" value="sim" required onchange="toggleExperienciaProfissional()" /><span class="radio-custom"></span>Possuo experiência profissional</label>
-                  <label class="radio-option"><input type="radio" name="tem-experiencia" value="nao" required onchange="toggleExperienciaProfissional()" /><span class="radio-custom"></span>Não possuo experiência profissional</label>
-                </div>
-              </div>
-            </div>
-
-            <div class="hidden-section" id="experiencia-profissional-section">
-              <div class="experience-container" id="experience-container"></div>
-
-              <div style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap">
-                <button type="button" class="btn-secondary" onclick="adicionarExperiencia()">Adicionar experiência</button>
-                <button type="button" class="btn-secondary" onclick="removerUltimaExperiencia()">Remover última</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="form-block">
-          <div class="block-header"><i class="fas fa-clipboard-check"></i><h3>Informações Finais</h3></div>
-          <div class="block-content">
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="pretensao-salarial">Pretensão Salarial</label>
-                <input type="text" id="pretensao-salarial" name="pretensao-salarial" placeholder="R$ 0.000,00" />
-              </div>
-              <div class="form-group">
-                <label for="pretensao-cargo">Pretensão de Cargo</label>
-                <input type="text" id="pretensao-cargo" name="pretensao-cargo" placeholder="Ex.: Vendedor, Caixa, Estoquista..." />
-              </div>
-
-              <div class="form-group full-width">
-                <label>Disponibilidade para início imediato *</label>
-                <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="disponibilidade-inicio" value="sim" required /><span class="radio-custom"></span>Sim</label>
-                  <label class="radio-option"><input type="radio" name="disponibilidade-inicio" value="nao" required /><span class="radio-custom"></span>Não</label>
+                  <label class="radio-option">
+                    <input type="radio" name="atribuicoes-claras" value="sim" onchange="toggleExplicacaoAtribuicoes()" />
+                    <span class="radio-custom"></span>Sim
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="atribuicoes-claras" value="em-partes" onchange="toggleExplicacaoAtribuicoes()" />
+                    <span class="radio-custom"></span>Em partes
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="atribuicoes-claras" value="nao" onchange="toggleExplicacaoAtribuicoes()" />
+                    <span class="radio-custom"></span>Não
+                  </label>
                 </div>
               </div>
 
-              <div class="form-group full-width">
-                <label>Disponibilidade de Horário *</label>
-                <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="disponibilidade-horario" value="manha" required /><span class="radio-custom"></span>Manhã</label>
-                  <label class="radio-option"><input type="radio" name="disponibilidade-horario" value="tarde" required /><span class="radio-custom"></span>Tarde</label>
-                  <label class="radio-option"><input type="radio" name="disponibilidade-horario" value="noite" required /><span class="radio-custom"></span>Noite</label>
-                  <label class="radio-option"><input type="radio" name="disponibilidade-horario" value="integral" required /><span class="radio-custom"></span>Integral</label>
-                </div>
-              </div>
-
-              <div class="form-group full-width">
-                <label>Como soube da vaga?</label>
-                <div class="radio-group">
-                  <label class="radio-option"><input type="radio" name="como-soube" value="site" /><span class="radio-custom"></span>Site de Empregos</label>
-                  <label class="radio-option"><input type="radio" name="como-soube" value="indicacao" /><span class="radio-custom"></span>Indicação</label>
-                  <label class="radio-option"><input type="radio" name="como-soube" value="redes-sociais" /><span class="radio-custom"></span>Redes Sociais</label>
-                  <label class="radio-option"><input type="radio" name="como-soube" value="outro" /><span class="radio-custom"></span>Outro</label>
-                </div>
+              <div id="explicacao-atribuicoes-container" class="form-group full-width" style="display:none">
+                <label for="explicacao-atribuicoes">Por favor, explique o motivo: *</label>
+                <textarea id="explicacao-atribuicoes" name="explicacao-atribuicoes" rows="3" placeholder="Descreva quais pontos não ficaram claros ou suas dúvidas sobre as atribuições do cargo..." required></textarea>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- 10-A. Declaração de Veracidade -->
+        <!-- 10. Declaração de Veracidade -->
         <div class="form-block">
           <div class="block-header"><i class="fas fa-file-signature"></i><h3>Declaração de Veracidade</h3></div>
           <div class="block-content">
@@ -615,6 +685,38 @@ async function buscarCEP(){
   refresh();
 })();
 
+/* ===== Como soube da vaga -> Qual site ===== */
+function toggleQualSite(){
+  const comoSoube = document.querySelector('input[name="como-soube"]:checked')?.value;
+  const container = document.getElementById('qual-site-container');
+  const input = document.getElementById('qual-site');
+  
+  if (comoSoube === 'site-empregos') {
+    container.style.display = 'block';
+    input.required = true;
+  } else {
+    container.style.display = 'none';
+    input.required = false;
+    input.value = '';
+  }
+}
+
+/* ===== Atribuições do cargo -> Explicação ===== */
+function toggleExplicacaoAtribuicoes(){
+  const atribuicoes = document.querySelector('input[name="atribuicoes-claras"]:checked')?.value;
+  const container = document.getElementById('explicacao-atribuicoes-container');
+  const textarea = document.getElementById('explicacao-atribuicoes');
+  
+  if (atribuicoes === 'em-partes' || atribuicoes === 'nao') {
+    container.style.display = 'block';
+    textarea.required = true;
+  } else {
+    container.style.display = 'none';
+    textarea.required = false;
+    textarea.value = '';
+  }
+}
+
 /* ===== Foto: preview e validação (id=foto) ===== */
 (function(){
   const fotoInput = document.getElementById('foto');
@@ -668,8 +770,8 @@ function experienciaCardTemplate(idx){
       <div class="form-group"><label for="empresa${idx}">Empresa</label><input type="text" id="empresa${idx}" name="empresa${idx}"></div>
       <div class="form-group"><label for="cargo${idx}">Cargo</label><input type="text" id="cargo${idx}" name="cargo${idx}"></div>
       <div class="form-group"><label for="periodo${idx}">Período (meses/anos)</label><input type="text" id="periodo${idx}" name="periodo${idx}" placeholder="Ex.: 1 ano e 6 meses"></div>
-      <div class="form-group"><label for="responsavel${idx}">Responsável (gestor/líder)</label><input type="text" id="responsavel${idx}" name="responsavel${idx}"></div>
-      <div class="form-group"><label for="contato${idx}">Contato do responsável</label><input type="tel" id="contato${idx}" name="contato${idx}" placeholder="(00) 00000-0000"></div>
+      <div class="form-group"><label for="responsavel${idx}">Responsável (gestor/líder) *</label><input type="text" id="responsavel${idx}" name="responsavel${idx}" required></div>
+      <div class="form-group"><label for="contato${idx}">Contato do responsável *</label><input type="tel" id="contato${idx}" name="contato${idx}" placeholder="(00) 00000-0000" required></div>
       <div class="form-group full-width"><label for="atividades${idx}">Principais Atividades</label><textarea id="atividades${idx}" name="atividades${idx}" rows="3"></textarea></div>
     </div>
   </div>`;
@@ -733,6 +835,12 @@ function initPreselect(){
 /* ===== Máscaras e init ===== */
 document.addEventListener('DOMContentLoaded', ()=>{
   initPreselect();
+
+  // Adiciona listeners para "Como soube da vaga"
+  const comoSoubeRadios = document.querySelectorAll('input[name="como-soube"]');
+  comoSoubeRadios.forEach(radio => {
+    radio.addEventListener('change', toggleQualSite);
+  });
 
   const cpf=document.getElementById('cpf');
   if(cpf){
@@ -833,47 +941,42 @@ document.getElementById('job-application-form').addEventListener('submit', async
 
   if (fotoFile) {
     try {
-      const dataUrl = await new Promise((resolve, reject) => {
+      const base64 = await new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = () => resolve(reader.result);
         reader.onerror = reject;
         reader.readAsDataURL(fotoFile);
       });
-      formData.append('foto_b64', dataUrl); // Adiciona o base64
+      formData.append('foto-base64', base64);
+      formData.append('foto-nome', fotoFile.name);
+      formData.append('foto-tipo', fotoFile.type);
     } catch (error) {
-      console.error('Erro ao converter a imagem:', error);
-      alert('Ocorreu um erro ao processar sua foto. Tente novamente.');
+      console.error('Erro ao processar foto:', error);
+      alert('Erro ao processar a foto. Tente novamente.');
       submitButton.disabled = false;
       submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Candidatura';
       return;
     }
   }
-  
-  // Remove o campo de arquivo para não ser enviado
-  formData.delete('foto');
 
-  // 5) Envia os dados usando fetch
+  // 5) Envia o formulário
   try {
     const response = await fetch(form.action, {
       method: 'POST',
-      body: new URLSearchParams(formData) // Envia como x-www-form-urlencoded
+      body: formData
     });
 
-    const result = await response.json();
-
-    if (result.success) {
-      alert('Candidatura enviada com sucesso!');
+    if (response.ok) {
+      alert('Candidatura enviada com sucesso! Entraremos em contato em breve.');
       form.reset();
-      document.getElementById('preview-foto').style.display = 'none';
-      document.getElementById('preview-foto-img').src = '';
-      // Opcional: recarregar a página ou redirecionar
+      // Recarrega a página para voltar à seleção de cidade/filial
       window.location.reload();
     } else {
-      throw new Error(result.message || 'Erro desconhecido no servidor.');
+      throw new Error(`Erro HTTP: ${response.status}`);
     }
   } catch (error) {
-    console.error('Erro ao enviar o formulário:', error);
-    alert(`Ocorreu um erro ao enviar sua candidatura: ${error.message}. Por favor, tente novamente.`);
+    console.error('Erro no envio:', error);
+    alert('Erro ao enviar candidatura. Verifique sua conexão e tente novamente.');
   } finally {
     // Reabilita o botão
     submitButton.disabled = false;
@@ -881,5 +984,6 @@ document.getElementById('job-application-form').addEventListener('submit', async
   }
 });
 </script>
+
 </body>
 </html>
