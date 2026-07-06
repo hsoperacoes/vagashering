@@ -85,6 +85,17 @@ input::placeholder,textarea::placeholder{color:#999}
 .preselect-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:16px}
 .badge{display:inline-flex;align-items:center;gap:8px;background:#3a3a3a;border:1px solid #555;color:#e0e0e0;border-radius:999px;padding:6px 12px;font-size:.9em}
 
+
+.welcome-text{color:#e0e0e0;line-height:1.7;font-size:1em;margin-top:14px}
+.welcome-text p{margin-bottom:12px}
+.preselect-title{color:#fff;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.preselect-subtitle{color:#cfcfcf;margin-bottom:16px}
+.preselect-stage{display:block}
+.preselect-stage.hidden{display:none}
+.vagas-status{color:#cfcfcf;font-size:.92em;margin-top:8px}
+select{background:#4a4a4a;border:2px solid #555;border-radius:8px;padding:12px 15px;color:#e0e0e0;font-size:1em}
+select:focus{outline:none;border-color:#4CAF50;box-shadow:0 0 0 3px rgba(76,175,80,.2);background:#5a5a5a}
+
 /* Botões */
 .form-actions{display:flex;gap:20px;justify-content:center;margin-top:40px;padding-top:30px;border-top:2px solid #555}
 .btn-submit,.btn-reset,.btn-secondary{display:flex;align-items:center;gap:10px;padding:12px 20px;border:none;border-radius:8px;font-size:1em;font-weight:600;cursor:pointer;transition:.3s;text-transform:uppercase;letter-spacing:1px;position:relative;overflow:hidden}
@@ -136,27 +147,53 @@ html, body { margin:0; padding:0 !important; }
 </head>
 <body>
 
-  <!-- Anti-tela: escolha Cidade e Filiais -->
+  <!-- Anti-tela: boas-vindas, escolha Cidade/Filial e Cargo -->
   <div id="preselect" role="dialog" aria-modal="true">
     <div class="preselect-card">
-      <h3><i class="fas fa-store"></i> Escolha a cidade e filial(is) para sua candidatura</h3>
-      <div class="preselect-row">
-        <div class="form-group">
-          <label for="cidade-select">Cidade *</label>
-          <select id="cidade-select" style="background:#4a4a4a;border:2px solid #555;border-radius:8px;padding:12px 15px;color:#e0e0e0">
-            <option value="">Selecione...</option>
-            <option value="Uberaba">Uberaba</option>
-            <option value="Uberlândia">Uberlândia</option>
-            <option value="Poços de Caldas">Poços de Caldas</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Filial(is) *</label>
-          <div id="filiais-box" class="checkbox-group"></div>
+      <div id="welcome-stage" class="preselect-stage">
+        <h3 class="preselect-title"><i class="fas fa-users"></i> Apresentação do Grupo</h3>
+        <div class="welcome-text">
+          <p><strong>Fundação: 1999</strong></p>
+          <p>Desde 1999, nosso propósito é desenvolver pessoas, fortalecer equipes e construir um ambiente de trabalho baseado em respeito, compromisso e excelência.</p>
+          <p>Este grupo foi criado para promover o crescimento profissional e oferecer todo o suporte necessário para que cada integrante desempenhe seu papel com segurança e confiança.</p>
+          <p>Nossos valores são pautados na ética, respeito, união, transparência, responsabilidade, inovação e aprendizado contínuo. Acreditamos que o desenvolvimento individual fortalece toda a equipe e reflete diretamente na qualidade dos resultados.</p>
+          <p>Contamos com uma equipe de retaguarda preparada para apoiar as demandas do dia a dia, coach dedicado ao desenvolvimento de pessoas, treinamentos, cursos e ferramentas voltadas ao aperfeiçoamento constante e à excelência em nossa área de atuação.</p>
+          <p>Mais do que um grupo, somos uma equipe comprometida em compartilhar conhecimento, incentivar a evolução profissional e criar oportunidades para que todos cresçam juntos.</p>
+          <p><strong>Seja bem-vindo!</strong> Desde 1999, seguimos construindo uma história de dedicação, desenvolvimento e sucesso por meio das pessoas.</p>
         </div>
         <div class="preselect-actions">
-          <button type="button" class="btn-secondary" id="btn-cancel-pre">Cancelar</button>
-          <button type="button" class="btn-submit" id="btn-continue-pre">Continuar</button>
+          <button type="button" class="btn-submit" id="btn-start-candidatura">Prosseguir candidatura</button>
+        </div>
+      </div>
+
+      <div id="choice-stage" class="preselect-stage hidden">
+        <h3 class="preselect-title"><i class="fas fa-store"></i> Escolha a cidade, filial e cargo pretendido</h3>
+        <p class="preselect-subtitle">As vagas são carregadas da planilha de funcionários. Caso a filial não tenha vaga listada, o currículo ainda poderá ser enviado para banco de talentos.</p>
+        <div class="preselect-row">
+          <div class="form-group">
+            <label for="cidade-select">Cidade *</label>
+            <select id="cidade-select">
+              <option value="">Selecione...</option>
+              <option value="Uberaba">Uberaba</option>
+              <option value="Uberlândia">Uberlândia</option>
+              <option value="Poços de Caldas">Poços de Caldas</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Filial(is) *</label>
+            <div id="filiais-box" class="checkbox-group"></div>
+          </div>
+          <div class="form-group">
+            <label for="cargo-select">Cargo pretendido *</label>
+            <select id="cargo-select" disabled>
+              <option value="">Selecione primeiro a filial...</option>
+            </select>
+            <div id="vagas-status" class="vagas-status"></div>
+          </div>
+          <div class="preselect-actions">
+            <button type="button" class="btn-secondary" id="btn-cancel-pre">Voltar</button>
+            <button type="button" class="btn-submit" id="btn-continue-pre">Continuar</button>
+          </div>
         </div>
       </div>
     </div>
@@ -179,6 +216,7 @@ html, body { margin:0; padding:0 !important; }
         <div class="block-content">
           <span class="badge"><i class="fas fa-city"></i> <strong id="badge-cidade"></strong></span>
           <span class="badge" style="margin-left:8px"><i class="fas fa-store"></i> <strong id="badge-filiais"></strong></span>
+          <span class="badge" style="margin-left:8px"><i class="fas fa-briefcase"></i> <strong id="badge-cargo"></strong></span>
         </div>
       </div>
 
@@ -186,6 +224,7 @@ html, body { margin:0; padding:0 !important; }
         <!-- ocultos -->
         <input type="hidden" name="cidade" id="cidade-hidden" />
         <input type="hidden" name="filiais" id="filiais-hidden" />
+        <input type="hidden" name="cargo-pretendido" id="cargo-hidden" />
 
         <!-- 1. Dados Pessoais -->
         <div class="form-block">
@@ -523,10 +562,21 @@ html, body { margin:0; padding:0 !important; }
 <script>
 /* ====== Mapa de filiais por cidade ====== */
 const FILIAIS = {
-  "Uberaba": ["Hering - Prudente de Morais","Hering - Shopping Uberaba"],
-  "Uberlândia": ["Hering - Floriano Peixoto","Hering - Uberlândia Shopping"],
-  "Poços de Caldas": ["Hering - Rio de Janeiro"]
+  "Uberaba": [
+    { label: "Hering - Prudente de Morais", sheet: "ARTUR MALHAS" },
+    { label: "Hering - Shopping Uberaba", sheet: "MODA JEANS E ACESSÓRIOS" }
+  ],
+  "Uberlândia": [
+    { label: "Hering - Floriano Peixoto", sheet: "FLORIANO JEANS E ACESSÓRIOS" },
+    { label: "Hering - Uberlândia Shopping", sheet: "JOTA MALHAS" }
+  ],
+  "Poços de Caldas": [
+    { label: "Hering - Rio de Janeiro", sheet: "PONTO DA MALHA" }
+  ]
 };
+
+let VAGAS_PLANILHA = {};
+const BANCO_TALENTOS = "Banco de talentos";
 
 /* ====== CEP ====== */
 async function buscarCEP(){
@@ -680,54 +730,150 @@ function removerUltimaExperiencia(){ const ctn=document.getElementById('experien
 function toggleExperienciaProfissional(){ const tem=document.querySelector('input[name="tem-experiencia"]:checked')?.value; const sec=document.getElementById('experiencia-profissional-section'); if(tem==='sim'){ sec.classList.add('show'); if(!document.querySelector('.experience-card')) adicionarExperiencia(); } else { sec.classList.remove('show'); } }
 
 /* ===== Anti-tela (Cidade/Filiais) ===== */
+async function carregarVagasDaPlanilha(){
+  const form = document.getElementById('job-application-form');
+  const baseUrl = form?.action || '';
+  if (!baseUrl) return;
+
+  try {
+    const resp = await fetch(baseUrl + '?action=vagas&ts=' + Date.now());
+    const data = await resp.json();
+    if (data && data.success && data.vagas) {
+      VAGAS_PLANILHA = data.vagas;
+    }
+  } catch (e) {
+    console.warn('Não foi possível carregar vagas da planilha:', e);
+  }
+}
+
+function vagasDasFiliaisSelecionadas(filiaisSelecionadas){
+  const cargos = [];
+  filiaisSelecionadas.forEach(filialSheet => {
+    const lista = VAGAS_PLANILHA[filialSheet] || [];
+    lista.forEach(cargo => {
+      const c = String(cargo || '').trim();
+      if (c && !cargos.includes(c)) cargos.push(c);
+    });
+  });
+  return cargos;
+}
+
+/* ===== Anti-tela (Boas-vindas/Cidade/Filiais/Cargo) ===== */
 function initPreselect(){
-  document.body.classList.add('no-scroll'); // BLOQUEIA SCROLL ENQUANTO O MODAL ESTÁ ABERTO
+  document.body.classList.add('no-scroll');
+  carregarVagasDaPlanilha();
+
   const pre=document.getElementById('preselect');
   const app=document.getElementById('app-root');
+  const welcomeStage=document.getElementById('welcome-stage');
+  const choiceStage=document.getElementById('choice-stage');
+  const btnStart=document.getElementById('btn-start-candidatura');
   const cidadeSel=document.getElementById('cidade-select');
   const filiaisBox=document.getElementById('filiais-box');
+  const cargoSel=document.getElementById('cargo-select');
+  const vagasStatus=document.getElementById('vagas-status');
   const btnCancel=document.getElementById('btn-cancel-pre');
   const btnCont=document.getElementById('btn-continue-pre');
   const badgeCidade=document.getElementById('badge-cidade');
   const badgeFiliais=document.getElementById('badge-filiais');
+  const badgeCargo=document.getElementById('badge-cargo');
   const inputCidade=document.getElementById('cidade-hidden');
   const inputFiliais=document.getElementById('filiais-hidden');
+  const inputCargo=document.getElementById('cargo-hidden');
+
+  btnStart.addEventListener('click', ()=>{
+    welcomeStage.classList.add('hidden');
+    choiceStage.classList.remove('hidden');
+  });
+
+  function filiaisMarcadas(){
+    return [...filiaisBox.querySelectorAll('input[type="checkbox"]:checked')].map(i => ({
+      label: i.dataset.label,
+      sheet: i.value
+    }));
+  }
+
+  function renderCargos(){
+    const marcadas = filiaisMarcadas();
+    cargoSel.innerHTML = '';
+    cargoSel.disabled = true;
+
+    if (!marcadas.length) {
+      cargoSel.insertAdjacentHTML('beforeend', '<option value="">Selecione primeiro a filial...</option>');
+      vagasStatus.textContent = '';
+      return;
+    }
+
+    const cargos = vagasDasFiliaisSelecionadas(marcadas.map(f => f.sheet));
+    if (cargos.length) {
+      cargoSel.insertAdjacentHTML('beforeend', '<option value="">Selecione...</option>');
+      cargos.forEach(cargo => {
+        cargoSel.insertAdjacentHTML('beforeend', `<option value="${cargo}">${cargo}</option>`);
+      });
+      vagasStatus.textContent = cargos.length === 1 ? '1 vaga encontrada para a filial selecionada.' : `${cargos.length} vagas encontradas para a(s) filial(is) selecionada(s).`;
+    } else {
+      cargoSel.insertAdjacentHTML('beforeend', `<option value="${BANCO_TALENTOS}">${BANCO_TALENTOS}</option>`);
+      cargoSel.value = BANCO_TALENTOS;
+      vagasStatus.textContent = 'Nenhuma vaga cadastrada para a filial selecionada. O currículo será recebido mesmo assim.';
+    }
+
+    cargoSel.disabled = false;
+  }
 
   function renderFiliais(){
     filiaisBox.innerHTML='';
+    cargoSel.innerHTML = '<option value="">Selecione primeiro a filial...</option>';
+    cargoSel.disabled = true;
+    vagasStatus.textContent = '';
+
     const cidade=cidadeSel.value;
     if(!cidade || !FILIAIS[cidade]) return;
-    FILIAIS[cidade].forEach((nome)=>{
+
+    FILIAIS[cidade].forEach((f)=>{
       filiaisBox.insertAdjacentHTML('beforeend', `
         <label class="checkbox-option">
-          <input type="checkbox" value="${nome}">
-          <span class="checkbox-custom"></span>${nome}
+          <input type="checkbox" value="${f.sheet}" data-label="${f.label}" onchange="renderCargos()">
+          <span class="checkbox-custom"></span>${f.label}
         </label>
       `);
     });
   }
 
+  window.renderCargos = renderCargos;
   cidadeSel.addEventListener('change', renderFiliais);
 
   btnCancel.addEventListener('click', ()=>{
-    cidadeSel.value=''; filiaisBox.innerHTML='';
+    choiceStage.classList.add('hidden');
+    welcomeStage.classList.remove('hidden');
+    cidadeSel.value='';
+    filiaisBox.innerHTML='';
+    cargoSel.innerHTML='<option value="">Selecione primeiro a filial...</option>';
+    cargoSel.disabled=true;
+    vagasStatus.textContent='';
   });
 
   btnCont.addEventListener('click', ()=>{
     const cidade=cidadeSel.value;
     if(!cidade){ alert('Selecione a cidade.'); return; }
-    const marcadas=[...filiaisBox.querySelectorAll('input[type="checkbox"]:checked')].map(i=>i.value);
+
+    const marcadas=filiaisMarcadas();
     if(!marcadas.length){ alert('Selecione pelo menos uma filial.'); return; }
 
+    const cargo = cargoSel.value;
+    if(!cargo){ alert('Selecione o cargo pretendido.'); return; }
+
     badgeCidade.textContent = cidade;
-    badgeFiliais.textContent = marcadas.join(', ');
+    badgeFiliais.textContent = marcadas.map(f => f.label).join(', ');
+    badgeCargo.textContent = cargo;
+
     inputCidade.value = cidade;
-    inputFiliais.value = marcadas.join(', ');
+    inputFiliais.value = marcadas.map(f => f.label).join(', ');
+    inputCargo.value = cargo;
 
     pre.style.display='none';
     app.style.display='block';
-    document.body.classList.remove('no-scroll'); // LIBERA O SCROLL
-    window.scrollTo(0,0); // GARANTE INÍCIO NO TOPO
+    document.body.classList.remove('no-scroll');
+    window.scrollTo(0,0);
   });
 }
 
