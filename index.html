@@ -79,7 +79,8 @@ input::placeholder,textarea::placeholder{color:#999}
 
 /* Seleção de loja (anti-tela) */
 #preselect{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:1000}
-.preselect-card{width:min(680px,92vw);background:#2a2a2a;border:2px solid #555;border-radius:14px;box-shadow:0 6px 30px rgba(0,0,0,.5);padding:24px}
+.preselect-card{width:min(860px,94vw);max-height:92vh;overflow:auto;background:linear-gradient(145deg,#242424 0%,#2f2f2f 55%,#1f1f1f 100%);border:1px solid rgba(76,175,80,.45);border-radius:22px;box-shadow:0 18px 60px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.05) inset;padding:0;position:relative}
+.preselect-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at top left,rgba(76,175,80,.20),transparent 35%),radial-gradient(circle at bottom right,rgba(255,255,255,.08),transparent 30%);pointer-events:none}
 .preselect-card h3{color:#fff;margin-bottom:10px}
 .preselect-row{display:grid;grid-template-columns:1fr;gap:16px}
 .preselect-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:16px}
@@ -150,19 +151,30 @@ html, body { margin:0; padding:0 !important; }
   <!-- Anti-tela: boas-vindas, escolha Cidade/Filial e Cargo -->
   <div id="preselect" role="dialog" aria-modal="true">
     <div class="preselect-card">
-      <div id="welcome-stage" class="preselect-stage">
-        <h3 class="preselect-title"><i class="fas fa-users"></i> Apresentação do Grupo</h3>
-        <div class="welcome-text">
-          <p><strong>Fundação: 1999</strong></p>
-          <p>Desde 1999, nosso propósito é desenvolver pessoas, fortalecer equipes e construir um ambiente de trabalho baseado em respeito, compromisso e excelência.</p>
-          <p>Este grupo foi criado para promover o crescimento profissional e oferecer todo o suporte necessário para que cada integrante desempenhe seu papel com segurança e confiança.</p>
-          <p>Nossos valores são pautados na ética, respeito, união, transparência, responsabilidade, inovação e aprendizado contínuo. Acreditamos que o desenvolvimento individual fortalece toda a equipe e reflete diretamente na qualidade dos resultados.</p>
-          <p>Contamos com uma equipe de retaguarda preparada para apoiar as demandas do dia a dia, coach dedicado ao desenvolvimento de pessoas, treinamentos, cursos e ferramentas voltadas ao aperfeiçoamento constante e à excelência em nossa área de atuação.</p>
-          <p>Mais do que um grupo, somos uma equipe comprometida em compartilhar conhecimento, incentivar a evolução profissional e criar oportunidades para que todos cresçam juntos.</p>
-          <p><strong>Seja bem-vindo!</strong> Desde 1999, seguimos construindo uma história de dedicação, desenvolvimento e sucesso por meio das pessoas.</p>
+      <div id="welcome-stage" class="preselect-stage" style="padding:0">
+        <div class="welcome-hero">
+          <span class="welcome-kicker"><i class="fas fa-star"></i> Fundação: 1999</span>
+          <h3 class="preselect-title"><i class="fas fa-users"></i> Apresentação do Grupo</h3>
+          <p class="preselect-subtitle">Bem-vindo ao processo de candidatura da Hering Store.</p>
         </div>
-        <div class="preselect-actions">
-          <button type="button" class="btn-submit" id="btn-start-candidatura">Prosseguir candidatura</button>
+        <div style="padding:30px;position:relative;z-index:1">
+          <div class="welcome-text">
+            <p>Desde 1999, nosso propósito é desenvolver pessoas, fortalecer equipes e construir um ambiente de trabalho baseado em respeito, compromisso e excelência.</p>
+            <p>Este grupo foi criado para promover o crescimento profissional e oferecer todo o suporte necessário para que cada integrante desempenhe seu papel com segurança e confiança.</p>
+            <div class="welcome-values">
+              <span class="value-chip"><i class="fas fa-handshake"></i> Ética</span>
+              <span class="value-chip"><i class="fas fa-heart"></i> Respeito</span>
+              <span class="value-chip"><i class="fas fa-people-group"></i> União</span>
+              <span class="value-chip"><i class="fas fa-lightbulb"></i> Inovação</span>
+              <span class="value-chip"><i class="fas fa-graduation-cap"></i> Aprendizado</span>
+              <span class="value-chip"><i class="fas fa-shield-alt"></i> Responsabilidade</span>
+            </div>
+            <p>Contamos com uma equipe de retaguarda preparada para apoiar as demandas do dia a dia, coach dedicado ao desenvolvimento de pessoas, treinamentos, cursos e ferramentas voltadas ao aperfeiçoamento constante e à excelência em nossa área de atuação.</p>
+            <div class="welcome-callout"><strong>Seja bem-vindo!</strong> Desde 1999, seguimos construindo uma história de dedicação, desenvolvimento e sucesso por meio das pessoas.</div>
+          </div>
+          <div class="preselect-actions">
+            <button type="button" class="btn-submit" id="btn-start-candidatura"><i class="fas fa-arrow-right"></i> Prosseguir candidatura</button>
+          </div>
         </div>
       </div>
 
@@ -177,6 +189,8 @@ html, body { margin:0; padding:0 !important; }
               <option value="Uberaba">Uberaba</option>
               <option value="Uberlândia">Uberlândia</option>
               <option value="Poços de Caldas">Poços de Caldas</option>
+              <option value="Divinópolis">Divinópolis</option>
+              <option value="Itaúna">Itaúna</option>
             </select>
           </div>
           <div class="form-group">
@@ -564,19 +578,26 @@ html, body { margin:0; padding:0 !important; }
 const FILIAIS = {
   "Uberaba": [
     { label: "Hering - Prudente de Morais", sheet: "ARTUR MALHAS" },
-    { label: "Hering - Shopping Uberaba", sheet: "MODA JEANS E ACESSÓRIOS" }
+    { label: "Hering - Shopping Uberaba", sheet: "PONTO DA MALHA" }
   ],
   "Uberlândia": [
     { label: "Hering - Floriano Peixoto", sheet: "FLORIANO JEANS E ACESSÓRIOS" },
-    { label: "Hering - Uberlândia Shopping", sheet: "JOTA MALHAS" }
+    { label: "Hering - Uberlândia Shopping", sheet: "MODA JEANS E ACESSÓRIOS" }
   ],
   "Poços de Caldas": [
-    { label: "Hering - Rio de Janeiro", sheet: "PONTO DA MALHA" }
+    { label: "Hering - Rio de Janeiro", sheet: "JOTA MALHAS" }
+  ],
+  "Divinópolis": [
+    { label: "Divinópolis", sheet: "DIVINOPOLIS" }
+  ],
+  "Itaúna": [
+    { label: "Itaúna", sheet: "ITAUNA" }
   ]
 };
 
 let VAGAS_PLANILHA = {};
 const BANCO_TALENTOS = "Banco de talentos";
+function normalizarChaveVaga(valor){ return String(valor || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toUpperCase(); }
 
 /* ====== CEP ====== */
 async function buscarCEP(){
@@ -749,7 +770,8 @@ async function carregarVagasDaPlanilha(){
 function vagasDasFiliaisSelecionadas(filiaisSelecionadas){
   const cargos = [];
   filiaisSelecionadas.forEach(filialSheet => {
-    const lista = VAGAS_PLANILHA[filialSheet] || [];
+    const chave = normalizarChaveVaga(filialSheet);
+    const lista = VAGAS_PLANILHA[filialSheet] || VAGAS_PLANILHA[chave] || [];
     lista.forEach(cargo => {
       const c = String(cargo || '').trim();
       if (c && !cargos.includes(c)) cargos.push(c);
