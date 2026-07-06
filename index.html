@@ -751,20 +751,48 @@ function removerUltimaExperiencia(){ const ctn=document.getElementById('experien
 function toggleExperienciaProfissional(){ const tem=document.querySelector('input[name="tem-experiencia"]:checked')?.value; const sec=document.getElementById('experiencia-profissional-section'); if(tem==='sim'){ sec.classList.add('show'); if(!document.querySelector('.experience-card')) adicionarExperiencia(); } else { sec.classList.remove('show'); } }
 
 /* ===== Anti-tela (Cidade/Filiais) ===== */
-async function carregarVagasDaPlanilha(){
+function carregarVagasDaPlanilha(){
   const form = document.getElementById('job-application-form');
   const baseUrl = form?.action || '';
-  if (!baseUrl) return;
+  if (!baseUrl) return Promise.resolve(false);
 
-  try {
-    const resp = await fetch(baseUrl + '?action=vagas&ts=' + Date.now());
-    const data = await resp.json();
-    if (data && data.success && data.vagas) {
-      VAGAS_PLANILHA = data.vagas;
-    }
-  } catch (e) {
-    console.warn('Não foi possível carregar vagas da planilha:', e);
-  }
+  return new Promise((resolve) => {
+    const callbackName = 'receberVagasHering_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+    const script = document.createElement('script');
+    const cleanup = () => {
+      try { delete window[callbackName]; } catch (_) { window[callbackName] = undefined; }
+      if (script.parentNode) script.parentNode.removeChild(script);
+    };
+
+    const timer = setTimeout(() => {
+      cleanup();
+      console.warn('Tempo esgotado ao carregar vagas da planilha.');
+      resolve(false);
+    }, 15000);
+
+    window[callbackName] = (data) => {
+      clearTimeout(timer);
+      if (data && data.success && data.vagas) {
+        VAGAS_PLANILHA = data.vagas;
+        renderCargos();
+        resolve(true);
+      } else {
+        console.warn('Retorno de vagas inválido:', data);
+        resolve(false);
+      }
+      cleanup();
+    };
+
+    script.onerror = () => {
+      clearTimeout(timer);
+      cleanup();
+      console.warn('Não foi possível carregar vagas da planilha.');
+      resolve(false);
+    };
+
+    script.src = baseUrl + '?action=vagas&callback=' + encodeURIComponent(callbackName) + '&ts=' + Date.now();
+    document.head.appendChild(script);
+  });
 }
 
 function vagasDasFiliaisSelecionadas(filiaisSelecionadas){
@@ -827,6 +855,14 @@ function initPreselect(){
     }
 
     const cargos = vagasDasFiliaisSelecionadas(marcadas.map(f => f.sheet));
+    if (!Object.keys(VAGAS_PLANILHA).length) {
+      cargoSel.insertAdjacentHTML('beforeend', `<option value="${BANCO_TALENTOS}">${BANCO_TALENTOS}</option>`);
+      cargoSel.value = BANCO_TALENTOS;
+      vagasStatus.textContent = 'Carregando vagas da planilha. Se não aparecerem, confira se o GS novo foi publicado como nova implantação.';
+      cargoSel.disabled = false;
+      return;
+    }
+
     if (cargos.length) {
       cargoSel.insertAdjacentHTML('beforeend', '<option value="">Selecione...</option>');
       cargos.forEach(cargo => {
